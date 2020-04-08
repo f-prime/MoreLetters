@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="libs/vue.js"></script>
+    <script type="text/javascript" src="js/game.js" defer></script>
+    <title>Postal Idle</title>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <div class="row main-stat">
+        ${{ this.round(money) }}
+      </div>
+      <div class="row stats">
+        <div class="column stat">
+          <div class="stat-value">{{ letters }}</div>
+          <div class="stat-name">letters</div>
+        </div>
+        <div class="column stat">
+          <div class="stat-value">{{ lettersDelivered }}</div>
+          <div class="stat-name">letters delivered</div>
+        </div>
+        <div class="column stat">
+          <div class="stat-value">{{ lettersPerSecond }}</div>
+          <div class="stat-name">letters per second</div>
+        </div>
+      </div>
+      <div class="row stats">
+        <div class="column stat" v-show="phase >= 1">
+          <div class="stat-value">{{ mailmen }}</div>
+          <div class="stat-name">mailmen</div>
+        </div>
+        <div class="column stat" v-show="phase >= 1">
+          <div class="stat-value">{{ mailboxes }}</div>
+          <div class="stat-name">mailboxes</div>
+        </div>
+      </div>
+      <div class="buttons">
+        <div class="row">
+          <div class="column">
+            <div class="button" @click="deliverLetter">
+              Deliver Letter
+            </div>
+          </div>
+        </div>
+        <div class="row" v-show="phase > 0">
+          <div class="column">
+            <div class="button" @click="buyMailman">
+              <div class="button-name">
+                Mailman (${{ mailmanPrice }})
+              </div>
+              <div class="button-description">
+                Automate letter delivery
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="button" @click="buyMailbox">
+              <div class="button-name">
+                Mailbox (${{ mailboxPrice }})
+              </div>
+              <div class="button-description">
+                Increase letters per second
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
