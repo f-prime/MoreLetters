@@ -33,7 +33,7 @@ const vw = new Vue({
     },
 
     mailboxPrice: function() {
-      return this.round(this.mailboxBasePrice + (this.mailboxes ** 1.7));
+      return this.round(this.mailboxBasePrice + (this.mailboxes ** 1.3));
     }
   },
 
@@ -64,11 +64,11 @@ const vw = new Vue({
     },
 
     deliverLetter: function(amount) {
-      amount = 1 || amount;
+      amount = amount || 1;
 
       if(this.letters >= amount) {
         this.letters -= amount;
-        this.money += (this.pricePerLetter * this.multiplier);
+        this.money += (this.pricePerLetter * this.multiplier) * amount;
         this.lettersDelivered += amount;
       }
     },
