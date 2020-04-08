@@ -25,7 +25,7 @@ const vw = new Vue({
  
   computed: {
     lettersPerSecond: function() {
-      return this.round(this.lettersInc / (this.lettersDelay / 1000));
+      return this.round((this.lettersInc * (this.mailboxes + 1)) / (this.lettersDelay / 1000));
     },
 
     mailmanPrice: function() {
@@ -44,6 +44,13 @@ const vw = new Vue({
     },
    
     buyMailman: function() {
+      /*
+       * Automates letter delivery
+       * Delivers once ever 500ms
+       * Delivers one letter per mailman
+       *
+       */
+
       const price = this.mailmanPrice;
 
       if(this.money < price)
@@ -54,17 +61,25 @@ const vw = new Vue({
     },
 
     buyMailbox: function() {
+      /*
+       * Increases number of letters per second by one
+       * Decreases letters delay by 2%
+       */
+
       const price = this.mailboxPrice;
 
       if(this.money < price)
         return;
 
       this.mailboxes += 1;
+      this.lettersDelay -= (this.lettersDelay * 0.02);
       this.money -= price;
     },
 
     deliverLetter: function(amount) {
-      amount = amount || 1;
+      /*
+       * Delivers N amount of letters if possible
+       */
 
       if(this.letters >= amount) {
         this.letters -= amount;
