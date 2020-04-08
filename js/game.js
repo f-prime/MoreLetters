@@ -48,6 +48,7 @@ const vw = new Vue({
        * Automates letter delivery
        * Delivers once ever 500ms
        * Delivers one letter per mailman
+       * Reduces delivery delay by 2%
        *
        */
 
@@ -57,6 +58,7 @@ const vw = new Vue({
         return;
 
       this.mailmen += 1;
+      this.mailmanDeliveryDelay -= this.mailmanDeliveryDelay * 0.02
       this.money -= price;
     },
 
