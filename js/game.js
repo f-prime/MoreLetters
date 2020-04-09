@@ -21,6 +21,8 @@ const vw = new Vue({
 
     pricePerLetter: 0.25,
     money: 0,
+
+    lastSave: new Date(),
   },
  
   computed: {
@@ -34,6 +36,16 @@ const vw = new Vue({
 
     mailboxPrice: function() {
       return this.round(this.mailboxBasePrice + (this.mailboxes ** 1.3));
+    },
+
+    nextPhaseAvailable: function() {
+      switch(this.phase) {
+        case 1: {
+          return this.lettersDelivered >= 10000; 
+        }
+      }
+
+      return false;
     }
   },
 
@@ -78,6 +90,10 @@ const vw = new Vue({
       this.money -= price;
     },
 
+    prestige: function() {
+
+    },
+
     deliverLetter: function(amount) {
       /*
        * Delivers N amount of letters if possible
@@ -92,7 +108,7 @@ const vw = new Vue({
 
     updateLetters: function() {
       const now = new Date();
-      if(now - this.lastLettersUpdate < this.lettersDelay) {
+      if(now - new Date(this.lastLettersUpdate) < this.lettersDelay) {
         return;
       }
 
@@ -106,7 +122,7 @@ const vw = new Vue({
 
       const now = new Date();
 
-      if(now - this.lastMailmanDelivery > this.mailmanDeliveryDelay) {
+      if(now - new Date(this.lastMailmanDelivery) > this.mailmanDeliveryDelay) {
         this.deliverLetter(this.mailmen);
         this.lastMailmanDelivery = now;
       }
@@ -122,14 +138,42 @@ const vw = new Vue({
       }
     },
 
+    saveState: function() {
+      const now = new Date();
+      if(now - new Date(this.lastSave) > 1000) {
+        localStorage.setItem("state", JSON.stringify(this.$data));
+        this.lastSave = now;
+      }
+    },
+
+    loadState: function() {
+      const state = localStorage.getItem("state");
+      if(!state)
+        return;
+
+      const json = JSON.parse(state);
+      
+      for(const key in json) {
+        this.$data[key] = json[key];
+      } 
+    },
+
+    newGame: function() {
+      localStorage.removeItem("state");
+      window.location.reload();
+    },
+
     update: function() {
       this.updateLetters();
       this.updateMailmen();
       this.updateState();
+      this.saveState();
     }
   },
 
   created: function() {
+    console.log("I know you're a 1337 h4x0r and all, but isn't it more fun to... you know... play the game?");
+    this.loadState();
     setInterval(this.update, 0);
   }
 
