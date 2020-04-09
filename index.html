@@ -35,6 +35,10 @@
           <div class="stat-value">{{ recruiters }}</div>
           <div class="stat-name">recruiters</div>
         </div>
+        <div class="column stat" v-show="phase >= 2">
+          <div class="stat-value">{{ factories }}</div>
+          <div class="stat-name">factories</div>
+        </div> 
         <div class="column stat" v-show="phase >= 1">
           <div class="stat-value">{{ mailboxes }}</div>
           <div class="stat-name">mailboxes</div>
@@ -80,6 +84,15 @@
             </div>
             <div class="button-description">
               Automatically hire mailmen
+            </div>
+          </div>
+          <div class="button" @click="buyFactory">
+            <div class="button-name">
+              <div>Factory</div>
+              <div>(${{ factoryPrice }})</div>
+            </div>
+            <div class="button-description">
+              Automatically build mailboxes
             </div>
           </div>
         </div>

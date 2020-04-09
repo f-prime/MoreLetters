@@ -1,11 +1,12 @@
-import { originalState, saveState, loadState, newGame } from "/js/state.js";
+import { originalState, saveState, loadState, newGame } from "./state.js";
 
 import { 
   updateState, 
   updateMailmen, 
-  updateRecruiters, 
-  updateLetters } 
-from "/js/tick.js";
+  updateRecruiters,
+  updateFactories,
+  updateLetters 
+} from "./tick.js";
 
 import { 
   buyMailbox, 
@@ -14,7 +15,7 @@ import {
   buyFactory,
   buyMailtruck,
   buyPostOffice,
-} from "/js/buy.js";
+} from "./buy.js";
 
 
 
@@ -25,8 +26,11 @@ const vw = new Vue({
  
   computed: {
     recruiterPrice: function() {
-      console.log(this.recruiterBasePrice);
       return this.round(this.recruiterBasePrice + (this.recruiters ** 1.5));
+    },
+
+    factoryPrice: function() {
+      return this.round(this.factoryBasePrice + (this.factories * 1.7));
     },
 
     lettersPerSecond: function() {
@@ -101,10 +105,12 @@ const vw = new Vue({
       this.updateLetters();
       this.updateMailmen();
       this.updateRecruiters();
+      this.updateFactories();
       this.updateState();
       this.saveState();
     },
 
+    updateFactories,
     updateLetters,
     updateRecruiters,
     updateMailmen,

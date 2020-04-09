@@ -24,6 +24,11 @@ export const originalState = {
   lastRecruiterHire: new Date(),
   recruiters: 0,
 
+  factoryBasePrice: 1500,
+  factoryDelay: 2000,
+  lastFactory: new Date(),
+  factories: 0,
+
   lastSave: new Date(),
 };
 

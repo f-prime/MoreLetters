@@ -8,6 +8,18 @@ export function updateLetters() {
   this.lastLettersUpdate = new Date();
 }
 
+export function updateFactories() {
+  if(this.factories <= 0)
+    return;
+
+  const now = new Date();
+
+  if(now - new Date(this.lastFactory) > this.factoryDelay) {
+    this.buyMailbox(true, this.factories);
+    this.lastFactory = now;
+  }
+}
+
 export function updateRecruiters() {
   if(this.recruiters <= 0)
     return;
@@ -15,7 +27,7 @@ export function updateRecruiters() {
   const now = new Date();
 
   if(now - new Date(this.lastRecruiterHire) > this.recruiterHireDelay) {
-    this.buyMailman(true);
+    this.buyMailman(true, this.recruiters);
     this.lastRecruiterHire = now;
   }
 }
