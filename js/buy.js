@@ -1,3 +1,31 @@
+export function buy(
+  free, 
+  amount,
+  countVar, 
+  priceVar, 
+  delayVar, 
+  delayPercentageDecrease) 
+
+{ 
+  amount = amount || 1;
+  if(!free) {
+    const price = this[priceVar] * amount;
+
+    if(this._data.money < price)
+      return false;
+
+    this._data.money -= price; 
+  }
+  
+  this._data[countVar] += amount;
+
+  if(delayVar && delayPercentageDecrease) {
+    this._data[delayVar] -= (this._data[delayVar] * delayPercentageDecrease);
+  }
+
+  return true;
+}
+
 export function buyMailtruck() {}
 
 export function buyFactory() {
@@ -6,14 +34,7 @@ export function buyFactory() {
    * Time between getting mailbox decreases by 5% for every new factory
    */
 
-  const price = this.factoryPrice;
-
-  if(this.money < price)
-    return;
-
-  this.factories += 1;
-  this.factoryDelay -= (this.factoryDelay * 0.05);
-  this.money -= price;
+  this.buy(false, 1, "factories", "factoryPrice", "factoryDelay", 0.05);
 }
 
 export function buyPostOffice() {}
@@ -23,20 +44,9 @@ export function buyMailbox(free, amount) {
    * Increases number of letters per second by one
    * Decreases letters delay by 2%
    */
-
-  amount = amount || 1;
-
-  if(!free) {
-    const price = this.mailboxPrice * amount;
-
-    if(this.money < price)
-      return;
-
-    this.money -= price;
-  }
-
-  this.mailboxes += amount;
-  this.lettersDelay -= (this.lettersDelay * 0.02);
+  console.log(free);
+  this.buy(free, amount, "mailboxes", "mailboxPrice", "lettersDelay", 0.02);
+  
 }
 
 export function buyRecruiter() {
@@ -46,14 +56,8 @@ export function buyRecruiter() {
    *
    */
 
-  const price = this.recruiterPrice;
+  this.buy(false, 1, "recruiters", "recruiterPrice", "recruiterHireDelay", 0.05);
 
-  if(this.money < price)
-    return;
-
-  this.recruiters += 1;
-  this.recruiterHireDelay -= (this.recruiterHireDelay * 0.05);
-  this.money -= price;
 }
 
 export function buyMailman(free, amount) {
@@ -65,17 +69,6 @@ export function buyMailman(free, amount) {
    *
    */
 
-  amount = amount || 1;
+  this.buy(false, 1, "mailmen", "mailmanPrice", "mailmanDeliveryDelay", 0.02);
 
-  if(!free) {
-    const price = this.mailmanPrice * amount;
-
-    if(this.money < price)
-      return;
-    
-    this.money -= price;
-  }
-
-  this.mailmen += amount;
-  this.mailmanDeliveryDelay -= this.mailmanDeliveryDelay * 0.02
 }

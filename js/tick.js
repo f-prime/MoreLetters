@@ -1,3 +1,15 @@
+export function generalUpdate(that, lastUpdate, delay, func, greaterThanZero) {
+  if(greaterThanZero <= 0)
+    return;
+  
+  const now = new Date();
+
+  if(now - new Date(that[lastUpdate]) > delay) {
+    func();
+    that[lastUpdate] = now;
+  }
+}
+
 export function updateLetters() {
   const now = new Date();
   if(now - new Date(this.lastLettersUpdate) < this.lettersDelay) {
@@ -9,39 +21,22 @@ export function updateLetters() {
 }
 
 export function updateFactories() {
-  if(this.factories <= 0)
-    return;
-
-  const now = new Date();
-
-  if(now - new Date(this.lastFactory) > this.factoryDelay) {
+  generalUpdate(this, "lastFactory", this.factoryDelay, () => {
     this.buyMailbox(true, this.factories);
-    this.lastFactory = now;
-  }
+  }, this.factories);
+
 }
 
 export function updateRecruiters() {
-  if(this.recruiters <= 0)
-    return;
-
-  const now = new Date();
-
-  if(now - new Date(this.lastRecruiterHire) > this.recruiterHireDelay) {
+  generalUpdate(this, "lastRecruiterHire", this.recruiterHireDelay, () => {
     this.buyMailman(true, this.recruiters);
-    this.lastRecruiterHire = now;
-  }
+  }, this.recruiters);
 }
 
 export function updateMailmen() {
-  if(this.mailmen <= 0)
-    return;
-
-  const now = new Date();
-
-  if(now - new Date(this.lastMailmanDelivery) > this.mailmanDeliveryDelay) {
+  generalUpdate(this, "lastMailmanDelivery", this.mailmanDeliveryDelay, () => {
     this.deliverLetter(this.mailmen);
-    this.lastMailmanDelivery = now;
-  }
+  }, this.mailmen);
 }
 
 export function updateState() {

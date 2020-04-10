@@ -1,6 +1,7 @@
 import { originalState, saveState, loadState, newGame } from "./state.js";
 
 import { 
+  generalUpdate,
   updateState, 
   updateMailmen, 
   updateRecruiters,
@@ -9,6 +10,7 @@ import {
 } from "./tick.js";
 
 import { 
+  buy,
   buyMailbox, 
   buyRecruiter, 
   buyMailman,
@@ -115,6 +117,7 @@ const vw = new Vue({
     updateRecruiters,
     updateMailmen,
     updateState,
+    generalUpdate,
     saveState,
     loadState,
     newGame,
@@ -124,7 +127,7 @@ const vw = new Vue({
     buyFactory,
     buyMailtruck,
     buyPostOffice,
-
+    buy,
   },
 
   created: function() {
