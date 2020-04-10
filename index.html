@@ -9,6 +9,9 @@
   </head>
   <body>
     <div id="app" class="container">
+      <transition name="fade">
+        <img v-show="phase > 0" src="assets/bgs/1.png" class="background">
+      </transition>
       <div class="row main-stat">
         ${{ this.round(money) }}
       </div>
@@ -62,6 +65,9 @@
               <div class="button-description">
                 Automate letter delivery
               </div>
+              <div class="buy-max" @click="buyMax(buyMailman)">
+                (buy max)
+              </div>
             </div>
           </div>
           <div class="column">
@@ -73,6 +79,9 @@
               <div class="button-description">
                 Increase letters per second
               </div>
+              <div class="buy-max" @click="buyMax(buyMailbox)">
+                (buy max)
+              </div> 
             </div>
           </div>
         </div>
@@ -85,6 +94,9 @@
             <div class="button-description">
               Automatically hire mailmen
             </div>
+            <div class="buy-max" @click="buyMax(buyRecruiter)">
+              (buy max)
+            </div>
           </div>
           <div class="button column" @click="buyFactory()">
             <div class="button-name">
@@ -93,6 +105,9 @@
             </div>
             <div class="button-description">
               Automatically build mailboxes
+            </div>
+            <div class="buy-max" @click="buyMax(buyFactory)">
+              (buy max)
             </div>
           </div>
         </div>
@@ -116,9 +131,9 @@
       </div>
       <div class="footer">
         <div class="row">
-            <div class="column footer-link">
-              <a @click="newGame()">new game</a>
-            </div>
+          <div class="column footer-link">
+            <a @click="newGame()">new game</a>
+          </div>
         </div>
       </div>
     </div>

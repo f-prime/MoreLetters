@@ -34,7 +34,7 @@ export function buyFactory() {
    * Time between getting mailbox decreases by 5% for every new factory
    */
 
-  this.buy(false, 1, "factories", "factoryPrice", "factoryDelay", 0.05);
+  return this.buy(false, 1, "factories", "factoryPrice");
 }
 
 export function buyPostOffice() {}
@@ -44,9 +44,8 @@ export function buyMailbox(free, amount) {
    * Increases number of letters per second by one
    * Decreases letters delay by 2%
    */
-  console.log(free);
-  this.buy(free, amount, "mailboxes", "mailboxPrice", "lettersDelay", 0.02);
   
+  return this.buy(free, amount, "mailboxes", "mailboxPrice");
 }
 
 export function buyRecruiter() {
@@ -56,8 +55,7 @@ export function buyRecruiter() {
    *
    */
 
-  this.buy(false, 1, "recruiters", "recruiterPrice", "recruiterHireDelay", 0.05);
-
+  return this.buy(false, 1, "recruiters", "recruiterPrice");
 }
 
 export function buyMailman(free, amount) {
@@ -69,6 +67,10 @@ export function buyMailman(free, amount) {
    *
    */
 
-  this.buy(false, 1, "mailmen", "mailmanPrice", "mailmanDeliveryDelay", 0.02);
+  return this.buy(free, amount, "mailmen", "mailmanPrice");
 
+}
+
+export function buyMax(buyFunction) {
+  while(buyFunction()) {}
 }

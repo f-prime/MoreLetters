@@ -17,6 +17,7 @@ import {
   buyFactory,
   buyMailtruck,
   buyPostOffice,
+  buyMax,
 } from "./buy.js";
 
 
@@ -28,11 +29,11 @@ const vw = new Vue({
  
   computed: {
     recruiterPrice: function() {
-      return this.round(this.recruiterBasePrice + (this.recruiters ** 1.5));
+      return this.round(this.recruiterBasePrice + (this.recruiters ** 2));
     },
 
     factoryPrice: function() {
-      return this.round(this.factoryBasePrice + (this.factories * 1.7));
+      return this.round(this.factoryBasePrice + (this.factories * 2.2));
     },
 
     lettersPerSecond: function() {
@@ -40,11 +41,11 @@ const vw = new Vue({
     },
 
     mailmanPrice: function() {
-      return this.round(this.mailmanBasePrice + (this.mailmen ** 1.15));
+      return this.round(this.mailmanBasePrice + (this.mailmen ** 1.5));
     },
 
     mailboxPrice: function() {
-      return this.round(this.mailboxBasePrice + (this.mailboxes ** 1.3));
+      return this.round(this.mailboxBasePrice + (this.mailboxes ** 1.8));
     },
 
     nextPhaseAt: function() {
@@ -52,7 +53,9 @@ const vw = new Vue({
         case 0:
           return "40";
         case 1:
-          return "10,000";
+          return "100,000";
+        case 2:
+          return "1,000,000";
         default:
           return "Infinity";
       }
@@ -61,7 +64,11 @@ const vw = new Vue({
     nextPhaseAvailable: function() {
       switch(this.phase) {
         case 1: {
-          return this.lettersDelivered >= 10000; 
+          return this.lettersDelivered >= 100000; 
+        }
+
+        case 2: {
+          return this.lettersDelivered >= 1000000;
         }
       }
 
@@ -128,6 +135,7 @@ const vw = new Vue({
     buyMailtruck,
     buyPostOffice,
     buy,
+    buyMax,
   },
 
   created: function() {

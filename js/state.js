@@ -1,5 +1,5 @@
 export const originalState = {
-  phase:1,
+  phase:0,
 
   multiplier: 1,
   lettersInc: 1,
