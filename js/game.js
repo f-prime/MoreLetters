@@ -1,4 +1,10 @@
-import { originalState, saveState, loadState, newGame } from "./state.js";
+import { 
+  originalState, 
+  saveState, 
+  loadState, 
+  newGame,
+  calculateNewState,
+} from "./state.js";
 
 import { 
   generalUpdate,
@@ -127,6 +133,7 @@ const vw = new Vue({
     generalUpdate,
     saveState,
     loadState,
+    calculateNewState,
     newGame,
     buyMailman,
     buyMailbox, 
