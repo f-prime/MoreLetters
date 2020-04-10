@@ -29,6 +29,12 @@ export const originalState = {
   lastFactory: new Date(),
   factories: 0,
 
+  segwayBasePrice: 5000,
+  segways: 0,
+
+  scientificManagementBasePrice: 10000000,
+  scientificManagement: false,
+
   lastSave: new Date(),
 };
 

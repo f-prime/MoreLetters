@@ -26,6 +26,28 @@ export function buy(
   return true;
 }
 
+export function buyScientificManagement() {
+  /*
+   * One time upgrade. Cuts factory time in half
+   */
+
+  if(this.scientificManagement || this.scientificManagementBasePrice > this.money) {
+    return;
+  }
+
+  this.money -= this.scientificManagementBasePrice;
+  this.factoryDelay /= 2;
+  this.scientificManagement = true;
+}
+
+export function buySegway() {
+  /*
+   * Increases mailman delivery speed by 5% per segway
+   */
+
+  return this.buy(false, 1, "segways", "segwayPrice", "mailmanDeliveryDelay", 0.05);  
+}
+
 export function buyMailtruck() {}
 
 export function buyFactory() {

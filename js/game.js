@@ -17,6 +17,8 @@ import {
 
 import { 
   buy,
+  buyScientificManagement,
+  buySegway,
   buyMailbox, 
   buyRecruiter, 
   buyMailman,
@@ -38,8 +40,12 @@ const vw = new Vue({
       return this.round(this.recruiterBasePrice + (this.recruiters ** 2));
     },
 
+    segwayPrice: function() {
+      return this.round(this.segwayBasePrice + (this.segways ** 5));
+    },
+
     factoryPrice: function() {
-      return this.round(this.factoryBasePrice + (this.factories * 2.2));
+      return this.round(this.factoryBasePrice + (this.factories ** 2.2));
     },
 
     lettersPerSecond: function() {
@@ -135,12 +141,14 @@ const vw = new Vue({
     loadState,
     calculateNewState,
     newGame,
+    buyScientificManagement,
     buyMailman,
     buyMailbox, 
     buyRecruiter,
     buyFactory,
     buyMailtruck,
     buyPostOffice,
+    buySegway,
     buy,
     buyMax,
   },
