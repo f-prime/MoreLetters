@@ -99,7 +99,8 @@ html, body {
 }
 
 .button-description {
-  font-size: 12px;
+  font-size: 15px;
+  padding: 0.5em;
 }
 
 .button:active {

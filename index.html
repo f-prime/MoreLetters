@@ -10,7 +10,9 @@
   <body>
     <div id="app" class="container">
       <transition name="fade">
-        <img v-show="phase > 0" src="assets/bgs/1.png" class="background">
+        <img v-show="phase == 1" src="assets/bgs/1.png" class="background">
+        <img v-show="phase == 2" src="assets/bgs/2.png" class="background">
+        <img v-show="phase > 2" src="assets/bgs/3.png" class="background">
       </transition>
       <div class="row main-stat">
         ${{ this.round(money) }}
