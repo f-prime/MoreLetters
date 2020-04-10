@@ -1,7 +1,6 @@
 export const originalState = {
   phase:0,
 
-  multiplier: 1,
   lettersInc: 1,
   lettersDelay: 1000,
   letters: 0,

@@ -36,6 +36,13 @@ const vw = new Vue({
   data: Object.assign({}, originalState), 
  
   computed: {
+    multiplier: function() {
+      if(this.phase == 0)
+        return 1;
+
+      return 2 ** (this.phase - 1); 
+    },
+
     recruiterPrice: function() {
       return this.round(this.recruiterBasePrice + (this.recruiters ** 2));
     },
@@ -49,7 +56,7 @@ const vw = new Vue({
     },
 
     lettersPerSecond: function() {
-      return this.round((this.lettersInc * (this.mailboxes + 1)) / (this.lettersDelay / 1000));
+      return this.round((this.lettersInc * this.multiplier * (this.mailboxes + 1)) / (this.lettersDelay / 1000));
     },
 
     mailmanPrice: function() {
@@ -67,7 +74,7 @@ const vw = new Vue({
         case 1:
           return "100,000";
         case 2:
-          return "1,000,000";
+          return "100,000,000";
         default:
           return "Infinity";
       }
@@ -106,7 +113,6 @@ const vw = new Vue({
       }
 
       this.phase = phase + 1;
-      this.multiplier = 2 ** this.phase;
       this.lettersDelivered = lettersDelivered;
     },
 
