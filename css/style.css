@@ -11,14 +11,14 @@ html, body {
 
 .background {
   position: fixed;
-  bottom:5%;
+  bottom:0;
   right:0;
   opacity:0.6;
   z-index:-1;
 }
 
 .bg1 {
-  width: 70%;
+  width: 100%;
 }
 
 .bg2 {

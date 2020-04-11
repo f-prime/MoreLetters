@@ -19,41 +19,41 @@
         <img v-show="phase > 2" src="assets/bgs/3.png" class="background bg3">
       </transition>
       <div class="row main-stat">
-        ${{ this.round(money) }}
+        ${{ format(this.round(money)) }}
       </div>
       <div class="row stats">
         <div class="column stat">
-          <div class="stat-value">{{ letters }}</div>
+          <div class="stat-value">{{ format(letters) }}</div>
           <div class="stat-name">letters</div>
         </div>
         <div class="column stat">
-          <div class="stat-value">{{ lettersDelivered }}</div>
+          <div class="stat-value">{{ format(lettersDelivered) }}</div>
           <div class="stat-name">letters delivered</div>
         </div>
         <div class="column stat">
-          <div class="stat-value">{{ lettersPerSecond }}</div>
+          <div class="stat-value">{{ format(lettersPerSecond) }}</div>
           <div class="stat-name">letters per second</div>
         </div>
       </div>
       <div class="row stats">
         <div class="column stat" v-show="phase >= 1">
-          <div class="stat-value">{{ mailmen }}</div>
+          <div class="stat-value">{{ format(mailmen) }}</div>
           <div class="stat-name">mailmen</div>
         </div>
         <div class="column stat" v-show="phase >= 2">
-          <div class="stat-value">{{ recruiters }}</div>
+          <div class="stat-value">{{ format(recruiters) }}</div>
           <div class="stat-name">recruiters</div>
         </div>
         <div class="column stat" v-show="phase >= 2">
-          <div class="stat-value">{{ factories }}</div>
+          <div class="stat-value">{{ format(factories) }}</div>
           <div class="stat-name">factories</div>
         </div> 
         <div class="column stat" v-show="phase >= 1">
-          <div class="stat-value">{{ mailboxes }}</div>
+          <div class="stat-value">{{ format(mailboxes) }}</div>
           <div class="stat-name">mailboxes</div>
         </div>
         <div class="column stat" v-show="phase >= 3">
-          <div class="stat-value">{{ segways }}</div>
+          <div class="stat-value">{{ format(segways) }}</div>
           <div class="stat-name">segways</div>
         </div>
       </div>
@@ -70,7 +70,7 @@
             <div class="button" @click="buyMailman()">
               <div class="button-name">
                 <div>Mailman</div>
-                <div>(${{ mailmanPrice }})</div>
+                <div>(${{ format(mailmanPrice) }})</div>
               </div>
               <div class="button-description">
                 Automate letter delivery
@@ -84,7 +84,7 @@
             <div class="button" @click="buyMailbox()">
               <div class="button-name">
                 <div>Mailbox</div>
-                <div>(${{ mailboxPrice }})</div>
+                <div>(${{ format(mailboxPrice) }})</div>
               </div>
               <div class="button-description">
                 Increase letters per second
@@ -99,7 +99,7 @@
           <div class="button column" @click="buyRecruiter()">
             <div class="button-name">
               <div>Recruiter</div>
-              <div>(${{ recruiterPrice }})</div>
+              <div>(${{ format(recruiterPrice) }})</div>
             </div>
             <div class="button-description">
               Automatically hire mailmen
@@ -111,7 +111,7 @@
           <div class="button column" @click="buyFactory()">
             <div class="button-name">
               <div>Factory</div>
-              <div>(${{ factoryPrice }})</div>
+              <div>(${{ format(factoryPrice) }})</div>
             </div>
             <div class="button-description">
               Automatically build mailboxes
@@ -125,7 +125,7 @@
           <div class="button column" @click="buySegway()">
             <div class="button-name">
               <div>Segway</div>
-              <div>(${{ segwayPrice }})</div>
+              <div>(${{ format(segwayPrice) }})</div>
             </div>
             <div class="button-description">
               Increases mailman delivery speed by 5% per segway
@@ -139,7 +139,7 @@
           <div class="button column" @click="buyScientificManagement()">
             <div class="button-name">
               <div>Scientific Management</div>
-              <div v-if="!scientificManagement">(${{ scientificManagementBasePrice }})</div>
+              <div v-if="!scientificManagement">(${{ format(scientificManagementBasePrice) }})</div>
               <div v-else>(owned)</div>
             </div>
             <div class="button-description">
@@ -162,7 +162,7 @@
             </div>
           </div>
           <div v-else class="column">
-            Next milestone at {{ this.nextPhaseAt }} letters delivered
+            Next milestone at {{ format(this.nextPhaseAt) }} letters delivered
           </div>
         </div>
       </div>

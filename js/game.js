@@ -70,13 +70,13 @@ const vw = new Vue({
     nextPhaseAt: function() {
       switch(this.phase) {
         case 0:
-          return "40";
+          return 40;
         case 1:
-          return "100,000";
+          return 100000;
         case 2:
-          return "100,000,000";
+          return 100000000;
         default:
-          return "Infinity";
+          return Infinity;
       }
     },
 
@@ -96,6 +96,32 @@ const vw = new Vue({
   },
 
   methods: {
+    getFormatted: function(number, divisor) {
+      const result = (number / divisor).toString().match(/[0-9]+\.?[0-9]?[0-9]?/g);
+      return result[0];
+    },
+
+    format: function(number) {
+      if(number < 10**3)
+        return number;
+
+      if (number < 10**6) {
+        return this.getFormatted(number, 10**3) + "k";
+      } else if (number < 10**9) {
+        return this.getFormatted(number, 10**6) + "M";
+      } else if (number < 10**12) {
+        return this.getFormatted(number, 10**9) + "G";
+      } else if (number < 10**15) {
+        return this.getFormatted(number, 10**12) + "T";
+      } else if (number < 10**18) {
+        return this.getFormatted(number, 10**15) + "P";
+      } else if (number == Infinity) {
+        return "Infinity";
+      }
+
+      return this.getFormatted(number, 10**15) + "E";
+    },
+
     round: function(number) {
       number *= 100;
       return Math.floor(number) / 100;
