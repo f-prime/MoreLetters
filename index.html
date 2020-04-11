@@ -9,6 +9,13 @@
   </head>
   <body>
     <div id="app" class="container">
+      <div class="top-links">
+        <div class="row">
+          <div class="column footer-link align-right">
+            <a @click="newGame()">new game</a>
+          </div>
+        </div>
+      </div>
       <transition name="fade">
         <img v-show="phase == 1" src="assets/bgs/1.png" class="background bg1">
       </transition>
@@ -55,6 +62,24 @@
         <div class="column stat" v-show="phase >= 3">
           <div class="stat-value">{{ format(segways) }}</div>
           <div class="stat-name">segways</div>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="row">
+          <div class="column" v-if="this.nextPhaseAvailable">
+            <div class="button" @click="prestige()">
+              <div class="button-name">
+                Enter Phase {{ this.phase + 1 }}
+              </div>
+              <div class="button-description">
+                This will erase all your progress and give you a 
+                x{{ 2 ** (this.phase) }} multiplier.
+              </div>
+            </div>
+          </div>
+          <div v-else class="column">
+            Next milestone at {{ format(this.nextPhaseAt) }} letters delivered
+          </div>
         </div>
       </div>
       <div class="buttons">
@@ -145,32 +170,6 @@
             <div class="button-description">
               Cuts factory production time in half (can only be purchased once).
             </div>
-          </div>
-        </div>
-
-      </div>
-      <div class="milestone">
-        <div class="row">
-          <div class="column" v-if="this.nextPhaseAvailable">
-            <div class="button" @click="prestige()">
-              <div class="button-name">
-                Enter Phase {{ this.phase + 1 }}
-              </div>
-              <div class="button-description">
-                This will erase all your progress and give you a 
-                x{{ 2 ** (this.phase) }} multiplier.
-              </div>
-            </div>
-          </div>
-          <div v-else class="column">
-            Next milestone at {{ format(this.nextPhaseAt) }} letters delivered
-          </div>
-        </div>
-      </div>
-      <div class="footer">
-        <div class="row">
-          <div class="column footer-link">
-            <a @click="newGame()">new game</a>
           </div>
         </div>
       </div>

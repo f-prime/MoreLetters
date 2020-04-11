@@ -19,12 +19,12 @@ export const originalState = {
   money: 0,
 
   recruiterBasePrice: 1000,
-  recruiterHireDelay: 1000,
+  recruiterHireDelay: 2000,
   lastRecruiterHire: new Date(),
   recruiters: 0,
 
   factoryBasePrice: 1500,
-  factoryDelay: 2000,
+  factoryDelay: 3000,
   lastFactory: new Date(),
   factories: 0,
 
