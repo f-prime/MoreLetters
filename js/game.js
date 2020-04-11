@@ -108,18 +108,18 @@ const vw = new Vue({
       if (number < 10**6) {
         return this.getFormatted(number, 10**3) + "k";
       } else if (number < 10**9) {
-        return this.getFormatted(number, 10**6) + "M";
+        return this.getFormatted(number, 10**6) + "m";
       } else if (number < 10**12) {
-        return this.getFormatted(number, 10**9) + "G";
+        return this.getFormatted(number, 10**9) + "g";
       } else if (number < 10**15) {
-        return this.getFormatted(number, 10**12) + "T";
+        return this.getFormatted(number, 10**12) + "t";
       } else if (number < 10**18) {
-        return this.getFormatted(number, 10**15) + "P";
+        return this.getFormatted(number, 10**15) + "p";
       } else if (number == Infinity) {
         return "Infinity";
       }
 
-      return this.getFormatted(number, 10**15) + "E";
+      return this.getFormatted(number, 10**15) + "e";
     },
 
     round: function(number) {

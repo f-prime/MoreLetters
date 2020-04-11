@@ -128,7 +128,7 @@
               <div>(${{ format(segwayPrice) }})</div>
             </div>
             <div class="button-description">
-              Increases mailman delivery speed by 5% per segway
+              Increases mailman delivery speed by 2.5% per segway
             </div>
             <div class="buy-max" @click="buyMax(buySegway)">
               (buy max)
@@ -157,7 +157,8 @@
                 Enter Phase {{ this.phase + 1 }}
               </div>
               <div class="button-description">
-                This will erase all your progress.
+                This will erase all your progress and give you a 
+                x{{ 2 ** (this.phase) }} multiplier.
               </div>
             </div>
           </div>

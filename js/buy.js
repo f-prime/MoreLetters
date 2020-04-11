@@ -42,10 +42,10 @@ export function buyScientificManagement() {
 
 export function buySegway() {
   /*
-   * Increases mailman delivery speed by 5% per segway
+   * Increases mailman delivery speed by 2.5% per segway
    */
 
-  return this.buy(false, 1, "segways", "segwayPrice", "mailmanDeliveryDelay", 0.05);  
+  return this.buy(false, 1, "segways", "segwayPrice", "mailmanDeliveryDelay", 0.025);  
 }
 
 export function buyMailtruck() {}
