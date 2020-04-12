@@ -41,6 +41,10 @@
           <div class="stat-value">{{ format(lettersPerSecond) }}</div>
           <div class="stat-name">letters per second</div>
         </div>
+        <div class="column stat" v-show="phase >= 1">
+          <div class="stat-value">{{ format(angryDogs) }}</div>
+          <div class="stat-name">angry dogs</div>
+        </div>
       </div>
       <div class="row stats">
         <div class="column stat" v-show="phase >= 1">
@@ -54,6 +58,10 @@
         <div class="column stat" v-show="phase >= 2">
           <div class="stat-value">{{ format(factories) }}</div>
           <div class="stat-name">factories</div>
+        </div>
+        <div class="column stat" v-show="phase >= 1">
+          <div class="stat-value">{{ format(dogTreats) }}</div>
+          <div class="stat-name">dog treats</div>
         </div> 
         <div class="column stat" v-show="phase >= 1">
           <div class="stat-value">{{ format(mailboxes) }}</div>
@@ -120,56 +128,86 @@
             </div>
           </div>
         </div>
-        <div class="row" v-show="phase > 1">
-          <div class="button column" @click="buyRecruiter()">
+        <div class="row" v-show="phase > 0">
+          <div class="column button" @click="buyDogTreats()">
             <div class="button-name">
-              <div>Recruiter</div>
-              <div>(${{ format(recruiterPrice) }})</div>
+              <div>Dog Treat</div>
+               <div>(${{ format(dogTreatsPrice) }})
             </div>
             <div class="button-description">
-              Automatically hire mailmen
+              Buy to stave off the angry dogs. <br/>Angry dogs decrease mailman efficiency, <br/>so it's
+              good to keep a few of these on hand at all times.
             </div>
-            <div class="buy-max" @click="buyMax(buyRecruiter)">
-              (buy max)
-            </div>
-          </div>
-          <div class="button column" @click="buyFactory()">
-            <div class="button-name">
-              <div>Factory</div>
-              <div>(${{ format(factoryPrice) }})</div>
-            </div>
-            <div class="button-description">
-              Automatically build mailboxes
-            </div>
-            <div class="buy-max" @click="buyMax(buyFactory)">
+            <div class="buy-max" @click="buyMax(buyDogTreats)">
               (buy max)
             </div>
           </div>
         </div>
-        <div class="row" v-show="phase > 2">
-          <div class="button column" @click="buySegway()">
-            <div class="button-name">
-              <div>Segway</div>
-              <div>(${{ format(segwayPrice) }})</div>
-            </div>
-            <div class="button-description">
-              Increases mailman delivery speed by 2.5% per segway
-            </div>
-            <div class="buy-max" @click="buyMax(buySegway)">
-              (buy max)
-            </div>
+      </div>
+      <div class="row" v-show="phase > 1">
+        <div class="button column" @click="buyRecruiter()">
+          <div class="button-name">
+            <div>Recruiter</div>
+            <div>(${{ format(recruiterPrice) }})</div>
+          </div>
+          <div class="button-description">
+            Automatically hire mailmen
+          </div>
+          <div class="buy-max" @click="buyMax(buyRecruiter)">
+            (buy max)
           </div>
         </div>
-        <div class="row" v-show="phase > 2">
-          <div class="button column" @click="buyScientificManagement()">
-            <div class="button-name">
-              <div>Scientific Management</div>
-              <div v-if="!scientificManagement">(${{ format(scientificManagementBasePrice) }})</div>
-              <div v-else>(owned)</div>
-            </div>
-            <div class="button-description">
-              Cuts factory production time in half (can only be purchased once).
-            </div>
+        <div class="button column" @click="buyFactory()">
+          <div class="button-name">
+            <div>Factory</div>
+            <div>(${{ format(factoryPrice) }})</div>
+          </div>
+          <div class="button-description">
+            Automatically build mailboxes
+          </div>
+          <div class="buy-max" @click="buyMax(buyFactory)">
+            (buy max)
+          </div>
+        </div>
+      </div>
+      
+      <div class="row" v-show="phase > 1">
+        <div class="button column" @click="buyBakery()">
+          <div class="button-name">
+            <div>Bakery</div>
+            <div v-if="!bakery">(${{ format(bakeryBasePrice) }})</div>
+            <div v-else>(owned)</div>
+          </div>
+          <div class="button-description">
+            Automatically create dog treats
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row" v-show="phase > 2">
+        <div class="button column" @click="buySegway()">
+          <div class="button-name">
+            <div>Segway</div>
+            <div>(${{ format(segwayPrice) }})</div>
+          </div>
+          <div class="button-description">
+            Increases mailman delivery speed by 2.5% per segway
+          </div>
+          <div class="buy-max" @click="buyMax(buySegway)">
+            (buy max)
+          </div>
+        </div>
+      </div>
+      <div class="row" v-show="phase > 2">
+        <div class="button column" @click="buyScientificManagement()">
+          <div class="button-name">
+            <div>Scientific Management</div>
+            <div v-if="!scientificManagement">(${{ format(scientificManagementBasePrice) }})</div>
+            <div v-else>(owned)</div>
+          </div>
+          <div class="button-description">
+            Cuts factory production time in half (can only be purchased once).
           </div>
         </div>
       </div>

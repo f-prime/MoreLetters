@@ -40,6 +40,28 @@ export function buyScientificManagement() {
   this.scientificManagement = true;
 }
 
+export function buyBakery() {
+  /*
+   *  One time upgrade. Generates dog treats automatically
+   */
+
+  if(this.bakery || this.bakeryBasePrice > this.money)
+    return;
+
+  this.money -= this.bakeryBasePrice;
+  this.bakery = true;
+}
+
+export function buyDogTreats() {
+  /*
+   *
+   * Reduces number of angry dogs
+   *
+   */
+  
+  return this.buy(false, 1, "dogTreats", "dogTreatsPrice"); 
+}
+
 export function buySegway() {
   /*
    * Increases mailman delivery speed by 2.5% per segway

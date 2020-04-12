@@ -34,6 +34,22 @@ export const originalState = {
   scientificManagementBasePrice: 10000000,
   scientificManagement: false,
 
+  angryDogs: 0,
+  angryDogDelay: 30000,
+  lastAngryDog: new Date(),
+  dogsPerTick:1,
+  angryDogEfficiencyHit: 20,
+
+  dogTreats: 0,
+  dogTreatsBasePrice: 1,
+  dogTreatsDecrement: 1,
+  
+  bakeryBasePrice: 5000,
+  bakeryTreatsIncrement: 1,
+  bakeryDelay: 10000,
+  lastBakeryUpdate: new Date(),
+  bakery: false,
+
   lastSave: new Date(),
 };
 

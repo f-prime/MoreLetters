@@ -12,7 +12,9 @@ import {
   updateMailmen, 
   updateRecruiters,
   updateFactories,
-  updateLetters 
+  updateLetters,
+  updateDogs,
+  updateBakery,
 } from "./tick.js";
 
 import { 
@@ -20,11 +22,13 @@ import {
   buyScientificManagement,
   buySegway,
   buyMailbox, 
+  buyBakery,
   buyRecruiter, 
   buyMailman,
   buyFactory,
   buyMailtruck,
   buyPostOffice,
+  buyDogTreats,
   buyMax,
 } from "./buy.js";
 
@@ -41,6 +45,10 @@ const vw = new Vue({
         return 1;
 
       return 2 ** (this.phase - 1); 
+    },
+  
+    dogTreatsPrice: function() {
+      return this.round(this.dogTreatsBasePrice + (this.dogTreats ** 1.05));
     },
 
     recruiterPrice: function() {
@@ -83,11 +91,11 @@ const vw = new Vue({
     nextPhaseAvailable: function() {
       switch(this.phase) {
         case 1: {
-          return this.lettersDelivered >= 100000; 
+          return this.lettersDelivered > 100000; 
         }
 
         case 2: {
-          return this.lettersDelivered >= 1000000;
+          return this.lettersDelivered > 1000000;
         }
       }
 
@@ -156,10 +164,12 @@ const vw = new Vue({
 
     update: function() {
       this.updateLetters();
+      this.updateBakery();
       this.updateMailmen();
       this.updateRecruiters();
       this.updateFactories();
       this.updateState();
+      this.updateDogs();
       this.saveState();
     },
 
@@ -168,6 +178,8 @@ const vw = new Vue({
     updateRecruiters,
     updateMailmen,
     updateState,
+    updateDogs,
+    updateBakery,
     generalUpdate,
     saveState,
     loadState,
@@ -181,6 +193,8 @@ const vw = new Vue({
     buyMailtruck,
     buyPostOffice,
     buySegway,
+    buyDogTreats,
+    buyBakery,
     buy,
     buyMax,
   },
