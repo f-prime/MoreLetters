@@ -1,3 +1,5 @@
+'use strict';
+
 import { 
   originalState, 
   saveState, 
@@ -7,14 +9,12 @@ import {
 } from "./state.js";
 
 import { 
-  generalUpdate,
   updateState, 
   updateMailmen, 
   updateRecruiters,
   updateFactories,
   updateLetters,
   updateDogs,
-  updateBakery,
 } from "./tick.js";
 
 import { 
@@ -22,17 +22,62 @@ import {
   buyScientificManagement,
   buySegway,
   buyMailbox, 
-  buyBakery,
   buyRecruiter, 
   buyMailman,
   buyFactory,
+  buyBootstrap,
   buyMailtruck,
   buyPostOffice,
   buyDogTreats,
   buyMax,
 } from "./buy.js";
 
+Vue.component("stat", {
+  props: ["value", "name"],
+  
+  template: `
+    <div class="column stat">
+      <div class="stat-value">{{ value }}</div>
+      <div class="stat-name">{{ name }}</div>
+    </div>
+  `
+});
 
+Vue.component('buy-button', {
+  props:[
+    'title', 
+    'price', 
+    'description', 
+    'maxBuy',
+    'owned',
+  ],
+  
+  methods: {
+    buy: function() {
+      this.$emit("buy");
+    },
+
+    buyMax: function() {
+      this.$emit("buy-max");
+    }
+  },
+
+  template: `
+    <div class="button column" @click='buy'>
+      <div class="button-name">
+        <div>{{ title }}</div>
+        <div v-if="!owned">(\${{ price }})</div>
+        <div v-else>(owned)</div>
+      </div>
+      <div class="button-description">
+        {{ description }}
+      </div>
+      <div v-show="maxBuy" class="buy-max" @click="buyMax">
+        (buy max)
+      </div>
+    </div>
+  `
+});
 
 const vw = new Vue({
   el:"#app",
@@ -47,6 +92,10 @@ const vw = new Vue({
       return 2 ** (this.phase - 1); 
     },
   
+    bootstrapPrice: function() {
+      return this.round(this.bootstrapBasePrice + (this.bootstrap ** 2))
+    },
+
     dogTreatsPrice: function() {
       return this.round(this.dogTreatsBasePrice + (this.dogTreats ** 1.05));
     },
@@ -106,8 +155,12 @@ const vw = new Vue({
   methods: {
     getFormatted: function(number, divisor) {
       const result = (number / divisor).toString().match(/[0-9]+\.?[0-9]?[0-9]?/g);
+      if(result == null)
+        return 0;
       return result[0];
     },
+  
+    floor: Math.floor,
 
     format: function(number) {
       if(number < 10**3)
@@ -149,22 +202,37 @@ const vw = new Vue({
       this.phase = phase + 1;
       this.lettersDelivered = lettersDelivered;
     },
+  
+    clickDeliver: function() {
+      if(this.letters == 0)
+        returnl
+
+      this.deliverLetter(Math.ceil(this.clickInc));
+      this.clickDelivery += 1;
+
+    },
 
     deliverLetter: function(amount) {
       /*
        * Delivers N amount of letters if possible
        */
 
-      if(this.letters >= amount) {
-        this.letters -= amount;
-        this.money += (this.pricePerLetter * this.multiplier) * amount;
-        this.lettersDelivered += amount;
+      if(this.letters < amount) {
+        amount = this.letters;
       }
+
+      this.letters -= amount;
+      this.money += (this.pricePerLetter * this.multiplier) * amount;
+      this.lettersDelivered += amount;
+
     },
 
     update: function() {
+      const now = new Date();
+      this.delta = now - new Date(this.lastTick);
+      this.lastTick = now;
+
       this.updateLetters();
-      this.updateBakery();
       this.updateMailmen();
       this.updateRecruiters();
       this.updateFactories();
@@ -179,8 +247,6 @@ const vw = new Vue({
     updateMailmen,
     updateState,
     updateDogs,
-    updateBakery,
-    generalUpdate,
     saveState,
     loadState,
     calculateNewState,
@@ -193,8 +259,8 @@ const vw = new Vue({
     buyMailtruck,
     buyPostOffice,
     buySegway,
+    buyBootstrap,
     buyDogTreats,
-    buyBakery,
     buy,
     buyMax,
   },

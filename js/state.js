@@ -1,31 +1,38 @@
 export const originalState = {
   phase:0,
 
+  lastTick: new Date(),
+  delta: 0,
+
+  clickDelivery: 0,
+  clickInc: 1,
+
   lettersInc: 1,
   lettersDelay: 1000,
-  letters: 0,
+  letters: 100,
   lettersDelivered: 0,
-  lastLettersUpdate: new Date(),
+  lettersLast: 0,
  
+  bootstrap: 0,
+  bootstrapBasePrice: 50,
+
   mailmen: 0,
   mailmanBasePrice: 10, 
-  lastMailmanDelivery: new Date(),
-  mailmanDeliveryDelay: 500,
+  mailmanDelay: 500,
+  mailmanLast: 0,
 
   mailboxBasePrice: 10,
   mailboxes: 0,
 
   pricePerLetter: 0.25,
-  money: 0,
+  money: 100000,
 
   recruiterBasePrice: 1000,
-  recruiterHireDelay: 2000,
-  lastRecruiterHire: new Date(),
+  recruiterDelay: 2000,
   recruiters: 0,
 
   factoryBasePrice: 1500,
   factoryDelay: 3000,
-  lastFactory: new Date(),
   factories: 0,
 
   segwayBasePrice: 5000,
@@ -36,7 +43,6 @@ export const originalState = {
 
   angryDogs: 0,
   angryDogDelay: 30000,
-  lastAngryDog: new Date(),
   dogsPerTick:1,
   angryDogEfficiencyHit: 20,
 
@@ -44,12 +50,6 @@ export const originalState = {
   dogTreatsBasePrice: 1,
   dogTreatsDecrement: 1,
   
-  bakeryBasePrice: 5000,
-  bakeryTreatsIncrement: 1,
-  bakeryDelay: 10000,
-  lastBakeryUpdate: new Date(),
-  bakery: false,
-
   lastSave: new Date(),
 };
 
@@ -73,9 +73,9 @@ export function calculateNewState() {
   const secondsSince = now - lastSaveTime;
 
   this.letters += Math.floor((secondsSince / this.lettersDelay));
-  this.mailmen += Math.floor((secondsSince / this.recruiterHireDelay) * this.recruiters * this.multiplier);
+  this.mailmen += Math.floor((secondsSince / this.recruiterDelay) * this.recruiters * this.multiplier);
   this.mailboxes += Math.floor((secondsSince / this.factoryDelay) * this.factories * this.multiplier);
-  this.money += Math.floor((secondsSince / this.mailmanDeliveryDelay) * this.mailmen * this.pricePerLetter * this.multiplier);
+  this.money += Math.floor((secondsSince / this.mailmanDelay) * this.mailmen * this.pricePerLetter * this.multiplier);
 
 }
 
@@ -83,7 +83,8 @@ export function loadState() {
   const state = localStorage.getItem("state");
   if(!state)
     return;
-
+  
+  console.log(state);
   const json = JSON.parse(state);
   
   for(const key in json) {
