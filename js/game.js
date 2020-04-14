@@ -85,6 +85,10 @@ const vw = new Vue({
   data: Object.assign({}, originalState), 
  
   computed: {
+    isActivePlayer: function() {
+      return this.bootstrap >= 15 && this.clickDelivery >= 200;
+    },
+    
     multiplier: function() {
       if(this.phase == 0)
         return 1;
@@ -127,11 +131,11 @@ const vw = new Vue({
     nextPhaseAt: function() {
       switch(this.phase) {
         case 0:
-          return 40;
+          return this.phase0;
         case 1:
-          return 100000;
+          return this.phase1;
         case 2:
-          return 100000000;
+          return this.phase2;
         default:
           return Infinity;
       }
@@ -140,11 +144,11 @@ const vw = new Vue({
     nextPhaseAvailable: function() {
       switch(this.phase) {
         case 1: {
-          return this.lettersDelivered > 100000; 
+          return this.lettersDelivered > this.phase1; 
         }
 
         case 2: {
-          return this.lettersDelivered > 1000000;
+          return this.lettersDelivered > this.phase2;
         }
       }
 
@@ -161,6 +165,7 @@ const vw = new Vue({
     },
   
     floor: Math.floor,
+    ceil: Math.ceil,
 
     format: function(number) {
       if(number < 10**3)

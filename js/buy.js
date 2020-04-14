@@ -77,8 +77,8 @@ export function buyBootstrap() {
     return false;
 
   this.money -= this.bootstrapPrice;
-  this.bootstrap += 1;
-  this.clickInc += (this.clickInc * 0.1);
+  this.bootstrap += 1 * this.multiplier;
+  this.clickInc += 1 * this.multiplier;
   this.mailmanDelay += (this.mailmanDelay * 0.05);
 
   return true;

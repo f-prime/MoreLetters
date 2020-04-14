@@ -1,6 +1,10 @@
 export const originalState = {
   phase:0,
 
+  phase0: 40,
+  phase1: 10000,
+  phase2: 100000,
+
   lastTick: new Date(),
   delta: 0,
 
@@ -9,7 +13,7 @@ export const originalState = {
 
   lettersInc: 1,
   lettersDelay: 1000,
-  letters: 100,
+  letters: 0,
   lettersDelivered: 0,
   lettersLast: 0,
  
@@ -25,7 +29,7 @@ export const originalState = {
   mailboxes: 0,
 
   pricePerLetter: 0.25,
-  money: 100000,
+  money: 0,
 
   recruiterBasePrice: 1000,
   recruiterDelay: 2000,
