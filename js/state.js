@@ -7,8 +7,8 @@ export const originalState = {
 
   phaseType: {},
 
-  isActiveBootstrap: 20,
-  isActiveClick: 200,
+  isActiveBootstrap: 10,
+  isActiveClick: 100,
 
   lastTick: new Date(),
   delta: 0,
