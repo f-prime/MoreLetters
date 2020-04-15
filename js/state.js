@@ -5,50 +5,72 @@ export const originalState = {
   phase1: 10000,
   phase2: 100000,
 
+  phaseType: {},
+
+  isActiveBootstrap: 20,
+  isActiveClick: 200,
+
   lastTick: new Date(),
   delta: 0,
 
+  pricePerLetter: 0.25,
+
   clickDelivery: 0,
   clickInc: 1,
+
+  money: 0,
 
   lettersInc: 1,
   lettersDelay: 1000,
   letters: 0,
   lettersDelivered: 0,
   lettersLast: 0,
- 
+
+  twoHands: false,
+  twoHandsMultiplier: 2,
+  twoHandsBasePrice: 3000,
+  twoHandsChance: 0.3,
+
   bootstrap: 0,
-  bootstrapBasePrice: 50,
+  bootstrapBasePrice: 25,
+  bootstrapDelivery: 1,
+  bootstrapMailmanHit: 0.02,
 
   mailmen: 0,
   mailmanBasePrice: 10, 
   mailmanDelay: 500,
   mailmanLast: 0,
+  mailmanDelivery: 1,
 
   mailboxBasePrice: 10,
   mailboxes: 0,
+  mailboxLettersIncrease: 1,
 
-  pricePerLetter: 0.25,
-  money: 0,
-
+  recruiterHire: 1,
+  recruiterLast: 0,
   recruiterBasePrice: 1000,
-  recruiterDelay: 2000,
+  recruiterDelay: 3500,
   recruiters: 0,
 
   factoryBasePrice: 1500,
-  factoryDelay: 3000,
+  factoryDelay: 5000,
   factories: 0,
+  factoryGenerate: 1,
+  factoryLast: 0,
 
   segwayBasePrice: 5000,
   segways: 0,
+  segwayMailmanBoost: 0.025,
 
   scientificManagementBasePrice: 10000000,
   scientificManagement: false,
 
   angryDogs: 0,
-  angryDogDelay: 30000,
-  dogsPerTick:1,
-  angryDogEfficiencyHit: 20,
+  angryDogsLast: 0,
+  angryDogsChance: 0.50,
+  angryDogsMailmanHit: 0.5,
+  angryDogsClickHit: 0.5,
+  angryDogsDuration: 30,
 
   dogTreats: 0,
   dogTreatsBasePrice: 1,
@@ -88,7 +110,6 @@ export function loadState() {
   if(!state)
     return;
   
-  console.log(state);
   const json = JSON.parse(state);
   
   for(const key in json) {

@@ -40,16 +40,17 @@ export function buyScientificManagement() {
   this.scientificManagement = true;
 }
 
-export function buyBakery() {
+export function buyTwoHands() {
   /*
-   *  One time upgrade. Generates dog treats automatically
+   *  One time upgrade. Random chance that a click to deliver will be multiplied by some multiplier.
    */
-
-  if(this.bakery || this.bakeryBasePrice > this.money)
+  
+  if(this.twoHands || this.twoHandsBasePrice > this.money) {
     return;
+  }
 
-  this.money -= this.bakeryBasePrice;
-  this.bakery = true;
+  this.money -= this.twoHandsBasePrice;
+  this.twoHands = true;
 }
 
 export function buyDogTreats() {
@@ -67,19 +68,23 @@ export function buySegway() {
    * Increases mailman delivery speed by 2.5% per segway
    */
 
-  return this.buy(false, 1, "segways", "segwayPrice", "mailmanDeliveryDelay", 0.025);  
+  return this.buy(false, 1, "segways", "segwayPrice", "mailmanDeliveryDelay", this.segwayMailmanBOost);  
 }
 
 export function buyMailtruck() {}
 
 export function buyBootstrap() {
+  /*
+   * Increases number of letters per click by 1 but decreases mailman efficiency
+   */
+
   if(this.money < this.bootstrapPrice)
     return false;
 
   this.money -= this.bootstrapPrice;
   this.bootstrap += 1 * this.multiplier;
   this.clickInc += 1 * this.multiplier;
-  this.mailmanDelay += (this.mailmanDelay * 0.05);
+  this.mailmanDelay += (this.mailmanDelay * this.bootstrapMailmanHit);
 
   return true;
 }

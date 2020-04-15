@@ -37,6 +37,29 @@ html, body {
   opacity: 0;
 }
 
+.timed-event {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 30%;
+}
+
+.timed-event .event-name {
+  font-size: 2em;
+}
+
+.timed-event .event-timer {
+  font-size: 1.3em;
+  margin: 0.5em;
+}
+
+.timed-event .event-description {
+}
+
 .container {
   width: 100%;
   height: 100%;

@@ -22,7 +22,8 @@ import {
   buyScientificManagement,
   buySegway,
   buyMailbox, 
-  buyRecruiter, 
+  buyRecruiter,
+  buyTwoHands,
   buyMailman,
   buyFactory,
   buyBootstrap,
@@ -31,6 +32,18 @@ import {
   buyDogTreats,
   buyMax,
 } from "./buy.js";
+
+Vue.component("timed-event", {
+  props: ["title", "seconds", "description"],
+
+  template: `
+  <div>
+    <div class="event-name">{{ title }}</div>
+    <div class="event-timer">{{ seconds }} seconds</div>
+    <div class="event-description">{{ description }}</div>
+  </div>
+  `
+});
 
 Vue.component("stat", {
   props: ["value", "name"],
@@ -86,7 +99,7 @@ const vw = new Vue({
  
   computed: {
     isActivePlayer: function() {
-      return this.bootstrap >= 15 && this.clickDelivery >= 200;
+      return this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
     },
     
     multiplier: function() {
@@ -199,20 +212,27 @@ const vw = new Vue({
 
       const lettersDelivered = this.lettersDelivered;
       const phase = this.phase;
+      const phaseType = this.phaseType;
+      const playType = this.isActivePlayer ? 'active' : 'idle'; 
 
       for(const key in originalState) {
         this.$data[key] = originalState[key];
       }
 
       this.phase = phase + 1;
+      this.phaseType = phaseType;
+      this.phaseType[phase] = playType;
       this.lettersDelivered = lettersDelivered;
+      console.log(JSON.stringify(this.$data))
     },
   
     clickDeliver: function() {
       if(this.letters == 0)
-        returnl
-
-      this.deliverLetter(Math.ceil(this.clickInc));
+        return;
+      
+      const twoHandsMult = Math.random() < this.twoHandsChance ? this.twoHandsMultiplier : 1;
+      const dogsHit = this.angryDogs ? this.angryDogsClickHit : 1; 
+      this.deliverLetter(Math.ceil(this.clickInc) * twoHandsMult * dogsHit);
       this.clickDelivery += 1;
 
     },
@@ -266,6 +286,7 @@ const vw = new Vue({
     buySegway,
     buyBootstrap,
     buyDogTreats,
+    buyTwoHands,
     buy,
     buyMax,
   },
