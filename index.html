@@ -138,6 +138,16 @@
                  :description="`Generates ${factoryGenerate} ${factoryGenerate == 1 ? 'letter' : 'letters'} per factory every ${factoryDelay / 1000} seconds`"
               ></buy-button>
             </div>
+
+            <div class="row">
+              <buy-button
+                 title="Dog Treats"
+                 @buy="buyDogTreats()"
+                 :price="format(dogTreatsBasePrice)"
+                 :owned="dogTreats"
+                 description="Cuts the time that Angry Dogs is active by 50%"
+              ></buy-button>
+            </div>
           </div>
         </transition>
 
@@ -159,6 +169,16 @@
                 :owned="twoHands"
                 :price="format(twoHandsBasePrice)"
                 :description="`Each delivery click has a ${twoHandsChance * 100}% chance of deliverying ${twoHandsMultiplier}x the amount of letters.`"
+              ></buy-button>
+            </div>
+
+            <div class="row">
+              <buy-button
+                 title="Dog Treats"
+                 @buy="buyDogTreats()"
+                 :price="format(dogTreatsBasePrice)"
+                 :owned="dogTreats"
+                 description="Cuts the time that Angry Dogs is active by 50%"
               ></buy-button>
             </div>
           </div>

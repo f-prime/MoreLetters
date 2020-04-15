@@ -113,10 +113,6 @@ const vw = new Vue({
       return this.round(this.bootstrapBasePrice + (this.bootstrap ** 2))
     },
 
-    dogTreatsPrice: function() {
-      return this.round(this.dogTreatsBasePrice + (this.dogTreats ** 1.05));
-    },
-
     recruiterPrice: function() {
       return this.round(this.recruiterBasePrice + (this.recruiters ** 2));
     },

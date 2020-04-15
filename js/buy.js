@@ -60,7 +60,11 @@ export function buyDogTreats() {
    *
    */
   
-  return this.buy(false, 1, "dogTreats", "dogTreatsPrice"); 
+  if(this.dogTreatsBasePrice > this.money || this.dogTreats)
+    return;
+
+  this.money -= this.dogTreats;
+  this.angryDogsDuration /= 2;
 }
 
 export function buySegway() {

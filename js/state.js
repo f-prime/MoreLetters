@@ -67,14 +67,13 @@ export const originalState = {
 
   angryDogs: 0,
   angryDogsLast: 0,
-  angryDogsChance: 0.50,
+  angryDogsChance: 0.03,
   angryDogsMailmanHit: 0.5,
   angryDogsClickHit: 0.5,
   angryDogsDuration: 30,
 
-  dogTreats: 0,
-  dogTreatsBasePrice: 1,
-  dogTreatsDecrement: 1,
+  dogTreats: false,
+  dogTreatsBasePrice: 5000,
   
   lastSave: new Date(),
 };
