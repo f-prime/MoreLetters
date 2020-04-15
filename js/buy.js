@@ -53,20 +53,6 @@ export function buyTwoHands() {
   this.twoHands = true;
 }
 
-export function buyDogTreats() {
-  /*
-   *
-   * Reduces number of angry dogs
-   *
-   */
-  
-  if(this.dogTreatsBasePrice > this.money || this.dogTreats)
-    return;
-
-  this.money -= this.dogTreats;
-  this.angryDogsDuration /= 2;
-}
-
 export function buySegway() {
   /*
    * Increases mailman delivery speed by 2.5% per segway

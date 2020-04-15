@@ -12,9 +12,7 @@ export function updateMailmen() {
   if(this.letters < 1)
     return;
 
-  const dogsHit = this.angryDogs ? this.angryDogsMailmanHit : 1; 
-
-  if(this.mailmanLast < this.mailmanDelay * (1 / dogsHit)) {
+  if(this.mailmanLast < this.mailmanDelay) {
     this.mailmanLast += this.delta;
     return;
   }
@@ -47,29 +45,6 @@ export function updateRecruiters() {
 
   this.mailmen += this.factoryGenerate;
   this.recruiterLast = 0;
-}
-
-export function updateDogs() {
-  if(this.phase < 2)
-    return;
-  
-  if(this.angryDogs) {
-    if(this.angryDogsLast > 1000) {
-      this.angryDogs -= 1;
-      this.angryDogsLast = 0;
-    } else {
-      this.angryDogsLast += this.delta;
-    }
-  } else {
-    if(this.angryDogsLast > 1000) {
-      if(Math.random() <= this.angryDogsChance) {
-        this.angryDogs = this.angryDogsDuration;
-      }
-      this.angryDogsLast = 0;
-    } else {
-      this.angryDogsLast += this.delta;
-    }
-  }
 }
 
 export function updateState() {

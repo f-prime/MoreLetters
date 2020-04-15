@@ -26,13 +26,7 @@
         <img v-show="phase > 2" src="assets/bgs/3.png" class="background bg3">
       </transition>
 
-      <div class="timed-event">
-        <timed-event v-if="angryDogs"
-            title="Angry Dogs"
-            :seconds="angryDogs"
-            description="Decreases mailman efficiency by 50% and click efficiency by 50%"
-        ></timed-event>
-      </div>
+      <div class="timed-event"></div>
 
       <div class="row main-stat">
         ${{ format(round(money)) }}
@@ -138,17 +132,7 @@
                  :description="`Generates ${factoryGenerate} ${factoryGenerate == 1 ? 'letter' : 'letters'} per factory every ${factoryDelay / 1000} seconds`"
               ></buy-button>
             </div>
-
-            <div class="row">
-              <buy-button
-                 title="Dog Treats"
-                 @buy="buyDogTreats()"
-                 :price="format(dogTreatsBasePrice)"
-                 :owned="dogTreats"
-                 description="Cuts the time that Angry Dogs is active by 50%"
-              ></buy-button>
-            </div>
-          </div>
+         </div>
         </transition>
 
         <transition name="fade">
@@ -171,17 +155,7 @@
                 :description="`Each delivery click has a ${twoHandsChance * 100}% chance of deliverying ${twoHandsMultiplier}x the amount of letters.`"
               ></buy-button>
             </div>
-
-            <div class="row">
-              <buy-button
-                 title="Dog Treats"
-                 @buy="buyDogTreats()"
-                 :price="format(dogTreatsBasePrice)"
-                 :owned="dogTreats"
-                 description="Cuts the time that Angry Dogs is active by 50%"
-              ></buy-button>
-            </div>
-          </div>
+         </div>
         </transition>
 
         <transition name="fade">

@@ -14,7 +14,6 @@ import {
   updateRecruiters,
   updateFactories,
   updateLetters,
-  updateDogs,
 } from "./tick.js";
 
 import { 
@@ -29,7 +28,6 @@ import {
   buyBootstrap,
   buyMailtruck,
   buyPostOffice,
-  buyDogTreats,
   buyMax,
 } from "./buy.js";
 
@@ -227,8 +225,7 @@ const vw = new Vue({
         return;
       
       const twoHandsMult = Math.random() < this.twoHandsChance ? this.twoHandsMultiplier : 1;
-      const dogsHit = this.angryDogs ? this.angryDogsClickHit : 1; 
-      this.deliverLetter(Math.ceil(this.clickInc) * twoHandsMult * dogsHit);
+      this.deliverLetter(Math.ceil(this.clickInc) * twoHandsMult);
       this.clickDelivery += 1;
 
     },
@@ -258,7 +255,6 @@ const vw = new Vue({
       this.updateRecruiters();
       this.updateFactories();
       this.updateState();
-      this.updateDogs();
       this.saveState();
     },
 
@@ -267,7 +263,6 @@ const vw = new Vue({
     updateRecruiters,
     updateMailmen,
     updateState,
-    updateDogs,
     saveState,
     loadState,
     calculateNewState,
@@ -281,7 +276,6 @@ const vw = new Vue({
     buyPostOffice,
     buySegway,
     buyBootstrap,
-    buyDogTreats,
     buyTwoHands,
     buy,
     buyMax,

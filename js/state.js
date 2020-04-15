@@ -65,16 +65,6 @@ export const originalState = {
   scientificManagementBasePrice: 10000000,
   scientificManagement: false,
 
-  angryDogs: 0,
-  angryDogsLast: 0,
-  angryDogsChance: 0.03,
-  angryDogsMailmanHit: 0.5,
-  angryDogsClickHit: 0.5,
-  angryDogsDuration: 30,
-
-  dogTreats: false,
-  dogTreatsBasePrice: 5000,
-  
   lastSave: new Date(),
 };
 
