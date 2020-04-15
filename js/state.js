@@ -3,11 +3,11 @@ export const originalState = {
 
   phase1: 40,
   phase2: 10000,
-  phase3: 50000,
-  phase4: 100000,
-  phase5: 200000,
-  phase6: 500000,
-  phase7: 1000000,
+  phase3: 100000,
+  phase4: 500000,
+  phase5: 1000000,
+  phase6: 5000000,
+  phase7: 100000000,
 
   phaseType: {},
 
