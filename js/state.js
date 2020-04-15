@@ -26,7 +26,7 @@ export const originalState = {
 
   lettersInc: 1,
   lettersDelay: 1000,
-  letters: 39,
+  letters: 0,
   lettersDelivered: 0,
   lettersLast: 0,
 
