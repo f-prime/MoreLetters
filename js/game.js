@@ -9,7 +9,6 @@ import {
 } from "./state.js";
 
 import { 
-  updateState, 
   updateMailmen, 
   updateRecruiters,
   updateFactories,
@@ -138,19 +137,19 @@ const vw = new Vue({
     nextPhaseAt: function() {
       switch(this.phase) {
         case 0:
-          return this.phase0;
-        case 1:
           return this.phase1;
-        case 2:
+        case 1:
           return this.phase2;
-        case 3:
+        case 2:
           return this.phase3;
-        case 4:
+        case 3:
           return this.phase4;
-        case 5:
+        case 4:
           return this.phase5;
-        case 6:
+        case 5:
           return this.phase6;
+        case 6:
+          return this.phase7;
         default:
           return Infinity;
       }
@@ -215,7 +214,7 @@ const vw = new Vue({
       this.phaseType = phaseType;
       this.phaseType[phase] = playType;
       this.lettersDelivered = lettersDelivered;
-      console.log(JSON.stringify(this.$data))
+      console.log(this.phase, this.phaseType);
     },
   
     clickDeliver: function() {
@@ -252,7 +251,6 @@ const vw = new Vue({
       this.updateMailmen();
       this.updateRecruiters();
       this.updateFactories();
-      this.updateState();
       this.saveState();
     },
 
@@ -260,7 +258,6 @@ const vw = new Vue({
     updateLetters,
     updateRecruiters,
     updateMailmen,
-    updateState,
     saveState,
     loadState,
     calculateNewState,

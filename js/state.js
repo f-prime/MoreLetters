@@ -1,13 +1,13 @@
 export const originalState = {
   phase:0,
 
-  phase0: 40,
-  phase1: 10000,
-  phase2: 50000,
-  phase3: 100000,
-  phase4: 200000,
-  phase5: 500000,
-  phase6: 1000000,
+  phase1: 40,
+  phase2: 10000,
+  phase3: 50000,
+  phase4: 100000,
+  phase5: 200000,
+  phase6: 500000,
+  phase7: 1000000,
 
   phaseType: {},
 
@@ -26,8 +26,8 @@ export const originalState = {
 
   lettersInc: 1,
   lettersDelay: 1000,
-  letters: 0,
-  lettersDelivered: 10000000,
+  letters: 39,
+  lettersDelivered: 0,
   lettersLast: 0,
 
   twoHands: false,

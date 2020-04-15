@@ -46,13 +46,3 @@ export function updateRecruiters() {
   this.mailmen += this.recruiterHire * this.recruiters;
   this.recruiterLast = 0;
 }
-
-export function updateState() {
-  switch(this.phase) {
-    case 0: {
-      if(this.lettersDelivered > 40) {
-        this.phase = 1;
-      }
-    }
-  }
-}
