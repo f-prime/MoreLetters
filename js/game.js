@@ -143,23 +143,21 @@ const vw = new Vue({
           return this.phase1;
         case 2:
           return this.phase2;
+        case 3:
+          return this.phase3;
+        case 4:
+          return this.phase4;
+        case 5:
+          return this.phase5;
+        case 6:
+          return this.phase6;
         default:
           return Infinity;
       }
     },
 
     nextPhaseAvailable: function() {
-      switch(this.phase) {
-        case 1: {
-          return this.lettersDelivered > this.phase1; 
-        }
-
-        case 2: {
-          return this.lettersDelivered > this.phase2;
-        }
-      }
-
-      return false;
+      return this.lettersDelivered >= this.nextPhaseAt;
     }
   },
 

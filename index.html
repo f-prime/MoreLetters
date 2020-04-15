@@ -111,55 +111,51 @@
         </transition>
 
         <transition name="fade">
-          <div v-show="phase >= 1 && phaseType[1] == 'idle'">
-            <div class="row">
-              <buy-button
-                 title="Recruiter"
-                 @buy="buyRecruiter()"
-                 @buy-max="buyMax(buyRecruiter)"
-                 :max-buy="true"
-                 :price="format(recruiterPrice)"
-                 :max-buy="true"
-                 :description="`Hires ${recruiterHire} mailmen per recruiter every ${recruiterDelay / 1000} seconds. Hiring does not cost money.`" 
-              ></buy-button>
+          <div class="row" v-show="phase >= 1 && phaseType[1] == 'idle'">
+            <buy-button
+               title="Recruiter"
+               @buy="buyRecruiter()"
+               @buy-max="buyMax(buyRecruiter)"
+               :max-buy="true"
+               :price="format(recruiterPrice)"
+               :max-buy="true"
+               :description="`Hires ${recruiterHire} mailmen per recruiter every ${recruiterDelay / 1000} seconds. Hiring does not cost money.`" 
+            ></buy-button>
 
-              <buy-button
-                 title="Factory"
-                 @buy="buyFactory()"
-                 @buy-max="buyMax(buyFactory)"
-                 :max-buy="true"
-                 :price="format(factoryPrice)"
-                 :description="`Generates ${factoryGenerate} ${factoryGenerate == 1 ? 'letter' : 'letters'} per factory every ${factoryDelay / 1000} seconds`"
-              ></buy-button>
-            </div>
-         </div>
+            <buy-button
+               title="Factory"
+               @buy="buyFactory()"
+               @buy-max="buyMax(buyFactory)"
+               :max-buy="true"
+               :price="format(factoryPrice)"
+               :description="`Generates ${factoryGenerate} ${factoryGenerate == 1 ? 'letter' : 'letters'} per factory every ${factoryDelay / 1000} seconds`"
+            ></buy-button>
+          </div>
         </transition>
 
         <transition name="fade">
-          <div v-show="phase >= 1 && phaseType[1] == 'active'">
-            <div class="row">
-              <buy-button
-                  title="Factory"
-                  @buy="buyFactory()"
-                  @buy-max="buyMax(buyFactory)"
-                  :max-buy="true"
-                  :price="format(factoryPrice)"
-                  :description="`Generates ${factoryGenerate} ${factoryGenerate == 1 ? 'letter' : 'letters'} per factory every ${factoryDelay / 1000} seconds`"
-              ></buy-button>
-                
-              <buy-button
-                title="Two Hands"
-                @buy="buyTwoHands()"
-                :owned="twoHands"
-                :price="format(twoHandsBasePrice)"
-                :description="`Each delivery click has a ${twoHandsChance * 100}% chance of deliverying ${twoHandsMultiplier}x the amount of letters.`"
-              ></buy-button>
-            </div>
-         </div>
+          <div class="row" v-show="phase >= 1 && phaseType[1] == 'active'">
+            <buy-button
+                title="Factory"
+                @buy="buyFactory()"
+                @buy-max="buyMax(buyFactory)"
+                :max-buy="true"
+                :price="format(factoryPrice)"
+                :description="`Generates ${factoryGenerate} ${factoryGenerate == 1 ? 'letter' : 'letters'} per factory every ${factoryDelay / 1000} seconds`"
+            ></buy-button>
+              
+            <buy-button
+              title="Two Hands"
+              @buy="buyTwoHands()"
+              :owned="twoHands"
+              :price="format(twoHandsBasePrice)"
+              :description="`Each delivery click has a ${twoHandsChance * 100}% chance of deliverying ${twoHandsMultiplier}x the amount of letters.`"
+            ></buy-button>
+          </div>
         </transition>
 
         <transition name="fade">
-          <div v-show="phase >= 2 && phaseType[2] == 'idle'">
+          <div class="row" v-show="phase >= 2 && phaseType[2] == 'idle'">
             <buy-button
                title="Segway"
                @buy="buySegway()"
@@ -179,13 +175,102 @@
         </transition>
 
         <transition name="fade">
-          <div v-show="phase >= 2 && phaseType[2] == 'active'">
+          <div class="row" v-show="phase >= 2 && phaseType[2] == 'active'">
             <buy-button
                title="Scientific Management"
                @buy="buyScientificManagement()"
                :owned="scientificManagement"
                :price="format(scientificManagementBasePrice)"
                description="Reduces the time it take for factories to generate mailboxes by 50%"
+            ></buy-button>
+
+            <buy-button
+               title="Two Hands"
+               description="Doubles Bootstrap's letters per click interval"
+            ></buy-button>
+          </div>
+        </transition>
+
+       <transition name="fade">
+          <div class="row" v-show="phase >= 3 && phaseType[3] == 'idle'">
+            <buy-button
+              title="Mail Truck"
+              description="Automatically delivers 2 letters every 0.5 seconds" 
+            ></buy-button> 
+            
+            <buy-button
+              title="Post Office"
+              description="Generates two letters every 0.5 seconds."
+            ></buy-button>
+          </div>
+        </transition>
+
+        <transition name="fade">
+          <div class="row" v-show="phase >= 3 && phaseType[3] == 'active'">
+            <buy-button
+               title="Little Help"
+               description="Random chance of hiring a mailman every delivery click."
+            ></buy-button>
+
+            <buy-button
+              title="Post Office"
+              description="Generates two letters every 0.5 seconds."
+            ></buy-button>
+          </div>
+        </transition>
+       
+        <transition name="fade">
+          <div class="row" v-show="phase >= 4 && phaseType[4] == 'idle'">
+            <buy-button
+              title="Email"
+              description="Accept letters via the internet. Increases letters per second by 60%" 
+            ></buy-button> 
+            
+            <buy-button
+              title="Caffeine"
+              description="Every mailman gets put on a madatory drip of high octane espresso. Increases mailman efficiency by 30%"
+            ></buy-button>
+          </div>
+        </transition>
+
+        <transition name="fade">
+          <div class="row" v-show="phase >= 4 && phaseType[4] == 'active'">
+            <buy-button
+               title="Little Help"
+               description="Random chance of hiring a mailman every delivery click."
+            ></buy-button>
+
+            <buy-button
+              title="Email"
+              description="Accept letters via the internet. Increases letters per second by 60%"
+            ></buy-button>
+          </div>
+        </transition>
+
+        <transition name="fade">
+          <div class="row" v-show="phase >= 4 && phaseType[4] == 'idle'">
+            <buy-button
+              title="Email"
+              description="Accept letters via the internet. Increases letters per second by 60%" 
+            ></buy-button> 
+            
+            <buy-button
+              title="Caffeine"
+              description="Every mailman gets put on a madatory drip of high octane espresso. Increases mailman efficiency by 30%"
+            ></buy-button>
+          </div>
+        </transition>
+
+        <transition name="fade">
+          <div class="row" v-show="phase >= 4 && phaseType[4] == 'active'">
+            <buy-button
+               title="Little Help"
+               description="Random chance of hiring a mailman every delivery click."
+            ></buy-button>
+
+            <buy-button
+              title="Email"
+              description="Accept letters via the internet. Increases letters per second by 60%"
             ></buy-button>
           </div>
         </transition>

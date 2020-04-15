@@ -30,7 +30,7 @@ export function updateFactories() {
     return;
   }
 
-  this.mailboxes += this.factoryGenerate;
+  this.mailboxes += this.factoryGenerate * this.factories;;
   this.factoryLast = 0;
 }
 
@@ -43,7 +43,7 @@ export function updateRecruiters() {
     return;
   }
 
-  this.mailmen += this.factoryGenerate;
+  this.mailmen += this.recruiterHire * this.recruiters;
   this.recruiterLast = 0;
 }
 
