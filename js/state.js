@@ -24,13 +24,20 @@ export const originalState = {
   clickDelivery: 0,
   clickInc: 1,
 
-  money: 0,
+  money: 100000000,
 
   lettersInc: 1,
   lettersDelay: 1000,
   letters: 0,
   lettersDelivered: 10000000000,
   lettersLast: 0,
+
+  littleHelp: false,
+  littleHelpChance:0.30,
+  littleHelpBasePrice: 200000,
+
+  twoForOne: false,
+  twoForOneBasePrice: 10000,
 
   twoHands: false,
   twoHandsMultiplier: 2,

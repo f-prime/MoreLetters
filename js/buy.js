@@ -26,6 +26,32 @@ export function buy(
   return true;
 }
 
+export function buyOneTime(toggle, price) {
+  if(this._data[toggle] || this.money < price)
+    return false;
+
+  this.money -= price;
+  this._data[toggle] = true;
+
+  return true;
+}
+
+export function buyLittleHelp() {
+  /*
+   * Randomly generates a mailman per delivery click
+   */
+  
+  return this.buyOneTime("littleHelp", this.littleHelpBasePrice);
+}
+
+export function buyTwoForOne() {
+  /*
+   * Doubles Bootstrap increment
+   */
+
+  return this,buyOneTime("twoForOne", this.twoForOneBasePrice);
+}
+
 export function buyScientificManagement() {
   /*
    * One time upgrade. Cuts factory time in half
@@ -72,7 +98,7 @@ export function buyBootstrap() {
     return false;
 
   this.money -= this.bootstrapPrice;
-  this.bootstrap += 1 * this.multiplier;
+  this.bootstrap += this.bootstrapInc;  
   this.clickInc += 1 * this.multiplier;
   this.mailmanDelay += (this.mailmanDelay * this.bootstrapMailmanHit);
 

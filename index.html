@@ -155,7 +155,7 @@
                @buy="buyBootstrap()"
                @buy-max="buyMax(buyBootstrap)"
                :price="format(bootstrapPrice)"
-               :description="`Increases letters per click by ${bootstrapDelivery} but reduces mailman efficiency by ${bootstrapMailmanHit * 100}%`"
+               :description="`Increases letters per click by ${bootstrapInc} but reduces mailman efficiency by ${bootstrapMailmanHit * 100}%`"
                :max-buy="true">
             </buy-button>
           </div>
@@ -216,7 +216,7 @@
             ></buy-button>
               
             <buy-button
-              title="2 for 1"
+              title="Two Hands"
               @buy="buyTwoHands()"
               :owned="twoHands"
               :price="format(twoHandsBasePrice)"
@@ -234,8 +234,11 @@
 
             <buy-button
                v-show="phase >= 3 && phaseType[2] == 'active'"
-               title="Two Hands"
-               description="Doubles Bootstrap's letters per click interval"
+               title="Two for One"
+               description="Doubles Bootstrap letters per click interval"
+               @buy="buyTwoForOne()"
+               :owned="twoForOne"
+               :price="twoForOneBasePrice"
             ></buy-button>
           </div>
  
@@ -274,7 +277,10 @@
           <div class="row" v-show="phase >= 4 && phaseType[3] == 'active'" :class="!day ? 'btn-night' :''">
             <buy-button
                title="Little Help"
-               description="Random chance of hiring a mailman every delivery click."
+               @buy="buyLittleHelp()"
+               :price="format(littleHelpBasePrice)"
+               :owned="littleHelp"
+               :description="`${littleHelpChance * 100}% chance of hiring a mailman every delivery click.`"
             ></buy-button>
 
             <buy-button

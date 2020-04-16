@@ -21,13 +21,16 @@ import {
   buySegway,
   buyMailbox, 
   buyRecruiter,
+  buyLittleHelp,
   buyTwoHands,
   buyMailman,
   buyFactory,
   buyBootstrap,
   buyMailtruck,
+  buyOneTime,
   buyPostOffice,
   buyMax,
+  buyTwoForOne,
 } from "./buy.js";
 
 Vue.component("timed-event", {
@@ -96,9 +99,13 @@ const vw = new Vue({
  
   computed: {
     isActivePlayer: function() {
-      return this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
+      return true; //this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
     },
     
+    bootstrapInc: function() {
+      return this.bootstrapDelivery * this.multiplier * (this.twoForOne ? 2 : 1);
+    },
+
     multiplier: function() {
       if(this.phase == 0)
         return 1;
@@ -224,6 +231,14 @@ const vw = new Vue({
         return;
       
       const twoHandsMult = Math.random() < this.twoHandsChance ? this.twoHandsMultiplier : 1;
+      
+      if(this.littleHelp) {
+        const littleHelp = Math.random();
+        if(littleHelp < this.littleHelpChance) {
+          this.mailmen += 1;
+        }
+      }
+      
       this.deliverLetter(Math.ceil(this.clickInc) * twoHandsMult);
       this.clickDelivery += 1;
 
@@ -274,6 +289,9 @@ const vw = new Vue({
     buySegway,
     buyBootstrap,
     buyTwoHands,
+    buyTwoForOne,
+    buyLittleHelp,
+    buyOneTime,
     buy,
     buyMax,
   },
