@@ -86,7 +86,7 @@
       </div>
       <div class="row stats">
         <stat name="letters per click" :value="format(round(clickInc))"></stat>
-        <stat name="letter price" :value="format(round(pricePerLetter))"></stat>
+        <stat name="letter price" :value="format(round(pricePerLetter * multiplier))"></stat>
       </div>
       
       <div class="row stats">
@@ -97,8 +97,9 @@
         <stat v-show="phase >= 2" name="factories" :value="format(factories)"></stat> 
       </div>
       <div class="row stats">
-       <stat v-show="phase >= 3" name="segways" :value="format(segways)"></stat>
-       <stat v-show="phase >= 4" name="post offices" :value="format(postOffices)"></stat>
+        <stat v-show="phase >= 3" name="segways" :value="format(segways)"></stat>
+        <stat v-show="phase >= 4" name="post offices" :value="format(postOffices)"></stat>
+        <stat v-show="phase >= 4" name="mail trucks" :value="format(mailTrucks)"></stat>
       </div>
       
       <div class="milestone">
@@ -193,6 +194,7 @@
                title="Segway"
                @buy="buySegway()"
                @buy-max="buyMax(buySegway)"
+               :max-buy="true"
                :price="format(segwayPrice)"
                :description="segwayDescription"
             ></buy-button> 
@@ -254,7 +256,11 @@
           <div class="row" v-show="phase >= 4 && phaseType[3] == 'idle'" :class="!day ? 'btn-night' :''">
             <buy-button
               title="Mail Truck"
-              :description="mailTruckDescription" 
+              :description="mailTruckDescription"
+              :price="format(mailTruckPrice)"
+              @buy="buyMailTruck()"
+              @buy-max="buyMax(buyMailTruck)"
+              :max-buy="true" 
             ></buy-button> 
             
             <buy-button

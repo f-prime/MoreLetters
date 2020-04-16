@@ -15,6 +15,7 @@ import {
   updateMailmen, 
   updateRecruiters,
   updateEmail,
+  updateMailTruck,
   updateFactories,
   updateLetters,
 } from "./tick.js";
@@ -27,6 +28,7 @@ import {
   buySelfReliance,
   buyMailbox, 
   buyRecruiter,
+  buyMailTruck,
   buyBigNet,
   buyInflation,
   buyEmail,
@@ -129,7 +131,7 @@ const vw = new Vue({
     },
 
     segwayDescription: function() {
-      return `Increases mailman efficiency by ${this.segwayMailmanBoost * 100} for every segway purchased.`
+      return `Increases mailman efficiency by ${this.segwayMailmanBoost * 100}% for every segway purchased.`
     },
 
     scientificManagementDescription: function() {
@@ -145,7 +147,7 @@ const vw = new Vue({
     },
 
     mailTruckDescription: function() {
-      return "Automatically delivers 2 letters every 0.5 seconds";
+      return `Automatically delivers ${this.mailTruckInc} letters every ${this.mailTruckDelay / 1000} seconds`;
     },
 
     emailDescription: function() {
@@ -193,7 +195,7 @@ const vw = new Vue({
     },
 
     isActivePlayer: function() {
-      return true; //this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
+      return this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
     },
     
     bootstrapInc: function() {
@@ -217,6 +219,10 @@ const vw = new Vue({
 
     bootstrapPrice: function() {
       return this.round(this.bootstrapBasePrice + (this.bootstrap ** 2))
+    },
+
+    mailTruckPrice: function() {
+      return this.round(this.mailTruckBasePrice + (this.mailTrucks ** 2.2));
     },
 
     recruiterPrice: function() {
@@ -377,6 +383,7 @@ const vw = new Vue({
       this.updateBigNet();
       this.updatePostOffices();
       this.updateMailmen();
+      this.updateMailTruck();
       this.updateRecruiters();
       this.updateFactories();
       this.saveState();
@@ -389,6 +396,7 @@ const vw = new Vue({
     updateEmail,
     updateMailware,
     updateBigNet,
+    updateMailTruck,
     updatePostOffices,
     saveState,
     loadState,
@@ -396,6 +404,7 @@ const vw = new Vue({
     newGame,
     buyScientificManagement,
     buyMailman,
+    buyMailTruck,
     buyMailbox,
     buyInflation,
     buyRecruiter,

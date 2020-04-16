@@ -41,8 +41,18 @@ export function updateEmail() {
     return;
   }
   
-  this.letters += this.emailInc * (this.mailware ? this.mailwareInc : 1) * this.multiplier;
+  this.letters += this.emailInc * this.multiplier;
   this.emailLast = 0;
+}
+
+export function updateMailTruck() {
+  if(this.mailTruckLast < this.mailTruckDelay) {
+    this.mailTruckLast += this.delta;
+    return;
+  }
+  
+  this.deliverLetter(this.mailTrucks * this.mailTruckInc * this.multiplier);
+  this.mailTruckLast = 0;
 }
 
 export function updatePostOffices() {
@@ -51,9 +61,7 @@ export function updatePostOffices() {
     return;
   }
   
-  const mailwareInc = this.mailware ? this.mailwareInc : 1;
-
-  this.letters += (this.postOffices * this.postOfficeInc) * mailwareInc;
+  this.letters += (this.postOffices * this.postOfficeInc);
   this.postOfficeLast = 0;
 }
 

@@ -111,6 +111,11 @@ export const originalState = {
   segways: 0,
   segwayMailmanBoost: 0.025,
 
+  mailTrucks: 0,
+  mailTruckDelay: 500,
+  mailTruckBasePrice:40000,
+  mailTruckInc: 2,
+
   scientificManagementBasePrice: 100000,
   scientificManagement: false,
 

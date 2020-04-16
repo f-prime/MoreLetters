@@ -194,6 +194,14 @@ export function buyMailman(free, amount) {
 
 }
 
+export function buyMailTruck() {
+  /*
+   * Deliveres 2 letters every 0.5 seconds
+   */
+
+  return this.buy(false, 1, "mailTrucks", "mailTruckPrice");
+}
+
 export function buyMax(buyFunction) {
   while(buyFunction()) {}
 }
