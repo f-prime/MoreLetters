@@ -170,7 +170,7 @@
         <!-- Phase 2 and 3 -->
         
         <transition name="fade">
-          <div class="row" v-show="phaseType[1] == 'idle'" :class="!day ? 'btn-night' :''">
+          <div class="row" v-show="phaseType[2] == 'idle'" :class="!day ? 'btn-night' :''">
             <buy-button
                title="Recruiter"
                @buy="buyRecruiter()"
@@ -212,7 +212,7 @@
         </transition>
 
         <transition name="fade">
-          <div class="row" v-show="phase >= 2 && phaseType[1] == 'active'" :class="!day ? 'btn-night' :''">
+          <div class="row" v-show="phase >= 2 && phaseType[2] == 'active'" :class="!day ? 'btn-night' :''">
             <buy-button
                title="Factory"
                @buy="buyFactory()"
@@ -231,7 +231,7 @@
             ></buy-button>
 
             <buy-button
-               v-show="phase >= 3 && phaseType[2] == 'active'"
+               v-show="phase >= 3 && phaseType[3] == 'active'"
                title="Scientific Management"
                @buy="buyScientificManagement()"
                :owned="scientificManagement"
@@ -240,7 +240,7 @@
             ></buy-button>
 
             <buy-button
-               v-show="phase >= 3 && phaseType[2] == 'active'"
+               v-show="phase >= 3 && phaseType[3] == 'active'"
                title="Two for One"
                description="Doubles Bootstrap letters per click interval"
                @buy="buyTwoForOne()"
@@ -254,7 +254,7 @@
         <! -- Phase 4 and 5 -->
         
         <transition name="fade">
-          <div class="row" v-show="phase >= 4 && phaseType[3] == 'idle'" :class="!day ? 'btn-night' :''">
+          <div class="row" v-show="phase >= 4 && phaseType[4] == 'idle'" :class="!day ? 'btn-night' :''">
             <buy-button
               title="Mail Truck"
               :description="mailTruckDescription"
@@ -274,7 +274,7 @@
             ></buy-button>
 
             <buy-button
-              v-show="phase >= 5 && phaseType[4] == 'idle'"
+              v-show="phase >= 5 && phaseType[5] == 'idle'"
               title="Email"
               :price="format(emailBasePrice)"
               :owned="email"
@@ -283,7 +283,7 @@
             ></buy-button>
             
             <buy-button
-              v-show="phase >= 5 && phaseType[4] == 'idle'"
+              v-show="phase >= 5 && phaseType[5] == 'idle'"
               title="Caffeine"
               :description="caffeineDescription"
               :price="format(caffeineBasePrice)"
@@ -295,7 +295,7 @@
         </transition>
 
         <transition name="fade">
-          <div class="row" v-show="phase >= 4 && phaseType[3] == 'active'" :class="!day ? 'btn-night' :''">
+          <div class="row" v-show="phase >= 4 && phaseType[4] == 'active'" :class="!day ? 'btn-night' :''">
             <buy-button
                title="Little Help"
                @buy="buyLittleHelp()"
@@ -314,7 +314,7 @@
             ></buy-button>
             
             <buy-button
-               v-show="phase >= 5 && phaseType[4] == 'active'"
+               v-show="phase >= 5 && phaseType[5] == 'active'"
                title="Spontaneous Generation"
                @buy="buySpontaneousGeneration()"
                :owned="spontaneousGeneration"
@@ -323,7 +323,7 @@
             ></buy-button>
 
             <buy-button
-              v-show="phase >= 5 && phaseType[4] == 'active'"
+              v-show="phase >= 5 && phaseType[5] == 'active'"
               title="Email"
               :price="format(emailBasePrice)"
               :owned="email"
@@ -336,7 +336,7 @@
         <! -- Phase 6 -->
 
         <transition name="fade">
-          <div class="row" v-show="phase >= 6 && phaseType[5] == 'idle'" :class="!day ? 'btn-night' :''">
+          <div class="row" v-show="phase >= 6 && phaseType[6] == 'idle'" :class="!day ? 'btn-night' :''">
             <buy-button
               title="Jet"
               :price="format(jetPrice)"
@@ -355,7 +355,7 @@
             ></buy-button>
              
             <buy-button
-              v-show="phase >= 7 && phaseType[6] == 'idle'"
+              v-show="phase >= 7 && phaseType[7] == 'idle'"
               title="Mail Drones"
               :description="mailDronesDescription"
               :price="format(mailDronesBasePrice)"
@@ -364,7 +364,7 @@
             ></buy-button> 
             
             <buy-button
-              v-show="phase >= 7 && phaseType[6] == 'idle'"
+              v-show="phase >= 7 && phaseType[7] == 'idle'"
               title="Mailware"
               @buy="buyMailware"
               :owned="mailware"
@@ -375,7 +375,7 @@
         </transition>
 
         <transition name="fade">
-          <div class="row" v-show="phase >= 6 && phaseType[5] == 'active'" :class="!day ? 'btn-night' :''">
+          <div class="row" v-show="phase >= 6 && phaseType[6] == 'active'" :class="!day ? 'btn-night' :''">
             <buy-button
                title="Inflation"
                :description="inflationDescription"
@@ -393,7 +393,7 @@
             ></buy-button>
             
             <buy-button
-               v-show="phase >= 7 && phaseType[6] == 'active'"
+               v-show="phase >= 7 && phaseType[7] == 'active'"
                title="Self-Reliance"
                :owned="selfReliance"
                @buy="buySelfReliance()"
@@ -402,7 +402,7 @@
             ></buy-button>
 
             <buy-button
-              v-show="phase >= 7 && phaseType[6] == 'active'"
+              v-show="phase >= 7 && phaseType[7] == 'active'"
               title="Mailware"
               @buy="buyMailware"
               :owned="mailware"
