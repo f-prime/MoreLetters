@@ -27,13 +27,21 @@ export function buy(
 }
 
 export function buyOneTime(toggle, price) {
-  if(this._data[toggle] || this.money < price)
+  if(this._data[toggle] || this.money < price) {
     return false;
+  }
 
   this.money -= price;
   this._data[toggle] = true;
 
   return true;
+}
+
+export function buySpontaneousGeneration() {
+  /*
+   * Random chance to quadruple number of letters per click
+   */
+  return this.buyOneTime("spontaneousGeneration", this.spontaneousGenerationBasePrice);
 }
 
 export function buyLittleHelp() {
@@ -49,7 +57,7 @@ export function buyTwoForOne() {
    * Doubles Bootstrap increment
    */
 
-  return this,buyOneTime("twoForOne", this.twoForOneBasePrice);
+  return this.buyOneTime("twoForOne", this.twoForOneBasePrice);
 }
 
 export function buyScientificManagement() {
@@ -57,13 +65,8 @@ export function buyScientificManagement() {
    * One time upgrade. Cuts factory time in half
    */
 
-  if(this.scientificManagement || this.scientificManagementBasePrice > this.money) {
-    return;
-  }
+  this.buyOneTime("scientificManagement", this.scientificManagementBasePrice)
 
-  this.money -= this.scientificManagementBasePrice;
-  this.factoryDelay /= 2;
-  this.scientificManagement = true;
 }
 
 export function buyTwoHands() {
@@ -71,12 +74,7 @@ export function buyTwoHands() {
    *  One time upgrade. Random chance that a click to deliver will be multiplied by some multiplier.
    */
   
-  if(this.twoHands || this.twoHandsBasePrice > this.money) {
-    return;
-  }
-
-  this.money -= this.twoHandsBasePrice;
-  this.twoHands = true;
+  this.buyOneTime("twoHands", this.twoHandsBasePrice);
 }
 
 export function buySegway() {
@@ -100,7 +98,6 @@ export function buyBootstrap() {
   this.money -= this.bootstrapPrice;
   this.bootstrap += this.bootstrapInc;  
   this.clickInc += 1 * this.multiplier;
-  this.mailmanDelay += (this.mailmanDelay * this.bootstrapMailmanHit);
 
   return true;
 }
@@ -114,7 +111,14 @@ export function buyFactory() {
   return this.buy(false, 1, "factories", "factoryPrice");
 }
 
-export function buyPostOffice() {}
+export function buyPostOffice() {
+  /*
+   * Generates more letters in less time
+   */
+
+  return this.buy(false, 1, "postOffices", "postOfficePrice");
+
+}
 
 export function buyMailbox(free, amount) {
   /*

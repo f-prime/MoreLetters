@@ -9,6 +9,7 @@ import {
 } from "./state.js";
 
 import { 
+  updatePostOffices,
   updateMailmen, 
   updateRecruiters,
   updateFactories,
@@ -24,6 +25,7 @@ import {
   buyLittleHelp,
   buyTwoHands,
   buyMailman,
+  buySpontaneousGeneration,
   buyFactory,
   buyBootstrap,
   buyMailtruck,
@@ -98,6 +100,90 @@ const vw = new Vue({
   data: Object.assign({}, originalState), 
  
   computed: {
+    mailmanDescription: function() {
+      return `Mailmen deliver ${this.mailmanDelivery} ${this.mailmanDelivery > 1 ? 'letters' : 'letter'} per mailman automatically every ${this.round(this.mailmanDelay / 1000)} seconds.`;
+    },
+   
+    mailboxDescription: function() {
+      return `Increases number of letters per second by ${this.mailboxLettersIncrease}`;
+    },
+
+    bootstrapDescription: function() {
+      return `Increases letters per click by ${this.bootstrapInc}`;
+    },
+
+    recruiterDescription: function() {
+      return `Hires ${this.recruiterHire} mailmen per recruiter every ${this.recruiterDelay / 1000} seconds. Hiring does not cost money.`;
+    },
+
+    factoryDescription: function() {
+      return `Generates ${this.factoryGenerate} ${this.factoryGenerate == 1 ? 'letter' : 'letters'} per factory every ${this.factoryDelay / 1000} seconds`;
+    },
+
+    segwayDescription: function() {
+      return `Increases mailman efficiency by ${this.segwayMailmanBoost * 100} for every segway purchased.`
+    },
+
+    scientificManagementDescription: function() {
+      return "Reduces the time it take for factories to generate mailboxes by 50%.";
+    },
+
+    twoHandsDescription: function() {
+      return `Each delivery click has a ${this.twoHandsChance * 100}% chance of deliverying ${this.twoHandsMultiplier}x the amount of letters.`
+    },
+
+    postOfficeDescription: function() {
+      return `Generates two letters every ${this.postOfficeDelay / 1000} seconds.`;
+    },
+
+    mailTruckDescription: function() {
+      return "Automatically delivers 2 letters every 0.5 seconds";
+    },
+
+    emailDescription: function() {
+      return "Accept letters via the internet. Increases letters per second by 60%";
+    },
+
+    littleHelpDescription: function() {
+      return `${this.littleHelpChance * 100}% chance of hiring a mailman every delivery click.`;
+    },
+
+    bigNetDescription: function() {
+      return "Capture all the messages in bottles that are floating around the ocean. Increases letters per second by 25%.";
+    },
+
+    selfRelianceDescription: function() {
+      return "Increases bootstrap increment by 10.";
+    },
+
+    inflationDescription: function() {
+      return "Increases the price per letter by 50%.";
+    },
+
+    mailwareDescription: function() {
+      return "Infect people's computers and phones with 'mailware' capturing letters before they are even sent! Increases letters per second by 25%";
+    },
+
+    mailDronesDescription: function() {
+      return "Unlease a swarm of mail delivering drones. Delivers 10 letters every 0.25 seconds.";
+    },
+
+    jetsDescription: function() {
+      return "Jets deliver 10 letters every 0.5 seconds.";
+    },
+
+    spontaneousGenerationDescription: function() {
+      return `${this.spontaneousGenerationChance * 100}% chance that clicking to deliver a letter will multiply your letters per click by ${this.spontaneousGenerationMult} for that click.`;
+    },
+
+    postOfficDescription: function() {
+      return `Generates two letters every ${this.postOfficeDelay / 1000} seconds.`;
+    },
+
+    caffeineDescription: function() {
+      return "Every mailman gets put on a madatory drip of high octane espresso. Increases mailman efficiency by 30%"
+    },
+
     isActivePlayer: function() {
       return true; //this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
     },
@@ -112,7 +198,11 @@ const vw = new Vue({
 
       return 2 ** (this.phase - 1); 
     },
-  
+
+    postOfficePrice: function() {
+      return this.round(this.postOfficeBasePrice + (this.postOffices ** 4));
+    },
+
     bootstrapPrice: function() {
       return this.round(this.bootstrapBasePrice + (this.bootstrap ** 2))
     },
@@ -229,8 +319,13 @@ const vw = new Vue({
     clickDeliver: function() {
       if(this.letters == 0)
         return;
+     
+
+      const twoHandsMult = this.twoHands && Math.random() < this.twoHandsChance ? this.twoHandsMultiplier : 1;
+      const spontGen = this.spontaneousGeneration && Math.random() < this.spontaneousGenerationChance ? this.spontaneousGenerationMult : 1;
       
-      const twoHandsMult = Math.random() < this.twoHandsChance ? this.twoHandsMultiplier : 1;
+      console.log("2 Hands", twoHandsMult);
+      console.log("Spont Gen", spontGen);
       
       if(this.littleHelp) {
         const littleHelp = Math.random();
@@ -239,7 +334,7 @@ const vw = new Vue({
         }
       }
       
-      this.deliverLetter(Math.ceil(this.clickInc) * twoHandsMult);
+      this.deliverLetter(Math.ceil(this.clickInc) * twoHandsMult * spontGen);
       this.clickDelivery += 1;
 
     },
@@ -265,6 +360,7 @@ const vw = new Vue({
       this.lastTick = now;
 
       this.updateLetters();
+      this.updatePostOffices();
       this.updateMailmen();
       this.updateRecruiters();
       this.updateFactories();
@@ -275,6 +371,7 @@ const vw = new Vue({
     updateLetters,
     updateRecruiters,
     updateMailmen,
+    updatePostOffices,
     saveState,
     loadState,
     calculateNewState,
@@ -287,6 +384,7 @@ const vw = new Vue({
     buyMailtruck,
     buyPostOffice,
     buySegway,
+    buySpontaneousGeneration,
     buyBootstrap,
     buyTwoHands,
     buyTwoForOne,

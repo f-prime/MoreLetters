@@ -8,6 +8,16 @@ export function updateLetters() {
   this.lettersLast = 0;
 }
 
+export function updatePostOffices() {
+  if(this.postOfficeLast < this.postOfficeDelay) {
+    this.postOfficeLast += this.delta;
+    return;
+  }
+
+  this.letters += (this.postOffices * 2);
+  this.postOfficeLast = 0;
+}
+
 export function updateMailmen() {
   if(this.letters < 1)
     return;
@@ -25,7 +35,7 @@ export function updateFactories() {
   if(this.factories <= 0)
     return;
 
-  if(this.factoryLast < this.factoryDelay) {
+  if(this.factoryLast < this.factoryDelay / (this.scientificManagement ? 2 : 1)) {
     this.factoryLast += this.delta;
     return;
   }

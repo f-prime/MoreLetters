@@ -24,7 +24,7 @@ export const originalState = {
   clickDelivery: 0,
   clickInc: 1,
 
-  money: 100000000,
+  money: 1000000000,
 
   lettersInc: 1,
   lettersDelay: 1000,
@@ -36,6 +36,12 @@ export const originalState = {
   littleHelpChance:0.30,
   littleHelpBasePrice: 200000,
 
+  postOffices: 0,
+  postOfficeDelay: 500,
+  postOfficeInc: 2,
+  postOfficeBasePrice: 50000,
+  postOfficeLast:0,
+
   twoForOne: false,
   twoForOneBasePrice: 10000,
 
@@ -44,10 +50,14 @@ export const originalState = {
   twoHandsBasePrice: 3000,
   twoHandsChance: 0.3,
 
+  spontaneousGeneration: false,
+  spontaneousGenerationBasePrice: 100000000,
+  spontaneousGenerationChance: 0.30,
+  spontaneousGenerationMult: 4,
+  
   bootstrap: 0,
   bootstrapBasePrice: 25,
   bootstrapDelivery: 1,
-  bootstrapMailmanHit: 0.02,
 
   mailmen: 0,
   mailmanBasePrice: 10, 
