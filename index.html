@@ -87,11 +87,11 @@
       <div class="row stats">
         <stat name="letters per click" :value="format(round(clickInc))"></stat>
         <stat name="letter price" :value="format(round(pricePerLetter * multiplier))"></stat>
+        <stat v-show="phase >= 1" name="multiplier" :value="format(multiplier)"></stat>
       </div>
       
       <div class="row stats">
         <stat v-show="phase >= 1" name="mailmen" :value="format(mailmen)"></stat>
-        <stat v-show="phase >= 1" name="multiplier" :value="format(multiplier)"></stat>
         <stat v-show="phase >= 1" name="mailboxes" :value="format(mailboxes)"></stat>
         <stat v-show="phase >= 2" name="recruiters" :value="format(recruiters)"></stat>
         <stat v-show="phase >= 2" name="factories" :value="format(factories)"></stat> 
