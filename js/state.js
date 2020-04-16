@@ -1,4 +1,6 @@
 export const originalState = {
+  day: true,
+  
   phase:0,
 
   phase1: 40,
@@ -7,7 +9,7 @@ export const originalState = {
   phase4: 500000,
   phase5: 1000000,
   phase6: 5000000,
-  phase7: 100000000,
+  phase7: 1000000000,
 
   phaseType: {},
 
@@ -27,7 +29,7 @@ export const originalState = {
   lettersInc: 1,
   lettersDelay: 1000,
   letters: 0,
-  lettersDelivered: 0,
+  lettersDelivered: 10000000000,
   lettersLast: 0,
 
   twoHands: false,
@@ -66,7 +68,7 @@ export const originalState = {
   segways: 0,
   segwayMailmanBoost: 0.025,
 
-  scientificManagementBasePrice: 10000000,
+  scientificManagementBasePrice: 100000,
   scientificManagement: false,
 
   lastSave: new Date(),
@@ -78,6 +80,7 @@ export function saveState() {
   if(now - new Date(this.lastSave) > 1000) {
     localStorage.setItem("state", JSON.stringify(this.$data));
     localStorage.setItem("lastSave", now);
+    localStorage.setItem("day", this.day);
     this.lastSave = now;
   }
 }
@@ -99,15 +102,22 @@ export function calculateNewState() {
 }
 
 export function loadState() {
-  const state = localStorage.getItem("state");
+  const day = localStorage.getItem("day");
+  let state = localStorage.getItem("state");
+  let json;
+
   if(!state)
-    return;
-  
-  const json = JSON.parse(state);
-  
+    json = {};
+  else
+    json = JSON.parse(state);
+
   for(const key in json) {
     this.$data[key] = json[key];
   } 
+  
+  if(day) {
+    this.day = JSON.parse(day); 
+  }
 
   this.calculateNewState();
 }

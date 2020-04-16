@@ -205,11 +205,13 @@ const vw = new Vue({
       const phase = this.phase;
       const phaseType = this.phaseType;
       const playType = this.isActivePlayer ? 'active' : 'idle'; 
+      const day = this.day;
 
       for(const key in originalState) {
         this.$data[key] = originalState[key];
       }
 
+      this.day = day;
       this.phase = phase + 1;
       this.phaseType = phaseType;
       this.phaseType[phase] = playType;
