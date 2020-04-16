@@ -24,12 +24,12 @@ export const originalState = {
   clickDelivery: 0,
   clickInc: 1,
 
-  money: 1000000000000,
+  money: 0,
 
   lettersInc: 1,
   lettersDelay: 1000,
   letters: 0,
-  lettersDelivered: 10000000000,
+  lettersDelivered: 0,
   lettersLast: 0,
 
   littleHelp: false,
@@ -65,17 +65,23 @@ export const originalState = {
   selfRelianceInc: 300,
 
   mailware: false,
-  mailwareBasePrice: 10 ** 11,
+  mailwareBasePrice: 11 ** 9,
   mailwareInc: 2,
   mailwareLast:0,
   mailwareDelay:0,
 
   bigNet: false,
   bigNetInc: 20,
-  bigNetBasePrice: 300000000,
+  bigNetBasePrice: 3000000,
   bigNetLast:0,
   bigNetDelay:300,
-  
+ 
+  jets: 0,
+  jetDelivery: 10,
+  jetDelay: 500,
+  jetLast: 0,
+  jetBasePrice: 500000, 
+
   spontaneousGeneration: false,
   spontaneousGenerationBasePrice: 100000000,
   spontaneousGenerationChance: 0.30,
@@ -84,6 +90,12 @@ export const originalState = {
   bootstrap: 0,
   bootstrapBasePrice: 25,
   bootstrapDelivery: 1,
+
+  mailDrones: false,
+  mailDronesDelay: 50,
+  mailDronesDelivery: 20,
+  mailDronesBasePrice: 10 ** 9,
+  mailDronesLast: 0,
 
   mailmen: 0,
   mailmanBasePrice: 10, 
@@ -115,6 +127,10 @@ export const originalState = {
   mailTruckDelay: 500,
   mailTruckBasePrice:40000,
   mailTruckInc: 2,
+
+  caffeine: false,
+  caffeineBasePrice: 100000,
+  caffeineBoost: 0.3,
 
   scientificManagementBasePrice: 100000,
   scientificManagement: false,

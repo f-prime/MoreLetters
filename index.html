@@ -100,6 +100,7 @@
         <stat v-show="phase >= 3" name="segways" :value="format(segways)"></stat>
         <stat v-show="phase >= 4" name="post offices" :value="format(postOffices)"></stat>
         <stat v-show="phase >= 4" name="mail trucks" :value="format(mailTrucks)"></stat>
+        <stat v-show="phase >= 6" name="jets" :value="format(jets)"></stat>
       </div>
       
       <div class="milestone">
@@ -275,13 +276,19 @@
             <buy-button
               v-show="phase >= 5 && phaseType[4] == 'idle'"
               title="Email"
-              :description="emailDescription" 
-            ></buy-button> 
+              :price="format(emailBasePrice)"
+              :owned="email"
+              @buy="buyEmail()"
+              :description="emailDescription"
+            ></buy-button>
             
             <buy-button
               v-show="phase >= 5 && phaseType[4] == 'idle'"
               title="Caffeine"
               :description="caffeineDescription"
+              :price="format(caffeineBasePrice)"
+              @buy="buyCaffeine()"
+              :owned="caffeine"
             ></buy-button>
           </div>
 
@@ -331,24 +338,37 @@
         <transition name="fade">
           <div class="row" v-show="phase >= 6 && phaseType[5] == 'idle'" :class="!day ? 'btn-night' :''">
             <buy-button
-              title="Jets"
+              title="Jet"
+              :price="format(jetPrice)"
+              :max-buy="true"
+              @buy="buyJet()"
+              @buy-max="buyMax(buyJet)"
               :description="jetsDescription" 
             ></buy-button> 
             
             <buy-button
               title="Big Net"
               :description="bigNetDescription"
+              :price="format(bigNetBasePrice)"
+              @buy="buyBigNet()"
+              :owned="bigNet"
             ></buy-button>
-
+             
             <buy-button
               v-show="phase >= 7 && phaseType[6] == 'idle'"
               title="Mail Drones"
-              :description="mailDronesDescription" 
+              :description="mailDronesDescription"
+              :price="format(mailDronesBasePrice)"
+              @buy="buyMailDrones()"
+              :owned="mailDrones" 
             ></buy-button> 
             
             <buy-button
               v-show="phase >= 7 && phaseType[6] == 'idle'"
               title="Mailware"
+              @buy="buyMailware"
+              :owned="mailware"
+              :price="format(mailwareBasePrice)"
               :description="mailwareDescription"
             ></buy-button>
           </div>

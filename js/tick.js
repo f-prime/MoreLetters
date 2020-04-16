@@ -1,105 +1,105 @@
-export function updateLetters() {
-  if(this.lettersLast < this.lettersDelay) {
-    this.lettersLast += this.delta;
-    return;
+export function generalUpdate(last, delay) {
+  if(this._data[last] < delay) {
+    this._data[last] += this.delta;
+    return false;
   }
 
-  this.letters += ((this.lettersInc * (this.mailboxes + 1)) * this.multiplier );
-  this.lettersLast = 0;
+  this._data[last] = 0;
+  return true;
+}
+
+export function updateLetters() {
+  if(this.generalUpdate("lettersLast", this.lettersDelay)) {
+    this.letters += ((this.lettersInc * (this.mailboxes + 1)) * this.multiplier );
+  }
 }
 
 export function updateBigNet() {
   if(!this.bigNet)
     return;
-
-  if(this.bigNetLast < this.bigNetDelay) {
-    this.bigNetLast += this.delta;
-    return;
+  
+  if(this.generalUpdate("bigNetLast", this.bigNetDelay)) {
+    this.letters += this.bigNetInc * this.multiplier;
   }
+}
 
-  this.letters += this.bigNetInc * this.multiplier;
+export function updateMailDrones() {
+  if(!this.mailDrones)
+    return;
+
+  if(this.generalUpdate("mailDronesLast", this.mailDronesDelay)) {
+    this.deliverLetter(this.mailDronesDelivery * this.multiplier);
+  }
 }
 
 export function updateMailware() {
   if(!this.mailware)
     return;
 
-  if(this.mailwareLast < this.mailwareDelay) {
-    this.mailwareLast += this.delta;
-    return;
+  if(this.generalUpdate("mailwareLast", this.mailwareDelay)) {
+    this.letters += this.mailwareInc * this.multiplier;
   }
-
-  this.letters += this.mailwareInc * this.multiplier;
 }
 
 export function updateEmail() {
   if(!this.email)
     return;
-  
-  if(this.emailLast < this.emailDelay) {
-    this.emailLast += this.delta;
-    return;
+ 
+  if(this.generalUpdate("emailLast", this.emailDelay)) {
+    this.letters += this.emailInc * this.multiplier;
   }
-  
-  this.letters += this.emailInc * this.multiplier;
-  this.emailLast = 0;
 }
 
 export function updateMailTruck() {
-  if(this.mailTruckLast < this.mailTruckDelay) {
-    this.mailTruckLast += this.delta;
-    return;
+  if(this.generalUpdate("mailTruckLast", this.mailTruckDelay)) {
+    this.deliverLetter(this.mailTrucks * this.mailTruckInc * this.multiplier);
   }
-  
-  this.deliverLetter(this.mailTrucks * this.mailTruckInc * this.multiplier);
-  this.mailTruckLast = 0;
 }
 
 export function updatePostOffices() {
-  if(this.postOfficeLast < this.postOfficeDelay) {
-    this.postOfficeLast += this.delta;
-    return;
+  if(this.generalUpdate("postOfficeLast", this.postOfficeDelay)) {
+    this.letters += (this.postOffices * this.postOfficeInc);
   }
-  
-  this.letters += (this.postOffices * this.postOfficeInc);
-  this.postOfficeLast = 0;
 }
 
 export function updateMailmen() {
   if(this.letters < 1)
     return;
 
-  if(this.mailmanLast < this.mailmanDelay) {
-    this.mailmanLast += this.delta;
-    return;
-  }
+  const dec = this.caffeine ? (this.mailmanDelay - (this.mailmanDelay * this.caffeineBoost)) : 0;
+  const delay = this.mailmanDelay - dec;
 
-  this.deliverLetter(this.mailmen * this.multiplier);
-  this.mailmanLast = 0;
+  if(this.generalUpdate("mailmanLast", delay)) {
+    this.deliverLetter(this.mailmen * this.multiplier);
+  }
 }
 
 export function updateFactories() {
   if(this.factories <= 0)
     return;
 
-  if(this.factoryLast < this.factoryDelay / (this.scientificManagement ? 2 : 1)) {
-    this.factoryLast += this.delta;
-    return;
+  const delay = this.factoryDelay / (this.scientificManagement ? 2 : 1);
+  
+  if(this.generalUpdate("mailmanLast", delay)) {
+    this.mailboxes += this.factoryGenerate * this.factories;;
   }
 
-  this.mailboxes += this.factoryGenerate * this.factories;;
-  this.factoryLast = 0;
+}
+
+export function updateJets() {
+  if(this.jets <= 0)
+    return;
+
+  if(this.generalUpdate("jetsLast", this.jetDelay)) {
+    this.deliverLetter(this.jetDelivery * this.jets * this.multiplier);
+  }
 }
 
 export function updateRecruiters() {
   if(this.recruiters <= 0)
     return;
 
-  if(this.recruiterLast < this.recruiterDelay) {
-    this.recruiterLast += this.delta;
-    return;
+  if(this.generalUpdate("recruiterLast", this.recruiterDelay)) {
+    this.mailmen += this.recruiterHire * this.recruiters;
   }
-
-  this.mailmen += this.recruiterHire * this.recruiters;
-  this.recruiterLast = 0;
 }

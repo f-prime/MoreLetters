@@ -9,11 +9,14 @@ import {
 } from "./state.js";
 
 import { 
+  generalUpdate,
   updateMailware,
   updateBigNet,
   updatePostOffices,
   updateMailmen, 
   updateRecruiters,
+  updateJets,
+  updateMailDrones,
   updateEmail,
   updateMailTruck,
   updateFactories,
@@ -25,10 +28,13 @@ import {
   buyScientificManagement,
   buyMailware,
   buySegway,
+  buyJet,
+  buyMailDrones,
   buySelfReliance,
   buyMailbox, 
   buyRecruiter,
   buyMailTruck,
+  buyCaffeine,
   buyBigNet,
   buyInflation,
   buyEmail,
@@ -159,7 +165,7 @@ const vw = new Vue({
     },
 
     bigNetDescription: function() {
-      return `Capture all the messages in bottles that are floating around the ocean. Increases letters per second by ${this.bigNetDecrease * 100}%.`;
+      return `Capture all the messages in bottles that are floating around the ocean. Generates ${this.bigNetInc} letters every ${this.bigNetDelay / 1000} seconds.`;
     },
 
     selfRelianceDescription: function() {
@@ -171,15 +177,15 @@ const vw = new Vue({
     },
 
     mailwareDescription: function() {
-      return "Infect people's computers and phones with 'mailware' capturing letters before they are even sent! Dramatically increases letters per second.";
+      return `Infect people's computers and phones with 'mailware' capturing letters before they are even sent! Generates ${this.mailwareInc} letters per tick.`;
     },
 
     mailDronesDescription: function() {
-      return "Unlease a swarm of mail delivering drones. Delivers 10 letters every 0.25 seconds.";
+      return `Unlease a swarm of mail delivering drones. Delivers ${this.mailDronesDelivery} letters every ${this.mailDronesDelay / 1000} seconds.`;
     },
 
     jetsDescription: function() {
-      return "Jets deliver 10 letters every 0.5 seconds.";
+      return `Jets deliver ${this.jetDelivery} letters every ${this.jetDelay / 1000} seconds.`;
     },
 
     spontaneousGenerationDescription: function() {
@@ -191,7 +197,7 @@ const vw = new Vue({
     },
 
     caffeineDescription: function() {
-      return "Every mailman gets put on a madatory drip of high octane espresso. Increases mailman efficiency by 30%"
+      return `Every mailman gets put on a madatory drip of high octane espresso. Increases mailman efficiency by ${this.caffeineBoost * 100}%`
     },
 
     isActivePlayer: function() {
@@ -211,6 +217,10 @@ const vw = new Vue({
         return 1;
 
       return 2 ** (this.phase - 1); 
+    },
+
+    jetPrice: function() {
+      return this.round(this.jetBasePrice + (this.jets ** 2));
     },
 
     postOfficePrice: function() {
@@ -378,7 +388,9 @@ const vw = new Vue({
       this.lastTick = now;
 
       this.updateLetters();
+      this.updateJets();
       this.updateEmail();
+      this.updateMailDrones(),
       this.updateMailware();
       this.updateBigNet();
       this.updatePostOffices();
@@ -389,6 +401,7 @@ const vw = new Vue({
       this.saveState();
     },
 
+    generalUpdate,
     updateFactories,
     updateLetters,
     updateRecruiters,
@@ -397,6 +410,8 @@ const vw = new Vue({
     updateMailware,
     updateBigNet,
     updateMailTruck,
+    updateJets,
+    updateMailDrones,
     updatePostOffices,
     saveState,
     loadState,
@@ -404,6 +419,8 @@ const vw = new Vue({
     newGame,
     buyScientificManagement,
     buyMailman,
+    buyMailDrones,
+    buyJet,
     buyMailTruck,
     buyMailbox,
     buyInflation,
@@ -418,6 +435,7 @@ const vw = new Vue({
     buyTwoHands,
     buyTwoForOne,
     buyLittleHelp,
+    buyCaffeine,
     buySelfReliance,
     buyEmail,
     buyMailware,

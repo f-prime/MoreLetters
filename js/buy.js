@@ -95,6 +95,14 @@ export function buyScientificManagement() {
 
 }
 
+export function buyMailDrones() {
+  /*
+   * Delivers 10 letters every 0.1 second
+   */
+
+  this.buyOneTime("mailDrones", this.mailDronesBasePrice);
+}
+
 export function buyMailware() {
   /*
    * Dramatically increases letters per second
@@ -162,6 +170,14 @@ export function buyPostOffice() {
 
 }
 
+export function buyCaffeine() {
+  /*
+   * Increases mailman efficiency
+   */
+
+  this.buyOneTime("caffeine", this.caffeineBasePrice);
+}
+
 export function buyMailbox(free, amount) {
   /*
    * Increases number of letters per second by one
@@ -192,6 +208,14 @@ export function buyMailman(free, amount) {
 
   return this.buy(free, amount, "mailmen", "mailmanPrice");
 
+}
+
+export function buyJet() {
+  /*
+   * Delivers 10 letters every 0.5 seconds
+   */
+
+  return this.buy(false, 1, "jets", "jetPrice");
 }
 
 export function buyMailTruck() {
