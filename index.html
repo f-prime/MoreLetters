@@ -83,7 +83,10 @@
         <stat name="letters" :value="format(floor(letters))"></stat>
         <stat name="letters delivered" :value="format(floor(lettersDelivered))"></stat>
         <stat name="letters per second" :value="format(lettersPerSecond)"></stat>
+      </div>
+      <div class="row stats">
         <stat name="letters per click" :value="format(round(clickInc))"></stat>
+        <stat name="letter price" :value="format(round(pricePerLetter))"></stat>
       </div>
       
       <div class="row stats">
@@ -309,6 +312,9 @@
             <buy-button
               v-show="phase >= 5 && phaseType[4] == 'active'"
               title="Email"
+              :price="format(emailBasePrice)"
+              :owned="email"
+              @buy="buyEmail()"
               :description="emailDescription"
             ></buy-button>
           </div>
@@ -347,22 +353,34 @@
             <buy-button
                title="Inflation"
                :description="inflationDescription"
+               :price="format(inflationBasePrice)"
+               @buy="buyInflation()"
+               :owned="inflation"
             ></buy-button>
 
             <buy-button
               title="Big Net"
               :description="bigNetDescription"
+              :price="format(bigNetBasePrice)"
+              @buy="buyBigNet()"
+              :owned="bigNet"
             ></buy-button>
             
             <buy-button
                v-show="phase >= 7 && phaseType[6] == 'active'"
                title="Self-Reliance"
+               :owned="selfReliance"
+               @buy="buySelfReliance()"
+               :price="format(selfRelianceBasePrice)"
                :description="selfRelianceDescription"
             ></buy-button>
 
             <buy-button
               v-show="phase >= 7 && phaseType[6] == 'active'"
               title="Mailware"
+              @buy="buyMailware"
+              :owned="mailware"
+              :price="format(mailwareBasePrice)"
               :description="mailwareDescription"
             ></buy-button>
           </div>

@@ -24,7 +24,7 @@ export const originalState = {
   clickDelivery: 0,
   clickInc: 1,
 
-  money: 1000000000,
+  money: 1000000000000,
 
   lettersInc: 1,
   lettersDelay: 1000,
@@ -50,6 +50,32 @@ export const originalState = {
   twoHandsBasePrice: 3000,
   twoHandsChance: 0.3,
 
+  inflation: false,
+  inflationBasePrice: 500000000,
+  inflationIncrease: 1,
+
+  email: false,
+  emailInc: 10,
+  emailDelay: 100,
+  emailLast: 0,
+  emailBasePrice: 200000000,
+
+  selfReliance: false,
+  selfRelianceBasePrice: 10 ** 9,
+  selfRelianceInc: 300,
+
+  mailware: false,
+  mailwareBasePrice: 10 ** 11,
+  mailwareInc: 2,
+  mailwareLast:0,
+  mailwareDelay:0,
+
+  bigNet: false,
+  bigNetInc: 20,
+  bigNetBasePrice: 300000000,
+  bigNetLast:0,
+  bigNetDelay:300,
+  
   spontaneousGeneration: false,
   spontaneousGenerationBasePrice: 100000000,
   spontaneousGenerationChance: 0.30,

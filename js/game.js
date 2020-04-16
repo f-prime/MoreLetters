@@ -9,9 +9,12 @@ import {
 } from "./state.js";
 
 import { 
+  updateMailware,
+  updateBigNet,
   updatePostOffices,
   updateMailmen, 
   updateRecruiters,
+  updateEmail,
   updateFactories,
   updateLetters,
 } from "./tick.js";
@@ -19,9 +22,14 @@ import {
 import { 
   buy,
   buyScientificManagement,
+  buyMailware,
   buySegway,
+  buySelfReliance,
   buyMailbox, 
   buyRecruiter,
+  buyBigNet,
+  buyInflation,
+  buyEmail,
   buyLittleHelp,
   buyTwoHands,
   buyMailman,
@@ -141,7 +149,7 @@ const vw = new Vue({
     },
 
     emailDescription: function() {
-      return "Accept letters via the internet. Increases letters per second by 60%";
+      return `Accept letters via the internet. Generates ${this.emailInc} letters every ${this.emailDelay / 1000} seconds`;
     },
 
     littleHelpDescription: function() {
@@ -149,19 +157,19 @@ const vw = new Vue({
     },
 
     bigNetDescription: function() {
-      return "Capture all the messages in bottles that are floating around the ocean. Increases letters per second by 25%.";
+      return `Capture all the messages in bottles that are floating around the ocean. Increases letters per second by ${this.bigNetDecrease * 100}%.`;
     },
 
     selfRelianceDescription: function() {
-      return "Increases bootstrap increment by 10.";
+      return `Increases bootstrap increment by ${this.selfRelianceInc}.`;
     },
 
     inflationDescription: function() {
-      return "Increases the price per letter by 50%.";
+      return `Increases the price per letter by ${this.inflationIncrease * 100}%.`;
     },
 
     mailwareDescription: function() {
-      return "Infect people's computers and phones with 'mailware' capturing letters before they are even sent! Increases letters per second by 25%";
+      return "Infect people's computers and phones with 'mailware' capturing letters before they are even sent! Dramatically increases letters per second.";
     },
 
     mailDronesDescription: function() {
@@ -189,7 +197,11 @@ const vw = new Vue({
     },
     
     bootstrapInc: function() {
-      return this.bootstrapDelivery * this.multiplier * (this.twoForOne ? 2 : 1);
+      let inc = this.bootstrapDelivery * this.multiplier * (this.twoForOne ? 2 : 1);
+      if(this.selfReliance)
+        inc += this.selfRelianceInc;
+
+      return inc;
     },
 
     multiplier: function() {
@@ -360,6 +372,9 @@ const vw = new Vue({
       this.lastTick = now;
 
       this.updateLetters();
+      this.updateEmail();
+      this.updateMailware();
+      this.updateBigNet();
       this.updatePostOffices();
       this.updateMailmen();
       this.updateRecruiters();
@@ -371,6 +386,9 @@ const vw = new Vue({
     updateLetters,
     updateRecruiters,
     updateMailmen,
+    updateEmail,
+    updateMailware,
+    updateBigNet,
     updatePostOffices,
     saveState,
     loadState,
@@ -378,17 +396,22 @@ const vw = new Vue({
     newGame,
     buyScientificManagement,
     buyMailman,
-    buyMailbox, 
+    buyMailbox,
+    buyInflation,
     buyRecruiter,
     buyFactory,
     buyMailtruck,
     buyPostOffice,
     buySegway,
+    buyBigNet,
     buySpontaneousGeneration,
     buyBootstrap,
     buyTwoHands,
     buyTwoForOne,
     buyLittleHelp,
+    buySelfReliance,
+    buyEmail,
+    buyMailware,
     buyOneTime,
     buy,
     buyMax,

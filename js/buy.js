@@ -37,6 +37,32 @@ export function buyOneTime(toggle, price) {
   return true;
 }
 
+export function buyBigNet() {
+  /*
+   * Increases letters per second
+   */
+
+  return this.buyOneTime("bigNet", this.bigNetBasePrice);
+}
+
+export function buyInflation() {
+  /*
+   * Increases letter price 
+   */
+  
+  if(this.buyOneTime("inflation", this.inflationBasePrice)) {
+    this.pricePerLetter += (this.pricePerLetter * this.inflationIncrease);
+  }
+}
+
+export function buyEmail() {
+  /*
+   * Generates more letters per second
+   */
+
+  return this.buyOneTime("email", this.emailBasePrice);
+}
+
 export function buySpontaneousGeneration() {
   /*
    * Random chance to quadruple number of letters per click
@@ -69,6 +95,14 @@ export function buyScientificManagement() {
 
 }
 
+export function buyMailware() {
+  /*
+   * Dramatically increases letters per second
+   */
+
+  this.buyOneTime("mailware", this.mailwareBasePrice);
+}
+
 export function buyTwoHands() {
   /*
    *  One time upgrade. Random chance that a click to deliver will be multiplied by some multiplier.
@@ -86,6 +120,14 @@ export function buySegway() {
 }
 
 export function buyMailtruck() {}
+
+export function buySelfReliance() {
+  /*
+   *  Increases bootstrap inc
+   */
+
+  return this.buyOneTime("selfReliance", this.selfRelianceBasePrice);
+}
 
 export function buyBootstrap() {
   /*
