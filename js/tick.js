@@ -80,7 +80,7 @@ export function updateFactories() {
 
   const delay = this.factoryDelay / (this.scientificManagement ? 2 : 1);
   
-  if(this.generalUpdate("mailmanLast", delay)) {
+  if(this.generalUpdate("factoryLast", delay)) {
     this.mailboxes += this.factoryGenerate * this.factories;;
   }
 
@@ -90,7 +90,7 @@ export function updateJets() {
   if(this.jets <= 0)
     return;
 
-  if(this.generalUpdate("jetsLast", this.jetDelay)) {
+  if(this.generalUpdate("jetLast", this.jetDelay)) {
     this.deliverLetter(this.jetDelivery * this.jets * this.multiplier);
   }
 }
