@@ -8,7 +8,7 @@ export const originalState = {
   phase3: 100000,
   phase4: 500000,
   phase5: 1000000,
-  phase6: 5000000,
+  phase6: 50000000,
   phase7: 1000000000,
 
   phaseType: {},
@@ -23,6 +23,13 @@ export const originalState = {
 
   clickDelivery: 0,
   clickInc: 1,
+
+  read: false,
+  readLetters:0,
+  curiosity: 0,
+  
+  autoreader: 0,
+  autoreaderBasePrice: 10,
 
   money: 0,
 
@@ -110,11 +117,11 @@ export const originalState = {
   recruiterHire: 1,
   recruiterLast: 0,
   recruiterBasePrice: 1000,
-  recruiterDelay: 3500,
+  recruiterDelay: 2000,
   recruiters: 0,
 
   factoryBasePrice: 1500,
-  factoryDelay: 5000,
+  factoryDelay: 3500,
   factories: 0,
   factoryGenerate: 1,
   factoryLast: 0,

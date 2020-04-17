@@ -103,3 +103,9 @@ export function updateRecruiters() {
     this.mailmen += this.recruiterHire * this.recruiters;
   }
 }
+
+export function updateAutoReader() {
+  if(this.autoreader <= 0)
+    return;
+  this.clickRead(this.autoreader);
+}

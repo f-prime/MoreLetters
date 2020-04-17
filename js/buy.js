@@ -226,6 +226,20 @@ export function buyMailTruck() {
   return this.buy(false, 1, "mailTrucks", "mailTruckPrice");
 }
 
+export function buyAutoReader() {
+  if(this.curiosity <= this.autoreaderPrice)
+    return false;
+
+  this.autoreader += 1;
+  this.curiosity -= this.autoreaderPrice;
+
+  return true;
+}
+
+export function buyMaxAutoReader() {
+  while(this.buyAutoReader()) {}
+}
+
 export function buyMax(buyFunction) {
   while(buyFunction()) {}
 }

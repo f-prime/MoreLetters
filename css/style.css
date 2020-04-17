@@ -99,8 +99,15 @@ html, body {
   font-size: 15px
 }
 
+.main-stat-label {
+  font-size: 30px;
+}
+
 .main-stat {
   font-size: 50px;
+  text-align: center;
+  display:flex;
+  flex-direction: column;
   margin-top:0em;
 }
 
@@ -155,7 +162,7 @@ html, body {
 }
 
 .top-links {
-  width: 10%;
+  width: 20%;
   position: absolute;
   top: 1em;
   right: 1em;
@@ -163,6 +170,7 @@ html, body {
 
 .align-right {
   align-items: flex-end;
+  margin-right: 1em;
 }
 
 .footer-link {

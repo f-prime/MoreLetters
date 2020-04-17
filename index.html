@@ -75,35 +75,45 @@
 
       <div class="timed-event"></div>
 
-      <div class="row main-stat">
+      <div class="row main-stat" v-if="!read">
         ${{ format(round(money)) }}
       </div>
       
-      <div class="row stats">
+      <div class="row main-stat" v-else>
+        {{ format(round(readLetters)) }}<br/>
+        <div class="main-stat-label">letters</div>
+      </div>
+
+      <div class="row stats" v-show="read">
+        <stat name="curiosity" :value="format(round(curiosity))"></stat>
+        <stat name="autoreaders" :value="format(round(autoreader))"></stat>
+      </div>
+
+      <div class="row stats" v-show="!read">
         <stat name="letters" :value="format(floor(letters))"></stat>
         <stat name="letters delivered" :value="format(floor(lettersDelivered))"></stat>
         <stat name="letters per second" :value="format(lettersPerSecond)"></stat>
       </div>
-      <div class="row stats">
+      <div class="row stats" v-show="!read">
         <stat name="letters per click" :value="format(round(clickInc))"></stat>
         <stat name="letter price" :value="format(round(pricePerLetter * multiplier))"></stat>
         <stat v-show="phase >= 1" name="multiplier" :value="format(multiplier)"></stat>
       </div>
       
-      <div class="row stats">
+      <div class="row stats" v-show="!read">
         <stat v-show="phase >= 1" name="mailmen" :value="format(mailmen)"></stat>
         <stat v-show="phase >= 1" name="mailboxes" :value="format(mailboxes)"></stat>
         <stat v-show="phase >= 2 && phaseType[1] == 'idle'" name="recruiters" :value="format(recruiters)"></stat>
         <stat v-show="phase >= 2" name="factories" :value="format(factories)"></stat> 
       </div>
-      <div class="row stats">
+      <div class="row stats" v-show="!read">
         <stat v-show="phase >= 3 && phaseType[2] == 'idle'" name="segways" :value="format(segways)"></stat>
         <stat v-show="phase >= 4" name="post offices" :value="format(postOffices)"></stat>
         <stat v-show="phase >= 4 && phaseType[3] == 'idle'" name="mail trucks" :value="format(mailTrucks)"></stat>
         <stat v-show="phase >= 6 && phaseType[5] == 'idle'" name="jets" :value="format(jets)"></stat>
       </div>
       
-      <div class="milestone">
+      <div v-show="!read" class="milestone">
         <div class="row" :class='!day ? "btn-night" : ""'>
           <div class="column" v-if="this.nextPhaseAvailable">
             <div class="button" @click="prestige()"> 
@@ -124,7 +134,35 @@
     
       <!-- Delivery Button -->
 
-      <div class="buttons" :class="!day ? 'btn-night' :''">
+      <div v-show="read" class="buttons" :class="!day ? 'btn-night' : ''">
+        <div class="row">
+          <div class="column">
+            <div class="button" @click="clickRead">
+              Read Letter
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="column">
+             <buy-button 
+               this-phase-type="either"
+               :phase="phase"
+               :phase-min="1"
+               
+               curiosity="true"
+               title="Auto Reader"
+               @buy="buyAutoReader()"
+               :price="format(autoreaderPrice)"
+               :description="autoreaderDescription"
+               :max-buy="true"
+               @buy-max="buyMaxAutoReader()">
+            </buy-button>
+          </div>
+        </div>
+      </div>
+
+      <div v-show="!read" class="buttons" :class="!day ? 'btn-night' :''">
         <div class="row">
           <div class="column">
             <div class="button" @click="clickDeliver">

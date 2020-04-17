@@ -19,6 +19,7 @@ import {
   updateMailDrones,
   updateEmail,
   updateMailTruck,
+  updateAutoReader,
   updateFactories,
   updateLetters,
 } from "./tick.js";
@@ -27,6 +28,8 @@ import {
   buy,
   buyScientificManagement,
   buyMailware,
+  buyAutoReader,
+  buyMaxAutoReader,
   buySegway,
   buyJet,
   buyMailDrones,
@@ -81,6 +84,7 @@ Vue.component('buy-button', {
     'description', 
     'maxBuy',
     'owned',
+    'curiosity',
     'thisPhaseType',
     'phaseMin',
     'phase',
@@ -101,7 +105,8 @@ Vue.component('buy-button', {
     <div v-if="(phaseType == thisPhaseType || thisPhaseType == 'either' )&& phase >= phaseMin" class="button column" @click='buy'>
       <div class="button-name">
         <div>{{ title }}</div>
-        <div v-if="!owned">(\${{ price }})</div>
+        <div v-if="!owned && !curiosity">(\${{ price }})</div>
+        <div v-else-if="curiosity">({{ price }} curiosity)</div>
         <div v-else>(owned)</div>
       </div>
       <div class="button-description">
@@ -120,6 +125,10 @@ const vw = new Vue({
   data: Object.assign({}, originalState), 
  
   computed: {
+    autoreaderDescription: function() {
+      return `Auto reads letters.`;
+    },
+
     mailmanDescription: function() {
       return `Mailmen deliver ${this.mailmanDelivery} ${this.mailmanDelivery > 1 ? 'letters' : 'letter'} per mailman automatically every ${this.round(this.mailmanDelay / 1000)} seconds.`;
     },
@@ -259,6 +268,10 @@ const vw = new Vue({
       return this.round(this.mailboxBasePrice + (this.mailboxes ** 1.8));
     },
 
+    autoreaderPrice: function() {
+      return this.round(this.autoreaderBasePrice + (this.autoreader ** 1.3)); 
+    },
+
     nextPhaseAt: function() {
       switch(this.phase) {
         case 0:
@@ -309,16 +322,16 @@ const vw = new Vue({
       } else if (number < 10**9) {
         return this.getFormatted(number, 10**6) + "m";
       } else if (number < 10**12) {
-        return this.getFormatted(number, 10**9) + "g";
+        return this.getFormatted(number, 10**9) + "b";
       } else if (number < 10**15) {
         return this.getFormatted(number, 10**12) + "t";
       } else if (number < 10**18) {
-        return this.getFormatted(number, 10**15) + "p";
+        return this.getFormatted(number, 10**15) + "s";
       } else if (number == Infinity) {
         return "Infinity";
       }
 
-      return this.getFormatted(number, 10**15) + "e";
+      return this.getFormatted(number, 10**15) + "q";
     },
 
     round: function(number) {
@@ -345,9 +358,23 @@ const vw = new Vue({
       this.phaseType = phaseType;
       this.phaseType[phase] = playType;
       this.lettersDelivered = lettersDelivered;
+      
+      if(this.phase == 7) {
+        this.readLetters = 10**9; // Set letters to read to 1T otherwise it could get too big
+        this.read = true;
+      }
+
       console.log(this.phase, this.phaseType);
     },
-  
+ 
+    clickRead: function(amount) {
+      if(this.readLetters <= 0)
+        return;
+
+      this.readLetters -= (amount && amount > 0 ? amount : 0);
+      this.curiosity += 1;
+    },
+
     clickDeliver: function() {
       if(this.letters == 0)
         return;
@@ -391,17 +418,21 @@ const vw = new Vue({
       this.delta = now - new Date(this.lastTick);
       this.lastTick = now;
 
-      this.updateLetters();
-      this.updateJets();
-      this.updateEmail();
-      this.updateMailDrones(),
-      this.updateMailware();
-      this.updateBigNet();
-      this.updatePostOffices();
-      this.updateMailmen();
-      this.updateMailTruck();
-      this.updateRecruiters();
-      this.updateFactories();
+      if(!this.read) {
+        this.updateLetters();
+        this.updateJets();
+        this.updateEmail();
+        this.updateMailDrones(),
+        this.updateMailware();
+        this.updateBigNet();
+        this.updatePostOffices();
+        this.updateMailmen();
+        this.updateMailTruck();
+        this.updateRecruiters();
+        this.updateFactories();
+      } else {
+        this.updateAutoReader();
+      }
       this.saveState();
     },
 
@@ -411,6 +442,7 @@ const vw = new Vue({
     updateRecruiters,
     updateMailmen,
     updateEmail,
+    updateAutoReader,
     updateMailware,
     updateBigNet,
     updateMailTruck,
@@ -439,7 +471,9 @@ const vw = new Vue({
     buyTwoHands,
     buyTwoForOne,
     buyLittleHelp,
+    buyMaxAutoReader,
     buyCaffeine,
+    buyAutoReader,
     buySelfReliance,
     buyEmail,
     buyMailware,
