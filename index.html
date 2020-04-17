@@ -44,6 +44,9 @@
           <transition name="fade">
             <img v-show="phase == 7" src="assets/day/7.png" class="background bg6">
           </transition>
+          <transition name="fade">
+            <img v-show="phase == 8" src="assets/day/8.png" class="background bg7">
+          </transition>
         </div>
       </transition>
 
@@ -69,6 +72,9 @@
           </transition>
           <transition name="fade">
             <img v-show="phase == 7" src="assets/night/7.png" class="background bg6">
+          </transition>
+          <transition name="fade">
+            <img v-show="phase == 8" src="assets/night/8.png" class="background bg7">
           </transition>
          </div>
       </transition>
@@ -144,6 +150,7 @@
         </div>
 
         <div class="row">
+          <div class="column"></div>
           <div class="column">
              <buy-button 
                this-phase-type="either"
@@ -159,14 +166,29 @@
                @buy-max="buyMaxAutoReader()">
             </buy-button>
           </div>
+          <div class="column"></div>
         </div>
       </div>
 
       <div v-show="read && readLetters <= 0" class="letter" :class="!day ? 'letter-night' : ''">
-        <div class="row">
-          <div class="column">
-            There will be something interesting here... not sure what yet. If you got this far thanks for playing. 
-          </div>
+        <div class="letter">
+          <transition name="fade">
+            <div class="letter-container">
+              <img v-show="day" src="assets/day/letter.png">
+              <img v-show="!day" src="assets/night/letter.png">
+              <div class="letter-header">
+                Dear Alsa,
+              </div>
+              <div class="letter-body">
+                I wish I would have said all the things
+                that I <br/>wanted to say.
+              </div>
+              <div class="letter-footer">
+                Love,<br/>
+                Lars
+              </div>
+            </div>
+          </transition>
         </div>
       </div>
 
