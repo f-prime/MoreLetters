@@ -116,7 +116,7 @@
         <stat v-show="phase >= 3 && phaseType[2] == 'idle'" name="segways" :value="format(segways)"></stat>
         <stat v-show="phase >= 4" name="post offices" :value="format(postOffices)"></stat>
         <stat v-show="phase >= 4 && phaseType[3] == 'idle'" name="mail trucks" :value="format(mailTrucks)"></stat>
-        <stat v-show="phase >= 6 && phaseType[5] == 'idle'" name="jets" :value="format(jets)"></stat>
+        <stat v-show="phase >= 5 && phaseType[4] == 'idle'" name="jets" :value="format(jets)"></stat>
       </div>
       
       <div v-show="!read" class="milestone">
