@@ -10,7 +10,16 @@ export function generalUpdate(last, delay) {
 
 export function updateLetters() {
   if(this.generalUpdate("lettersLast", this.lettersDelay)) {
-    this.letters += ((this.lettersInc * (this.mailboxes + 1)) * this.multiplier );
+    this.letters += (this.lettersInc * this.multiplier );
+  }
+}
+
+export function updateMailboxes() {
+  if(this.mailboxes <= 0)
+    return;
+
+  if(this.generalUpdate("mailboxLast", this.mailboxDelay)) {
+    this.letters += (this.mailboxes * this.multiplier);
   }
 }
 

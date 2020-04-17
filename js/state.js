@@ -108,13 +108,15 @@ export const originalState = {
 
   mailmen: 0,
   mailmanBasePrice: 10, 
-  mailmanDelay: 500,
+  mailmanDelay: 750,
   mailmanLast: 0,
   mailmanDelivery: 1,
 
   mailboxBasePrice: 10,
   mailboxes: 0,
   mailboxLettersIncrease: 1,
+  mailboxDelay: 500,
+  mailboxLast: 0,
 
   recruiterHire: 1,
   recruiterLast: 0,

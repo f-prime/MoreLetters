@@ -19,6 +19,7 @@ import {
   updateMailDrones,
   updateEmail,
   updateMailTruck,
+  updateMailboxes,
   updateAutoReader,
   updateFactories,
   updateLetters,
@@ -133,7 +134,7 @@ const vw = new Vue({
     },
    
     mailboxDescription: function() {
-      return `Increases number of letters per second by ${this.mailboxLettersIncrease}`;
+      return `Generates one letter per mailbox every ${this.mailboxDelay / 1000} seconds.`
     },
 
     bootstrapDescription: function() {
@@ -423,6 +424,7 @@ const vw = new Vue({
 
       if(!this.read) {
         this.updateLetters();
+        this.updateMailboxes();
         this.updateJets();
         this.updateEmail();
         this.updateMailDrones(),
@@ -451,6 +453,7 @@ const vw = new Vue({
     updateMailTruck,
     updateJets,
     updateMailDrones,
+    updateMailboxes,
     updatePostOffices,
     saveState,
     loadState,
@@ -485,7 +488,6 @@ const vw = new Vue({
   },
 
   created: function() {
-    console.log("I know you're a 1337 h4x0r and all, but isn't it more fun to... you know... play the game?");
     this.loadState();
     setInterval(this.update, 0);
   }
