@@ -135,11 +135,14 @@
         
         <!-- End Delivery Button -->
 
-        <!-- Phase 1 -->
-
         <transition name="fade">
-          <div class="row" v-show="phase >= 1" :class="!day ? 'btn-night' :''">
+          <div class="row" :class="!day ? 'btn-night' :''">
+            <!-- Phase 1 -->
             <buy-button 
+               this-phase-type="either"
+               :phase="phase"
+               :phase-min="1"
+               
                title="Mailman"
                @buy="buyMailman()"
                :price="format(mailmanPrice)"
@@ -147,7 +150,12 @@
                :max-buy="true"
                @buy-max="buyMax(buyMailman)">
             </buy-button>
+
             <buy-button
+               this-phase-type="either"
+               :phase="phase"
+               :phase-min="1"
+
                title="Mailbox"
                @buy="buyMailbox()"
                @buy-max="buyMax(buyMailbox)"
@@ -157,6 +165,10 @@
             ></buy-button>
             
             <buy-button
+               this-phase-type="either"
+               :phase="phase"
+               :phase-min="1"
+
                title="Bootstrap"
                @buy="buyBootstrap()"
                @buy-max="buyMax(buyBootstrap)"
@@ -164,14 +176,19 @@
                :description="bootstrapDescription"
                :max-buy="true">
             </buy-button>
+            <!-- end -->
           </div>
         </transition>
         
-        <!-- Phase 2 and 3 -->
-        
         <transition name="fade">
-          <div class="row" v-show="phaseType[1] == 'idle'" :class="!day ? 'btn-night' :''">
+          <div class="row" :class="!day ? 'btn-night' :''">
+            <!-- Phase 2 -->
             <buy-button
+                this-phase-type="idle"
+               :phase="phase"
+               :phase-min="2"
+               :phase-type="phaseType[1]"
+
                title="Recruiter"
                @buy="buyRecruiter()"
                @buy-max="buyMax(buyRecruiter)"
@@ -180,8 +197,25 @@
                :max-buy="true"
                :description="recruiterDescription" 
             ></buy-button>
+           
+            <buy-button
+              this-phase-type="either"
+              :phase="phase"
+              :phase-min="2"
+              :phase-type="phaseType[1]"
+
+              title="Two Hands"
+              @buy="buyTwoHands()"
+              :owned="twoHands"
+              :price="format(twoHandsBasePrice)"
+              :description="twoHandsDescription"
+            ></buy-button>
 
             <buy-button
+               this-phase-type="either"
+               :phase="phase"
+               :phase-min="2"
+               
                title="Factory"
                @buy="buyFactory()"
                @buy-max="buyMax(buyFactory)"
@@ -190,8 +224,16 @@
                :description="factoryDescription"
             ></buy-button>
             
+            <!-- end -->
+
+            <!-- Phase 3 -->
+
             <buy-button
-               v-show="phase >= 3"
+                this-phase-type="idle"
+               :phase="phase"
+               :phase-min="3"
+               :phase-type="phaseType[2]"
+
                title="Segway"
                @buy="buySegway()"
                @buy-max="buyMax(buySegway)"
@@ -201,70 +243,43 @@
             ></buy-button> 
             
             <buy-button
-               v-show="phase >= 3"
-               title="Scientific Management"
-               @buy="buyScientificManagement()"
-               :owned="scientificManagement"
-               :price="format(scientificManagementBasePrice)"
-               :description="scientificManagementDescription"
-            ></buy-button>
-          </div>
-        </transition>
+               this-phase-type="active"
+               :phase-min="3"
+               :phase-type="phaseType[2]"
+               :phase="phase"
 
-        <transition name="fade">
-          <div class="row" v-show="phase >= 2 && phaseType[1] == 'active'" :class="!day ? 'btn-night' :''">
-            <buy-button
-               title="Factory"
-               @buy="buyFactory()"
-               @buy-max="buyMax(buyFactory)"
-               :max-buy="true"
-               :price="format(factoryPrice)"
-               :description="factoryDescription"
-            ></buy-button>
-              
-            <buy-button
-              title="Two Hands"
-              @buy="buyTwoHands()"
-              :owned="twoHands"
-              :price="format(twoHandsBasePrice)"
-              :description="twoHandsDescription"
-            ></buy-button>
-
-            <buy-button
-               v-show="phase >= 3 && phaseType[2] == 'active'"
-               title="Scientific Management"
-               @buy="buyScientificManagement()"
-               :owned="scientificManagement"
-               :price="format(scientificManagementBasePrice)"
-               :description="scientificManagementDescription"
-            ></buy-button>
-
-            <buy-button
-               v-show="phase >= 3 && phaseType[2] == 'active'"
                title="Two for One"
                description="Doubles Bootstrap letters per click interval"
                @buy="buyTwoForOne()"
                :owned="twoForOne"
                :price="format(twoForOneBasePrice)"
             ></buy-button>
+              
+            <buy-button
+               this-phase-type="either"
+               :phase="phase"
+               :phase-min="3"
+
+               title="Scientific Management"
+               @buy="buyScientificManagement()"
+               :owned="scientificManagement"
+               :price="format(scientificManagementBasePrice)"
+               :description="scientificManagementDescription"
+            ></buy-button>
+
+            <!-- end -->
           </div>
- 
         </transition>
 
-        <! -- Phase 4 and 5 -->
+        <!-- Phase 4 and 5 -->
         
         <transition name="fade">
-          <div class="row" v-show="phase >= 4 && phaseType[3] == 'idle'" :class="!day ? 'btn-night' :''">
+          <div class="row" :class="!day ? 'btn-night' :''">
             <buy-button
-              title="Mail Truck"
-              :description="mailTruckDescription"
-              :price="format(mailTruckPrice)"
-              @buy="buyMailTruck()"
-              @buy-max="buyMax(buyMailTruck)"
-              :max-buy="true" 
-            ></buy-button> 
-            
-            <buy-button
+              this-phase-type="either"
+              :phase-min="4"
+              :phase="phase"
+
               title="Post Office"
               @buy="buyPostOffice()"
               @buy-max="buyMax(buyPostOffice)"
@@ -274,7 +289,37 @@
             ></buy-button>
 
             <buy-button
-              v-show="phase >= 5 && phaseType[4] == 'idle'"
+               this-phase-type="active"
+               :phase-min="4"
+               :phase-type="phaseType[3]"
+               :phase="phase"
+               title="Little Help"
+               @buy="buyLittleHelp()"
+               :price="format(littleHelpBasePrice)"
+               :owned="littleHelp"
+               :description="littleHelpDescription"
+            ></buy-button>
+
+            <buy-button
+              this-phase-type="idle"
+              :phase-min="4"
+              :phase-type="phaseType[3]"
+              :phase="phase"
+                           
+              title="Mail Truck"
+              :description="mailTruckDescription"
+              :price="format(mailTruckPrice)"
+              @buy="buyMailTruck()"
+              @buy-max="buyMax(buyMailTruck)"
+              :max-buy="true" 
+            ></buy-button> 
+
+            <buy-button
+              this-phase-type="either"
+              :phase-min="5"
+              :phase-type="phaseType[4]"
+              :phase="phase"
+
               title="Email"
               :price="format(emailBasePrice)"
               :owned="email"
@@ -283,7 +328,23 @@
             ></buy-button>
             
             <buy-button
-              v-show="phase >= 5 && phaseType[4] == 'idle'"
+               this-phase-type="active"
+               :phase-min="5"
+               :phase-type="phaseType[4]"
+               :phase="phase"
+               title="Spontaneous Generation"
+               @buy="buySpontaneousGeneration()"
+               :owned="spontaneousGeneration"
+               :price="format(spontaneousGenerationBasePrice)"
+               :description="spontaneousGenerationDescription"
+            ></buy-button>
+
+            <buy-button
+              this-phase-type="idle"
+              :phase-min="5"
+              :phase-type="phaseType[4]"
+              :phase="phase"
+
               title="Caffeine"
               :description="caffeineDescription"
               :price="format(caffeineBasePrice)"
@@ -295,49 +356,13 @@
         </transition>
 
         <transition name="fade">
-          <div class="row" v-show="phase >= 4 && phaseType[3] == 'active'" :class="!day ? 'btn-night' :''">
+          <div class="row" :class="!day ? 'btn-night' :''">
             <buy-button
-               title="Little Help"
-               @buy="buyLittleHelp()"
-               :price="format(littleHelpBasePrice)"
-               :owned="littleHelp"
-               :description="littleHelpDescription"
-            ></buy-button>
+              :phase="phase"
+              :phase-min="6"
+              :phase-type="phaseType[5]"
+              this-phase-type="idle"
 
-            <buy-button
-              title="Post Office"
-              @buy="buyPostOffice()"
-              @buy-max="buyMax(buyPostOffice)"
-              :price="format(postOfficePrice)"
-              :max-buy="true"
-              :description="postOfficeDescription"
-            ></buy-button>
-            
-            <buy-button
-               v-show="phase >= 5 && phaseType[4] == 'active'"
-               title="Spontaneous Generation"
-               @buy="buySpontaneousGeneration()"
-               :owned="spontaneousGeneration"
-               :price="format(spontaneousGenerationBasePrice)"
-               :description="spontaneousGenerationDescription"
-            ></buy-button>
-
-            <buy-button
-              v-show="phase >= 5 && phaseType[4] == 'active'"
-              title="Email"
-              :price="format(emailBasePrice)"
-              :owned="email"
-              @buy="buyEmail()"
-              :description="emailDescription"
-            ></buy-button>
-          </div>
-        </transition>
-
-        <! -- Phase 6 -->
-
-        <transition name="fade">
-          <div class="row" v-show="phase >= 6 && phaseType[5] == 'idle'" :class="!day ? 'btn-night' :''">
-            <buy-button
               title="Jet"
               :price="format(jetPrice)"
               :max-buy="true"
@@ -347,6 +372,23 @@
             ></buy-button> 
             
             <buy-button
+              :phase="phase"
+              :phase-min="6"
+              :phase-type="phaseType[5]"
+              this-phase-type="active"
+
+              title="Inflation"
+              :description="inflationDescription"
+              :price="format(inflationBasePrice)"
+              @buy="buyInflation()"
+              :owned="inflation"
+            ></buy-button>
+
+            <buy-button
+              :phase="phase"
+              :phase-min="6"
+              this-phase-type="either"
+
               title="Big Net"
               :description="bigNetDescription"
               :price="format(bigNetBasePrice)"
@@ -355,7 +397,25 @@
             ></buy-button>
              
             <buy-button
-              v-show="phase >= 7 && phaseType[6] == 'idle'"
+               :phase="phase"
+               :phase-min="7"
+               :phase-type="phaseType[6]"
+               this-phase-type="active"
+
+               title="Self-Reliance"
+               :owned="selfReliance"
+               @buy="buySelfReliance()"
+               :price="format(selfRelianceBasePrice)"
+               :description="selfRelianceDescription"
+            ></buy-button>
+ 
+
+            <buy-button
+              :phase="phase"
+              :phase-min="7"
+              :phase-type="phaseType[6]"
+              this-phase-type="idle"
+
               title="Mail Drones"
               :description="mailDronesDescription"
               :price="format(mailDronesBasePrice)"
@@ -364,7 +424,10 @@
             ></buy-button> 
             
             <buy-button
-              v-show="phase >= 7 && phaseType[6] == 'idle'"
+              :phase="phase"
+              :phase-min="7"
+              this-phase-type="either"
+
               title="Mailware"
               @buy="buyMailware"
               :owned="mailware"
@@ -373,45 +436,6 @@
             ></buy-button>
           </div>
         </transition>
-
-        <transition name="fade">
-          <div class="row" v-show="phase >= 6 && phaseType[5] == 'active'" :class="!day ? 'btn-night' :''">
-            <buy-button
-               title="Inflation"
-               :description="inflationDescription"
-               :price="format(inflationBasePrice)"
-               @buy="buyInflation()"
-               :owned="inflation"
-            ></buy-button>
-
-            <buy-button
-              title="Big Net"
-              :description="bigNetDescription"
-              :price="format(bigNetBasePrice)"
-              @buy="buyBigNet()"
-              :owned="bigNet"
-            ></buy-button>
-            
-            <buy-button
-               v-show="phase >= 7 && phaseType[6] == 'active'"
-               title="Self-Reliance"
-               :owned="selfReliance"
-               @buy="buySelfReliance()"
-               :price="format(selfRelianceBasePrice)"
-               :description="selfRelianceDescription"
-            ></buy-button>
-
-            <buy-button
-              v-show="phase >= 7 && phaseType[6] == 'active'"
-              title="Mailware"
-              @buy="buyMailware"
-              :owned="mailware"
-              :price="format(mailwareBasePrice)"
-              :description="mailwareDescription"
-            ></buy-button>
-          </div>
-        </transition>
-
       </div>
     </div>
   </body>

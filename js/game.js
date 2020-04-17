@@ -81,6 +81,10 @@ Vue.component('buy-button', {
     'description', 
     'maxBuy',
     'owned',
+    'thisPhaseType',
+    'phaseMin',
+    'phase',
+    'phaseType'
   ],
   
   methods: {
@@ -94,7 +98,7 @@ Vue.component('buy-button', {
   },
 
   template: `
-    <div class="button column" @click='buy'>
+    <div v-if="(phaseType == thisPhaseType || thisPhaseType == 'either' )&& phase >= phaseMin" class="button column" @click='buy'>
       <div class="button-name">
         <div>{{ title }}</div>
         <div v-if="!owned">(\${{ price }})</div>
@@ -199,11 +203,7 @@ const vw = new Vue({
     caffeineDescription: function() {
       return `Every mailman gets put on a madatory drip of high octane espresso. Increases mailman efficiency by ${this.caffeineBoost * 100}%`
     },
-
-    isActivePlayer: function() {
-      return this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
-    },
-    
+   
     bootstrapInc: function() {
       let inc = this.bootstrapDelivery * this.multiplier * (this.twoForOne ? 2 : 1);
       if(this.selfReliance)
@@ -286,6 +286,10 @@ const vw = new Vue({
   },
 
   methods: {
+    isActivePlayer: function() {
+      return Math.random() > 0.5;//this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
+    },
+ 
     getFormatted: function(number, divisor) {
       const result = (number / divisor).toString().match(/[0-9]+\.?[0-9]?[0-9]?/g);
       if(result == null)
@@ -329,7 +333,7 @@ const vw = new Vue({
       const lettersDelivered = this.lettersDelivered;
       const phase = this.phase;
       const phaseType = this.phaseType;
-      const playType = this.isActivePlayer ? 'active' : 'idle'; 
+      const playType = this.isActivePlayer() ? 'active' : 'idle'; 
       const day = this.day;
 
       for(const key in originalState) {
