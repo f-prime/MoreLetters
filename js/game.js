@@ -47,7 +47,6 @@ import {
   buySpontaneousGeneration,
   buyFactory,
   buyBootstrap,
-  buyMailtruck,
   buyOneTime,
   buyPostOffice,
   buyMax,
@@ -158,7 +157,7 @@ const vw = new Vue({
     },
 
     twoHandsDescription: function() {
-      return `Each delivery click has a ${this.twoHandsChance * 100}% chance of deliverying ${this.twoHandsMultiplier}x the amount of letters.`
+      return `Each delivery click has a ${this.twoHandsChance * 100}% chance of delivering ${this.twoHandsMultiplier}x the amount of letters.`
     },
 
     postOfficeDescription: function() {
@@ -249,7 +248,7 @@ const vw = new Vue({
     },
 
     segwayPrice: function() {
-      return this.round(this.segwayBasePrice + (this.segways ** 5));
+      return this.round(this.segwayBasePrice + (this.segways ** 1.8));
     },
 
     factoryPrice: function() {
@@ -288,6 +287,8 @@ const vw = new Vue({
           return this.phase6;
         case 6:
           return this.phase7;
+        case 7:
+          return this.phase8;
         default:
           return Infinity;
       }
@@ -300,7 +301,7 @@ const vw = new Vue({
 
   methods: {
     isActivePlayer: function() {
-      return this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
+      return true; //this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
     },
  
     getFormatted: function(number, divisor) {
@@ -359,8 +360,8 @@ const vw = new Vue({
       this.phaseType[phase] = playType;
       this.lettersDelivered = lettersDelivered;
       
-      if(this.phase == 7) {
-        this.readLetters = 10**9; // Set letters to read to 1T otherwise it could get too big
+      if(this.phase == 8) {
+        this.readLetters = this.phase8; // Set letters to read to 1T otherwise it could get too big
         this.read = true;
       }
 
@@ -387,10 +388,7 @@ const vw = new Vue({
 
       const twoHandsMult = this.twoHands && Math.random() < this.twoHandsChance ? this.twoHandsMultiplier : 1;
       const spontGen = this.spontaneousGeneration && Math.random() < this.spontaneousGenerationChance ? this.spontaneousGenerationMult : 1;
-      
-      console.log("2 Hands", twoHandsMult);
-      console.log("Spont Gen", spontGen);
-      
+     
       if(this.littleHelp) {
         const littleHelp = Math.random();
         if(littleHelp < this.littleHelpChance) {
@@ -467,7 +465,6 @@ const vw = new Vue({
     buyInflation,
     buyRecruiter,
     buyFactory,
-    buyMailtruck,
     buyPostOffice,
     buySegway,
     buyBigNet,

@@ -134,7 +134,7 @@
     
       <!-- Delivery Button -->
 
-      <div v-show="read" class="buttons" :class="!day ? 'btn-night' : ''">
+      <div v-show="read && readLetters > 0" class="buttons" :class="!day ? 'btn-night' : ''">
         <div class="row">
           <div class="column">
             <div class="button" @click="clickRead">
@@ -158,6 +158,14 @@
                :max-buy="true"
                @buy-max="buyMaxAutoReader()">
             </buy-button>
+          </div>
+        </div>
+      </div>
+
+      <div v-show="read && readLetters <= 0" class="letter" :class="!day ? 'letter-night' : ''">
+        <div class="row">
+          <div class="column">
+            Thanks for playing the demo. 
           </div>
         </div>
       </div>
@@ -351,20 +359,7 @@
               @buy-max="buyMax(buyMailTruck)"
               :max-buy="true" 
             ></buy-button> 
-
-            <buy-button
-              this-phase-type="either"
-              :phase-min="5"
-              :phase-type="phaseType[4]"
-              :phase="phase"
-
-              title="Email"
-              :price="format(emailBasePrice)"
-              :owned="email"
-              @buy="buyEmail()"
-              :description="emailDescription"
-            ></buy-button>
-            
+           
             <buy-button
                this-phase-type="active"
                :phase-min="5"
@@ -389,16 +384,11 @@
               @buy="buyCaffeine()"
               :owned="caffeine"
             ></buy-button>
-          </div>
 
-        </transition>
-
-        <transition name="fade">
-          <div class="row" :class="!day ? 'btn-night' :''">
             <buy-button
               :phase="phase"
-              :phase-min="6"
-              :phase-type="phaseType[5]"
+              :phase-min="5"
+              :phase-type="phaseType[4]"
               this-phase-type="idle"
 
               title="Jet"
@@ -408,7 +398,27 @@
               @buy-max="buyMax(buyJet)"
               :description="jetsDescription" 
             ></buy-button> 
-            
+
+          </div>
+
+        </transition>
+
+        <transition name="fade">
+          <div class="row" :class="!day ? 'btn-night' :''">
+
+            <buy-button
+              this-phase-type="either"
+              :phase-min="6"
+              :phase-type="phaseType[5]"
+              :phase="phase"
+
+              title="Email"
+              :price="format(emailBasePrice)"
+              :owned="email"
+              @buy="buyEmail()"
+              :description="emailDescription"
+            ></buy-button> 
+
             <buy-button
               :phase="phase"
               :phase-min="6"

@@ -3,13 +3,14 @@ export const originalState = {
   
   phase:0,
 
-  phase1: 40,
+  phase1: 50,
   phase2: 10000,
   phase3: 100000,
-  phase4: 500000,
-  phase5: 1000000,
-  phase6: 50000000,
+  phase4: 1000000,
+  phase5: 10000000,
+  phase6: 100000000,
   phase7: 1000000000,
+  phase8: 10000000000,
 
   phaseType: {},
 
@@ -32,7 +33,7 @@ export const originalState = {
   autoreader: 0,
   autoreaderBasePrice: 10,
 
-  money: 0,
+  money: 100000,
 
   lettersInc: 1,
   lettersDelay: 1000,
@@ -66,11 +67,11 @@ export const originalState = {
   emailInc: 10,
   emailDelay: 100,
   emailLast: 0,
-  emailBasePrice: 200000000,
+  emailBasePrice: 1000000,
 
   selfReliance: false,
   selfRelianceBasePrice: 10 ** 9,
-  selfRelianceInc: 300,
+  selfRelianceInc: 1000,
 
   mailware: false,
   mailwareBasePrice: 11 ** 9,
@@ -93,7 +94,7 @@ export const originalState = {
   spontaneousGeneration: false,
   spontaneousGenerationBasePrice: 100000000,
   spontaneousGenerationChance: 0.30,
-  spontaneousGenerationMult: 4,
+  spontaneousGenerationMult: 25,
   
   bootstrap: 0,
   bootstrapBasePrice: 25,
@@ -140,7 +141,7 @@ export const originalState = {
   caffeineBasePrice: 100000,
   caffeineBoost: 0.3,
 
-  scientificManagementBasePrice: 100000,
+  scientificManagementBasePrice: 10000,
   scientificManagement: false,
 
   lastSave: new Date(),

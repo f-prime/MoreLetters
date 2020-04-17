@@ -127,8 +127,6 @@ export function buySegway() {
   return this.buy(false, 1, "segways", "segwayPrice", "mailmanDeliveryDelay", this.segwayMailmanBOost);  
 }
 
-export function buyMailtruck() {}
-
 export function buySelfReliance() {
   /*
    *  Increases bootstrap inc
@@ -139,7 +137,7 @@ export function buySelfReliance() {
 
 export function buyBootstrap() {
   /*
-   * Increases number of letters per click by 1 but decreases mailman efficiency
+   * Increases number of letters per click
    */
 
   if(this.money < this.bootstrapPrice)
@@ -147,7 +145,7 @@ export function buyBootstrap() {
 
   this.money -= this.bootstrapPrice;
   this.bootstrap += this.bootstrapInc;  
-  this.clickInc += 1 * this.multiplier;
+  this.clickInc += this.bootstrapInc * this.multiplier;
 
   return true;
 }
@@ -227,7 +225,7 @@ export function buyMailTruck() {
 }
 
 export function buyAutoReader() {
-  if(this.curiosity <= this.autoreaderPrice)
+  if(this.curiosity < this.autoreaderPrice)
     return false;
 
   this.autoreader += this.autoreaderInc;;
