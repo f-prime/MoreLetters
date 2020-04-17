@@ -371,8 +371,13 @@ const vw = new Vue({
       if(this.readLetters <= 0)
         return;
 
-      this.readLetters -= (amount && amount > 0 ? amount : 0);
-      this.curiosity += 1;
+      const inc = (amount && amount > 0 ? amount : 1);
+
+      this.readLetters -= inc;
+      this.curiosity += inc;
+
+      if(this.readLetters < 0)
+        this.readLetters = 0;
     },
 
     clickDeliver: function() {

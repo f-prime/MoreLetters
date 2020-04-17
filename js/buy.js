@@ -230,7 +230,7 @@ export function buyAutoReader() {
   if(this.curiosity <= this.autoreaderPrice)
     return false;
 
-  this.autoreader += 10;
+  this.autoreader += this.autoreaderInc;;
   this.curiosity -= this.autoreaderPrice;
 
   return true;

@@ -28,6 +28,7 @@ export const originalState = {
   readLetters:0,
   curiosity: 0,
   
+  autoreaderInc: 1,
   autoreader: 0,
   autoreaderBasePrice: 10,
 
