@@ -20,7 +20,34 @@ html, body {
 .bgs img {
   object-fit: cover;
   width: 100%;
-  height: 95%;
+}
+
+.bg0 {
+  height:50%;
+}
+
+.bg1 {
+  height: 100%;
+}
+
+.bg2 {
+  height: 100%;
+}
+
+.bg3 {
+  height: 100%;
+}
+
+.bg4 {
+  height: 100%;
+}
+
+.bg5 {
+  height: 100%;
+}
+
+.bg6 {
+  height: 100%;
 }
 
 .fade-enter-active, .fade-leave-active {

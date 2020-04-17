@@ -9,7 +9,7 @@
   </head>
   <body id="body">
     <div class="container" id="app" :style="!day ? 'color: white;' : ''">
-      <div class="bg-color" :style="!day ? 'background-color: #414042;' : ''"></div>
+      <div class="bg-color" :style="!day ? 'background-color: #383838;' : ''"></div>
       <div class="top-links">
         <div class="row">
           <div class="column align-right">
@@ -24,25 +24,25 @@
       <transition name="fade"> 
         <div class="bgs" v-show="day">
           <transition name="fade">
-            <img v-show="phase == 1" src="assets/day/1.png" class="background bg1">
+            <img v-show="phase == 1" src="assets/day/1.png" class="background bg0">
           </transition>
           <transition name="fade">
             <img v-show="phase == 2" src="assets/day/2.png" class="background bg1">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 3" src="assets/day/3.png" class="background bg1">
+            <img v-show="phase == 3" src="assets/day/3.png" class="background bg2">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 4" src="assets/day/4.png" class="background bg1">
+            <img v-show="phase == 4" src="assets/day/4.png" class="background bg3">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 5" src="assets/day/5.png" class="background bg1">
+            <img v-show="phase == 5" src="assets/day/5.png" class="background bg4">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 6" src="assets/day/6.png" class="background bg1">
+            <img v-show="phase == 6" src="assets/day/6.png" class="background bg5">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 7" src="assets/day/7.png" class="background bg1">
+            <img v-show="phase == 7" src="assets/day/7.png" class="background bg6">
           </transition>
         </div>
       </transition>
@@ -50,25 +50,25 @@
       <transition name="fade"> 
         <div class="bgs" v-show="!day">
           <transition name="fade">
-            <img v-show="phase == 1" src="assets/night/1.png" class="background bg1">
+            <img v-show="phase == 1" src="assets/night/1.png" class="background bg0">
           </transition>
           <transition name="fade">
             <img v-show="phase == 2" src="assets/night/2.png" class="background bg1">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 3" src="assets/night/3.png" class="background bg1">
+            <img v-show="phase == 3" src="assets/night/3.png" class="background bg2">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 4" src="assets/night/4.png" class="background bg1">
+            <img v-show="phase == 4" src="assets/night/4.png" class="background bg3">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 5" src="assets/night/5.png" class="background bg1">
+            <img v-show="phase == 5" src="assets/night/5.png" class="background bg4">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 6" src="assets/night/6.png" class="background bg1">
+            <img v-show="phase == 6" src="assets/night/6.png" class="background bg5">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 7" src="assets/night/7.png" class="background bg1">
+            <img v-show="phase == 7" src="assets/night/7.png" class="background bg6">
           </transition>
          </div>
       </transition>
@@ -165,7 +165,7 @@
       <div v-show="read && readLetters <= 0" class="letter" :class="!day ? 'letter-night' : ''">
         <div class="row">
           <div class="column">
-            Thanks for playing the demo. 
+            There will be something interesting here... not sure what yet. If you got this far thanks for playing. 
           </div>
         </div>
       </div>
