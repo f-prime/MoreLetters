@@ -287,7 +287,7 @@ const vw = new Vue({
 
   methods: {
     isActivePlayer: function() {
-      return Math.random() > 0.5;//this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
+      return this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
     },
  
     getFormatted: function(number, divisor) {
