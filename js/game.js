@@ -269,7 +269,7 @@ const vw = new Vue({
     },
 
     autoreaderPrice: function() {
-      return this.round(this.autoreaderBasePrice + (this.autoreader ** 1.3)); 
+      return this.round(this.autoreaderBasePrice + ((this.autoreader / 10) ** 1.05)); 
     },
 
     nextPhaseAt: function() {
