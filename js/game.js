@@ -137,7 +137,7 @@ const vw = new Vue({
     },
 
     factoryDescription: function() {
-      return `Generates ${this.factoryGenerate} ${this.factoryGenerate == 1 ? 'factory' : 'factories'} per factory every ${this.factoryDelay / 1000} seconds`;
+      return `Generates ${this.factoryGenerate} ${this.factoryGenerate == 1 ? 'mailbox' : 'mailboxes'} per factory every ${this.factoryDelay / 1000} seconds`;
     },
 
     segwayDescription: function() {
