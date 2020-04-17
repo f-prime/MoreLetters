@@ -301,7 +301,7 @@ const vw = new Vue({
 
   methods: {
     isActivePlayer: function() {
-      return true; //this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
+      return this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
     },
  
     getFormatted: function(number, divisor) {
