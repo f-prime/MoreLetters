@@ -194,7 +194,7 @@ const vw = new Vue({
     },
 
     mailDronesDescription: function() {
-      return `Unlease a swarm of mail delivering drones. Delivers ${this.mailDronesDelivery} letters every ${this.mailDronesDelay / 1000} seconds.`;
+      return `Unleash a swarm of mail delivering drones. Delivers ${this.mailDronesDelivery} letters every ${this.mailDronesDelay / 1000} seconds.`;
     },
 
     jetsDescription: function() {
