@@ -33,7 +33,7 @@ export const originalState = {
   autoreader: 0,
   autoreaderBasePrice: 10,
 
-  money: 100000,
+  money: 0,
 
   lettersInc: 1,
   lettersDelay: 1000,
