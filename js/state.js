@@ -135,7 +135,7 @@ export const originalState = {
   segwayMailmanBoost: 0.025,
 
   mailTrucks: 0,
-  mailTruckDelay: 500,
+  mailTruckDelay: 250,
   mailTruckBasePrice:1000,
   mailTruckInc: 2,
 
