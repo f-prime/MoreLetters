@@ -109,13 +109,13 @@
       <div class="row stats" v-show="!read">
         <stat v-show="phase >= 1" name="mailmen" :value="format(mailmen)"></stat>
         <stat v-show="phase >= 1" name="mailboxes" :value="format(mailboxes)"></stat>
-        <stat v-show="phase >= 2 && phaseType[1] == 'idle'" name="recruiters" :value="format(recruiters)"></stat>
-        <stat v-show="phase >= 2" name="factories" :value="format(factories)"></stat> 
+        <stat v-show="phase >= 2" name="post offices" :value="format(postOffices)"></stat>
+        <stat v-show="phase >= 2 && phaseType[1] == 'idle'" name="mail trucks" :value="format(mailTrucks)"></stat>
       </div>
       <div class="row stats" v-show="!read">
         <stat v-show="phase >= 3 && phaseType[2] == 'idle'" name="segways" :value="format(segways)"></stat>
-        <stat v-show="phase >= 4" name="post offices" :value="format(postOffices)"></stat>
-        <stat v-show="phase >= 4 && phaseType[3] == 'idle'" name="mail trucks" :value="format(mailTrucks)"></stat>
+        <stat v-show="phase >= 4 && phaseType[1] == 'idle'" name="recruiters" :value="format(recruiters)"></stat>
+        <stat v-show="phase >= 4" name="factories" :value="format(factories)"></stat> 
         <stat v-show="phase >= 5 && phaseType[4] == 'idle'" name="jets" :value="format(jets)"></stat>
       </div>
       
