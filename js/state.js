@@ -87,7 +87,7 @@ export const originalState = {
  
   jets: 0,
   jetDelivery: 10,
-  jetDelay: 500,
+  jetDelay: 250,
   jetLast: 0,
   jetBasePrice: 500000, 
 
