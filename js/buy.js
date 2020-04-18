@@ -124,7 +124,7 @@ export function buySegway() {
    * Increases mailman delivery speed by 2.5% per segway
    */
 
-  return this.buy(false, 1, "segways", "segwayPrice", "mailmanDeliveryDelay", this.segwayMailmanBOost);  
+  return this.buy(false, 1, "segways", "segwayPrice", "mailmanDelay", this.segwayMailmanBoost);  
 }
 
 export function buySelfReliance() {
