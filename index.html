@@ -252,19 +252,18 @@
           <div class="row" :class="!day ? 'btn-night' :''">
             <!-- Phase 2 -->
             <buy-button
-                this-phase-type="idle"
-               :phase="phase"
-               :phase-min="2"
-               :phase-type="phaseType[1]"
-
-               title="Recruiter"
-               @buy="buyRecruiter()"
-               @buy-max="buyMax(buyRecruiter)"
-               :max-buy="true"
-               :price="format(recruiterPrice)"
-               :max-buy="true"
-               :description="recruiterDescription" 
-            ></buy-button>
+              this-phase-type="idle"
+              :phase="phase"
+              :phase-min="2"
+              :phase-type="phaseType[1]"
+              title="Mail Truck"
+              :description="mailTruckDescription"
+              :price="format(mailTruckPrice)"
+              @buy="buyMailTruck()"
+              @buy-max="buyMax(buyMailTruck)"
+              :max-buy="true" 
+   
+           ></buy-button>
            
             <buy-button
               this-phase-type="active"
@@ -284,12 +283,12 @@
                :phase="phase"
                :phase-min="2"
                
-               title="Factory"
-               @buy="buyFactory()"
-               @buy-max="buyMax(buyFactory)"
-               :max-buy="true"
-               :price="format(factoryPrice)"
-               :description="factoryDescription"
+              title="Post Office"
+              @buy="buyPostOffice()"
+              @buy-max="buyMax(buyPostOffice)"
+              :price="format(postOfficePrice)"
+              :max-buy="true"
+              :description="postOfficeDescription"
             ></buy-button>
             
             <!-- end -->
@@ -324,15 +323,16 @@
             ></buy-button>
               
             <buy-button
-               this-phase-type="either"
+               this-phase-type="active"
                :phase="phase"
                :phase-min="3"
+               
+               title="Little Help"
+               @buy="buyLittleHelp()"
+               :price="format(littleHelpBasePrice)"
+               :owned="littleHelp"
+               :description="littleHelpDescription"
 
-               title="Scientific Management"
-               @buy="buyScientificManagement()"
-               :owned="scientificManagement"
-               :price="format(scientificManagementBasePrice)"
-               :description="scientificManagementDescription"
             ></buy-button>
 
             <!-- end -->
@@ -348,24 +348,26 @@
               :phase-min="4"
               :phase="phase"
 
-              title="Post Office"
-              @buy="buyPostOffice()"
-              @buy-max="buyMax(buyPostOffice)"
-              :price="format(postOfficePrice)"
-              :max-buy="true"
-              :description="postOfficeDescription"
-            ></buy-button>
+               title="Factory"
+               @buy="buyFactory()"
+               @buy-max="buyMax(buyFactory)"
+               :max-buy="true"
+               :price="format(factoryPrice)"
+               :description="factoryDescription"
+ 
+           ></buy-button>
 
             <buy-button
                this-phase-type="active"
                :phase-min="4"
                :phase-type="phaseType[3]"
                :phase="phase"
-               title="Little Help"
-               @buy="buyLittleHelp()"
-               :price="format(littleHelpBasePrice)"
-               :owned="littleHelp"
-               :description="littleHelpDescription"
+               title="Scientific Management"
+               @buy="buyScientificManagement()"
+               :owned="scientificManagement"
+               :price="format(scientificManagementBasePrice)"
+               :description="scientificManagementDescription"
+
             ></buy-button>
 
             <buy-button
@@ -373,14 +375,16 @@
               :phase-min="4"
               :phase-type="phaseType[3]"
               :phase="phase"
-                           
-              title="Mail Truck"
-              :description="mailTruckDescription"
-              :price="format(mailTruckPrice)"
-              @buy="buyMailTruck()"
-              @buy-max="buyMax(buyMailTruck)"
-              :max-buy="true" 
-            ></buy-button> 
+                     
+               title="Recruiter"
+               @buy="buyRecruiter()"
+               @buy-max="buyMax(buyRecruiter)"
+               :max-buy="true"
+               :price="format(recruiterPrice)"
+               :max-buy="true"
+               :description="recruiterDescription" 
+ 
+           ></buy-button> 
            
             <buy-button
                this-phase-type="active"

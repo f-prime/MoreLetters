@@ -233,7 +233,7 @@ const vw = new Vue({
     },
 
     postOfficePrice: function() {
-      return this.round(this.postOfficeBasePrice + (this.postOffices ** 4));
+      return this.round(this.postOfficeBasePrice + (this.postOffices ** 1.5));
     },
 
     bootstrapPrice: function() {
@@ -241,11 +241,11 @@ const vw = new Vue({
     },
 
     mailTruckPrice: function() {
-      return this.round(this.mailTruckBasePrice + (this.mailTrucks ** 2.2));
+      return this.round(this.mailTruckBasePrice + (this.mailTrucks ** 1.8));
     },
 
     recruiterPrice: function() {
-      return this.round(this.recruiterBasePrice + (this.recruiters ** 2));
+      return this.round(this.recruiterBasePrice + (this.recruiters ** 3));
     },
 
     segwayPrice: function() {
@@ -253,7 +253,7 @@ const vw = new Vue({
     },
 
     factoryPrice: function() {
-      return this.round(this.factoryBasePrice + (this.factories ** 2.2));
+      return this.round(this.factoryBasePrice + (this.factories ** 2.5));
     },
 
     lettersPerSecond: function() {

@@ -67,7 +67,7 @@ export function updateMailTruck() {
 
 export function updatePostOffices() {
   if(this.generalUpdate("postOfficeLast", this.postOfficeDelay)) {
-    this.letters += (this.postOffices * this.postOfficeInc);
+    this.letters += (this.postOffices * this.postOfficeInc * this.multiplier);
   }
 }
 
@@ -90,7 +90,7 @@ export function updateFactories() {
   const delay = this.factoryDelay / (this.scientificManagement ? 2 : 1);
   
   if(this.generalUpdate("factoryLast", delay)) {
-    this.mailboxes += this.factoryGenerate * this.factories;;
+    this.mailboxes += this.factoryGenerate * this.factories * this.multiplier;
   }
 
 }
@@ -109,7 +109,7 @@ export function updateRecruiters() {
     return;
 
   if(this.generalUpdate("recruiterLast", this.recruiterDelay)) {
-    this.mailmen += this.recruiterHire * this.recruiters;
+    this.mailmen += this.recruiterHire * this.recruiters * this.multiplier;
   }
 }
 

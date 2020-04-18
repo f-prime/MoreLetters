@@ -43,12 +43,12 @@ export const originalState = {
 
   littleHelp: false,
   littleHelpChance:0.30,
-  littleHelpBasePrice: 200000,
+  littleHelpBasePrice: 20000,
 
   postOffices: 0,
   postOfficeDelay: 500,
   postOfficeInc: 2,
-  postOfficeBasePrice: 50000,
+  postOfficeBasePrice: 1500,
   postOfficeLast:0,
 
   twoForOne: false,
@@ -120,11 +120,11 @@ export const originalState = {
 
   recruiterHire: 1,
   recruiterLast: 0,
-  recruiterBasePrice: 1000,
+  recruiterBasePrice: 50000,
   recruiterDelay: 2000,
   recruiters: 0,
 
-  factoryBasePrice: 1500,
+  factoryBasePrice: 50000,
   factoryDelay: 3500,
   factories: 0,
   factoryGenerate: 1,
@@ -136,14 +136,14 @@ export const originalState = {
 
   mailTrucks: 0,
   mailTruckDelay: 500,
-  mailTruckBasePrice:40000,
+  mailTruckBasePrice:1000,
   mailTruckInc: 2,
 
   caffeine: false,
   caffeineBasePrice: 100000,
   caffeineBoost: 0.3,
 
-  scientificManagementBasePrice: 10000,
+  scientificManagementBasePrice: 100000,
   scientificManagement: false,
 
   lastSave: new Date(),
