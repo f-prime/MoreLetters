@@ -1,5 +1,9 @@
 'use strict';
 
+import {
+  setupTests,
+} from "./tests.js"
+
 import { 
   originalState, 
   saveState, 
@@ -85,15 +89,32 @@ Vue.component('buy-button', {
     'maxBuy',
     'owned',
     'curiosity',
-    'thisPhaseType',
-    'phaseMin',
-    'phase',
-    'phaseType'
+    'chosen',
+    'choose',
   ],
   
+  data() {
+    return {
+      isChosen: Boolean(this.chosen),
+    }
+  },
+
   methods: {
     buy: function() {
       this.$emit("buy");
+    },
+
+    setChosen: function() {
+      this.isChosen = !this.isChosen;
+      this.$emit("chosen");
+    },
+
+    action: function() {
+      if(this.choose) {
+        this.setChosen();
+      } else {
+        this.buy();
+      }
     },
 
     buyMax: function() {
@@ -102,7 +123,7 @@ Vue.component('buy-button', {
   },
 
   template: `
-    <div v-if="(phaseType == thisPhaseType || thisPhaseType == 'either' )&& phase >= phaseMin" class="button column" @click='buy'>
+    <div class="button column" :class="isChosen ? 'chosen' : ''"  @click='action'>
       <div class="button-name">
         <div>{{ title }}</div>
         <div v-if="!owned && !curiosity">(\${{ price }})</div>
@@ -301,10 +322,29 @@ const vw = new Vue({
   },
 
   methods: {
-    isActivePlayer: function() {
-      return this.bootstrap >= this.isActiveBootstrap && this.clickDelivery >= this.isActiveClick;
+    nextPhase: function() {
+      if(this.phase < 7) {
+        this.choosePowerups = true;
+      } else {
+        this.prestige();
+      }
+    }, 
+    
+    choose: function(name) {
+      const chosen = this.powerups[name];
+      if(chosen) {
+        delete this.powerups[name];
+        this.numChosen -= 1;
+      } else {
+        this.powerups[name] = true;
+        this.numChosen += 1;
+      }
+
+      if(this.numChosen >= 2) {
+        this.prestige();
+      }
     },
- 
+
     getFormatted: function(number, divisor) {
       const result = (number / divisor).toString().match(/[0-9]+\.?[0-9]?[0-9]?/g);
       if(result == null)
@@ -345,28 +385,27 @@ const vw = new Vue({
       if(!this.nextPhaseAvailable)
         return;
 
+      this.choosePowerups = false;
+      this.numChosen = 0;
+
       const lettersDelivered = this.lettersDelivered;
       const phase = this.phase;
-      const phaseType = this.phaseType;
-      const playType = this.isActivePlayer() ? 'active' : 'idle'; 
       const day = this.day;
+      const powerups = this.powerups;
 
       for(const key in originalState) {
         this.$data[key] = originalState[key];
       }
-
+  
+      this.powerups = powerups;
       this.day = day;
       this.phase = phase + 1;
-      this.phaseType = phaseType;
-      this.phaseType[phase] = playType;
       this.lettersDelivered = lettersDelivered;
       
       if(this.phase == 8) {
         this.readLetters = this.phase8; // Set letters to read to 1T otherwise it could get too big
         this.read = true;
       }
-
-      console.log(this.phase, this.phaseType);
     },
  
     clickRead: function(amount) {
@@ -485,9 +524,11 @@ const vw = new Vue({
     buyOneTime,
     buy,
     buyMax,
+    setupTests,
   },
 
   created: function() {
+    this.setupTests(),
     this.loadState();
     setInterval(this.update, 0);
   }

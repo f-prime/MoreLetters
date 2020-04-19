@@ -214,6 +214,14 @@ html, body {
   background-color: #efefef;
 }
 
+.chosen {
+  background-color: #efefef !important;
+}
+
+.btn-night .chosen {
+  background-color: #555555 !important;
+}
+
 .btn-night .button {
   background-color:#414042;
   border: 1px solid white; 

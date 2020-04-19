@@ -12,7 +12,9 @@ export const originalState = {
   phase7: 1000000000,
   phase8: 10000000000,
 
-  phaseType: {},
+  numChosen: 0,
+  powerups: {},
+  choosePowerups: false,
 
   isActiveBootstrap: 10,
   isActiveClick: 100,
@@ -60,7 +62,7 @@ export const originalState = {
   twoHandsChance: 0.3,
 
   inflation: false,
-  inflationBasePrice: 500000000,
+  inflationBasePrice: 500000,
   inflationIncrease: 1,
 
   email: false,
@@ -92,7 +94,7 @@ export const originalState = {
   jetBasePrice: 500000, 
 
   spontaneousGeneration: false,
-  spontaneousGenerationBasePrice: 100000000,
+  spontaneousGenerationBasePrice: 300000,
   spontaneousGenerationChance: 0.30,
   spontaneousGenerationMult: 25,
   
@@ -173,7 +175,6 @@ export function calculateNewState() {
   this.mailmen += Math.floor((secondsSince / this.recruiterDelay) * this.recruiters * this.multiplier);
   this.mailboxes += Math.floor((secondsSince / this.factoryDelay) * this.factories * this.multiplier);
   this.money += Math.floor((secondsSince / this.mailmanDelay) * this.mailmen * this.pricePerLetter * this.multiplier);
-
 }
 
 export function loadState() {

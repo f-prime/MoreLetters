@@ -102,43 +102,24 @@
       </div>
       <div class="row stats" v-show="!read">
         <stat name="letters per click" :value="format(round(clickInc))"></stat>
-        <stat name="letter price" :value="format(round(pricePerLetter * multiplier))"></stat>
-        <stat v-show="phase >= 1" name="multiplier" :value="format(multiplier)"></stat>
+        <stat name="letter price" :value="'$' + format(round(pricePerLetter * multiplier))"></stat>
+        <stat name="multiplier" :value="format(multiplier)"></stat>
       </div>
       
       <div class="row stats" v-show="!read">
-        <stat v-show="phase >= 1" name="mailmen" :value="format(mailmen)"></stat>
-        <stat v-show="phase >= 1" name="mailboxes" :value="format(mailboxes)"></stat>
-        <stat v-show="phase >= 2" name="post offices" :value="format(postOffices)"></stat>
-        <stat v-show="phase >= 2 && phaseType[1] == 'idle'" name="mail trucks" :value="format(mailTrucks)"></stat>
+        <stat v-show="powerups['Mailman']" name="mailmen" :value="format(mailmen)"></stat>
+        <stat v-show="powerups['Mailbox']" name="mailboxes" :value="format(mailboxes)"></stat>
+        <stat v-show="powerups['Post Office']" name="post offices" :value="format(postOffices)"></stat>
+        <stat v-show="powerups['Mail Truck']" name="mail trucks" :value="format(mailTrucks)"></stat>
       </div>
       <div class="row stats" v-show="!read">
-        <stat v-show="phase >= 3 && phaseType[2] == 'idle'" name="segways" :value="format(segways)"></stat>
-        <stat v-show="phase >= 4 && phaseType[1] == 'idle'" name="recruiters" :value="format(recruiters)"></stat>
-        <stat v-show="phase >= 4" name="factories" :value="format(factories)"></stat> 
-        <stat v-show="phase >= 5 && phaseType[4] == 'idle'" name="jets" :value="format(jets)"></stat>
+        <stat v-show="powerups['Segway']" name="segways" :value="format(segways)"></stat>
+        <stat v-show="powerups['Recruiter']" name="recruiters" :value="format(recruiters)"></stat>
+        <stat v-show="powerups['Factory']" :value="format(factories)" name="factories"></stat> 
+        <stat v-show="powerups['Jet']" name="jets" :value="format(jets)"></stat>
       </div>
-      
-      <div v-show="!read" class="milestone">
-        <div class="row" :class='!day ? "btn-night" : ""'>
-          <div class="column" v-if="this.nextPhaseAvailable">
-            <div class="button" @click="prestige()"> 
-              <div class="button-name">
-                Enter Phase {{ phase + 1 }}
-              </div>
-              <div class="button-description">
-                This will erase all your progress and give you a 
-                x{{ 2 ** (phase) }} multiplier.
-              </div>
-            </div>
-          </div>
-          <div v-else class="column">
-            Next milestone at {{ format(nextPhaseAt) }} letters delivered
-          </div>
-        </div>
-      </div>
-    
-      <!-- Delivery Button -->
+         
+      <!-- Read -->
 
       <div v-show="read && readLetters > 0" class="buttons" :class="!day ? 'btn-night' : ''">
         <div class="row">
@@ -192,7 +173,254 @@
         </div>
       </div>
 
-      <div v-show="!read" class="buttons" :class="!day ? 'btn-night' :''">
+      <!-- End Read -->
+
+      <!-- Choose Powerups -->
+
+      <div v-show="!read && choosePowerups" class="buttons" :class="!day ? 'btn-night' :''">
+        <div class="row">
+          <div class="column">
+            Choose Two Powerups
+          </div>
+        </div>
+        <div class="row" v-show="phase == 0">
+           <buy-button 
+             title="Mailman"
+             :price="format(mailmanPrice)"
+             :description="mailmanDescription"
+             choose="true"
+             :chosen="powerups['Mailman']"
+             @chosen="choose('Mailman')"    
+          >
+          </buy-button>
+
+          <buy-button
+             title="Mailbox"
+             :price="format(mailboxPrice)"
+             :description="mailboxDescription"
+             choose="true"
+             :chosen="powerups['Mailbox']"
+             @chosen="choose('Mailbox')"    
+          ></buy-button>
+          
+          <buy-button
+             title="Bootstrap"
+             :price="format(bootstrapPrice)"
+             :description="bootstrapDescription"
+             choose="true"
+             :chosen="powerups['Bootstrap']"
+             @chosen="choose('Bootstrap')"    
+          >
+          </buy-button>
+        </div>
+
+        <div class="row" v-show="phase == 1">
+          <buy-button
+            title="Mail Truck"
+            :description="mailTruckDescription"
+            :price="format(mailTruckPrice)"
+            choose="true"
+            :chosen="powerups['Mail Truck']"
+            @chosen="choose('Mail Truck')"    
+          ></buy-button>
+         
+          <buy-button
+            title="Two Hands"
+            :price="format(twoHandsBasePrice)"
+            :description="twoHandsDescription"
+            choose="true"
+            :chosen="powerups['Two Hands']"
+            @chosen="choose('Two Hands')"    
+          ></buy-button>
+
+          <buy-button
+            title="Post Office"
+            :price="format(postOfficePrice)"
+            :description="postOfficeDescription"
+            choose="true"
+            :chosen="powerups['Post Office']"
+            @chosen="choose('Post Office')"    
+          ></buy-button> 
+        </div>
+
+        <div class="row" v-show="phase == 2">
+          <buy-button
+             title="Segway"
+             :price="format(segwayPrice)"
+             :description="segwayDescription"
+             choose="true"
+             :chosen="powerups['Segway']"
+             @chosen="choose('Segway')" 
+          ></buy-button> 
+          
+          <buy-button
+             title="Two for One"
+             description="Doubles Bootstrap letters per click interval"
+             :price="format(twoForOneBasePrice)"
+             choose="true"
+             :chosen="powerups['Two for One']"
+             @chosen="choose('Two for One')" 
+
+          ></buy-button>
+            
+          <buy-button
+             title="Little Help"
+             :price="format(littleHelpBasePrice)"
+             :description="littleHelpDescription"
+             choose="true"
+             :chosen="powerups['Little Help']"
+             @chosen="choose('Little Help')" 
+          ></buy-button>
+        </div>
+
+        <div class="row" v-show="phase == 3">
+          <buy-button
+             title="Factory"
+             :price="format(factoryPrice)"
+             :description="factoryDescription"
+             choose="true"
+             :chosen="powerups['Factory']"
+             @chosen="choose('Factory')" 
+          ></buy-button>
+
+          <buy-button
+             title="Scientific Management"
+             :price="format(scientificManagementBasePrice)"
+             :description="scientificManagementDescription"
+             choose="true"
+             :chosen="powerups['Scientific Management']"
+             @chosen="choose('Scientific Management')" 
+ 
+          ></buy-button>
+
+          <buy-button
+             title="Recruiter"
+             :price="format(recruiterPrice)"
+             :description="recruiterDescription" 
+             choose="true"
+             :chosen="powerups['Recruiter']"
+             @chosen="choose('Recruiter')" 
+         ></buy-button>  
+        </div>
+
+        <div class="row" v-show="phase == 4">
+          <buy-button
+             title="Spontaneous Generation"
+             :owned="spontaneousGeneration"
+             :price="format(spontaneousGenerationBasePrice)"
+             :description="spontaneousGenerationDescription"
+             choose="true"
+             :chosen="powerups['Spontaneous Generation']"
+             @chosen="choose('Spontaneous Generation')"
+          ></buy-button>
+
+          <buy-button
+            title="Caffeine"
+            :description="caffeineDescription"
+            :price="format(caffeineBasePrice)"
+            choose="true"
+            :chosen="powerups['Caffeine']"
+            @chosen="choose('Caffeine')"
+          ></buy-button>
+
+          <buy-button
+            title="Jet"
+            :price="format(jetPrice)"
+            :description="jetsDescription"
+            choose="true"
+            :chosen="powerups['Jet']"
+            @chosen="choose('Jet')"
+          ></buy-button> 
+        </div>
+
+        <div class="row" v-show="phase == 5">
+          <buy-button
+            title="Email"
+            :price="format(emailBasePrice)"
+            :owned="email"
+            @buy="buyEmail()"
+            :description="emailDescription"
+            choose="true"
+            :chosen="powerups['Email']"
+            @chosen="choose('Email')"
+          ></buy-button> 
+
+          <buy-button
+            title="Inflation"
+            :description="inflationDescription"
+            :price="format(inflationBasePrice)"
+            choose="true"
+            :chosen="powerups['Inflation']"
+            @chosen="choose('Inflation')" 
+          ></buy-button>
+
+          <buy-button
+            title="Big Net"
+            :description="bigNetDescription"
+            :price="format(bigNetBasePrice)"
+            @buy="buyBigNet()"
+            :owned="bigNet"
+            choose="true"
+            :chosen="powerups['Big Net']"
+            @chosen="choose('Big Net')" 
+          ></buy-button> 
+        </div>
+
+        <div class="row" v-show="phase == 6">
+          <buy-button
+             title="Self-Reliance"
+             :price="format(selfRelianceBasePrice)"
+             :description="selfRelianceDescription"
+             choose="true"
+             :chosen="powerups['Self-Reliance']"
+             @chosen="choose('Self-Reliance')" 
+          ></buy-button>
+
+          <buy-button
+            title="Mail Drones"
+            :description="mailDronesDescription"
+            :price="format(mailDronesBasePrice)"
+            choose="true"
+            :chosen="powerups['Mail Drones']"
+            @chosen="choose('Mail Drones')" 
+
+          ></buy-button> 
+          
+          <buy-button
+            title="Mailware"
+            :price="format(mailwareBasePrice)"
+            :description="mailwareDescription"
+            choose="true"
+            :chosen="powerups['Mailware']"
+            @chosen="choose('Mailware')" 
+          ></buy-button>
+        </div>
+      </div>
+
+      <div v-show="!read && !choosePowerups" class="milestone">
+        <div class="row" :class='!day ? "btn-night" : ""'>
+          <div class="column" v-if="this.nextPhaseAvailable">
+            <div class="button" @click="nextPhase()"> 
+              <div class="button-name">
+                Enter Phase {{ phase + 1 }}
+              </div>
+              <div class="button-description">
+                This will erase all your progress and give you a 
+                x{{ 2 ** (phase) }} multiplier.
+              </div>
+            </div>
+          </div>
+          <div v-else class="column">
+            Next milestone at {{ format(nextPhaseAt) }} letters delivered
+          </div>
+        </div>
+      </div>
+ 
+      <!-- End Choose Powerups -->
+
+      <!-- Main Game -->
+
+      <div v-show="!read && !choosePowerups" class="buttons" :class="!day ? 'btn-night' :''">
         <div class="row">
           <div class="column">
             <div class="button" @click="clickDeliver">
@@ -205,44 +433,34 @@
 
         <transition name="fade">
           <div class="row" :class="!day ? 'btn-night' :''">
-            <!-- Phase 1 -->
-            <buy-button 
-               this-phase-type="either"
-               :phase="phase"
-               :phase-min="1"
-               
-               title="Mailman"
-               @buy="buyMailman()"
-               :price="format(mailmanPrice)"
-               :description="mailmanDescription"
-               :max-buy="true"
-               @buy-max="buyMax(buyMailman)">
+            <buy-button
+              v-show="powerups['Mailman']" 
+              title="Mailman"
+              @buy="buyMailman()"
+              :price="format(mailmanPrice)"
+              :description="mailmanDescription"
+              :max-buy="true"
+              @buy-max="buyMax(buyMailman)">
             </buy-button>
 
             <buy-button
-               this-phase-type="either"
-               :phase="phase"
-               :phase-min="1"
-
-               title="Mailbox"
-               @buy="buyMailbox()"
-               @buy-max="buyMax(buyMailbox)"
-               :price="format(mailboxPrice)"
-               :max-buy="true"
-               :description="mailboxDescription"
+              v-show="powerups['Mailbox']"
+              title="Mailbox"
+              @buy="buyMailbox()"
+              @buy-max="buyMax(buyMailbox)"
+              :price="format(mailboxPrice)"
+              :max-buy="true"
+              :description="mailboxDescription"
             ></buy-button>
             
             <buy-button
-               this-phase-type="either"
-               :phase="phase"
-               :phase-min="1"
-
-               title="Bootstrap"
-               @buy="buyBootstrap()"
-               @buy-max="buyMax(buyBootstrap)"
-               :price="format(bootstrapPrice)"
-               :description="bootstrapDescription"
-               :max-buy="true">
+              v-show="powerups['Bootstrap']"
+              title="Bootstrap"
+              @buy="buyBootstrap()"
+              @buy-max="buyMax(buyBootstrap)"
+              :price="format(bootstrapPrice)"
+              :description="bootstrapDescription"
+              :max-buy="true">
             </buy-button>
             <!-- end -->
           </div>
@@ -252,25 +470,17 @@
           <div class="row" :class="!day ? 'btn-night' :''">
             <!-- Phase 2 -->
             <buy-button
-              this-phase-type="idle"
-              :phase="phase"
-              :phase-min="2"
-              :phase-type="phaseType[1]"
+              v-show="powerups['Mail Truck']"
               title="Mail Truck"
               :description="mailTruckDescription"
               :price="format(mailTruckPrice)"
               @buy="buyMailTruck()"
               @buy-max="buyMax(buyMailTruck)"
               :max-buy="true" 
-   
-           ></buy-button>
+            ></buy-button>
            
             <buy-button
-              this-phase-type="active"
-              :phase="phase"
-              :phase-min="2"
-              :phase-type="phaseType[1]"
-
+              v-show="powerups['Two Hands']"
               title="Two Hands"
               @buy="buyTwoHands()"
               :owned="twoHands"
@@ -279,10 +489,7 @@
             ></buy-button>
 
             <buy-button
-               this-phase-type="either"
-               :phase="phase"
-               :phase-min="2"
-               
+              v-show="powerups['Post Office']"
               title="Post Office"
               @buy="buyPostOffice()"
               @buy-max="buyMax(buyPostOffice)"
@@ -296,43 +503,31 @@
             <!-- Phase 3 -->
 
             <buy-button
-                this-phase-type="idle"
-               :phase="phase"
-               :phase-min="3"
-               :phase-type="phaseType[2]"
-
-               title="Segway"
-               @buy="buySegway()"
-               @buy-max="buyMax(buySegway)"
-               :max-buy="true"
-               :price="format(segwayPrice)"
-               :description="segwayDescription"
+              v-show="powerups['Segway']"
+              title="Segway"
+              @buy="buySegway()"
+              @buy-max="buyMax(buySegway)"
+              :max-buy="true"
+              :price="format(segwayPrice)"
+              :description="segwayDescription"
             ></buy-button> 
             
             <buy-button
-               this-phase-type="active"
-               :phase-min="3"
-               :phase-type="phaseType[2]"
-               :phase="phase"
-
-               title="Two for One"
-               description="Doubles Bootstrap letters per click interval"
-               @buy="buyTwoForOne()"
-               :owned="twoForOne"
-               :price="format(twoForOneBasePrice)"
+              v-show="powerups['Two for One']"
+              title="Two for One"
+              description="Doubles Bootstrap letters per click interval"
+              @buy="buyTwoForOne()"
+              :owned="twoForOne"
+              :price="format(twoForOneBasePrice)"
             ></buy-button>
               
             <buy-button
-               this-phase-type="active"
-               :phase="phase"
-               :phase-min="3"
-               
-               title="Little Help"
-               @buy="buyLittleHelp()"
-               :price="format(littleHelpBasePrice)"
-               :owned="littleHelp"
-               :description="littleHelpDescription"
-
+              v-show="powerups['Little Help']"
+              title="Little Help"
+              @buy="buyLittleHelp()"
+              :price="format(littleHelpBasePrice)"
+              :owned="littleHelp"
+              :description="littleHelpDescription"
             ></buy-button>
 
             <!-- end -->
@@ -344,10 +539,7 @@
         <transition name="fade">
           <div class="row" :class="!day ? 'btn-night' :''">
             <buy-button
-              this-phase-type="either"
-              :phase-min="4"
-              :phase="phase"
-
+               v-show="powerups['Factory']"
                title="Factory"
                @buy="buyFactory()"
                @buy-max="buyMax(buyFactory)"
@@ -355,55 +547,39 @@
                :price="format(factoryPrice)"
                :description="factoryDescription"
  
-           ></buy-button>
-
-            <buy-button
-               this-phase-type="active"
-               :phase-min="4"
-               :phase-type="phaseType[3]"
-               :phase="phase"
-               title="Scientific Management"
-               @buy="buyScientificManagement()"
-               :owned="scientificManagement"
-               :price="format(scientificManagementBasePrice)"
-               :description="scientificManagementDescription"
-
             ></buy-button>
 
             <buy-button
-              this-phase-type="idle"
-              :phase-min="4"
-              :phase-type="phaseType[3]"
-              :phase="phase"
-                     
-               title="Recruiter"
-               @buy="buyRecruiter()"
-               @buy-max="buyMax(buyRecruiter)"
-               :max-buy="true"
-               :price="format(recruiterPrice)"
-               :max-buy="true"
-               :description="recruiterDescription" 
- 
+              v-show="powerups['Scientific Management']"
+              title="Scientific Management"
+              @buy="buyScientificManagement()"
+              :owned="scientificManagement"
+              :price="format(scientificManagementBasePrice)"
+              :description="scientificManagementDescription"
+            ></buy-button>
+
+            <buy-button
+              v-show="powerups['Recruiter']"
+              title="Recruiter"
+              @buy="buyRecruiter()"
+              @buy-max="buyMax(buyRecruiter)"
+              :max-buy="true"
+              :price="format(recruiterPrice)"
+              :max-buy="true"
+              :description="recruiterDescription" 
            ></buy-button> 
            
-            <buy-button
-               this-phase-type="active"
-               :phase-min="5"
-               :phase-type="phaseType[4]"
-               :phase="phase"
-               title="Spontaneous Generation"
-               @buy="buySpontaneousGeneration()"
-               :owned="spontaneousGeneration"
-               :price="format(spontaneousGenerationBasePrice)"
-               :description="spontaneousGenerationDescription"
+            <buy-button 
+              v-show="powerups['Spontaneous Generation']"
+              title="Spontaneous Generation"
+              @buy="buySpontaneousGeneration()"
+              :owned="spontaneousGeneration"
+              :price="format(spontaneousGenerationBasePrice)"
+              :description="spontaneousGenerationDescription"
             ></buy-button>
 
             <buy-button
-              this-phase-type="idle"
-              :phase-min="5"
-              :phase-type="phaseType[4]"
-              :phase="phase"
-
+              v-show="powerups['Caffeine']"
               title="Caffeine"
               :description="caffeineDescription"
               :price="format(caffeineBasePrice)"
@@ -412,11 +588,7 @@
             ></buy-button>
 
             <buy-button
-              :phase="phase"
-              :phase-min="5"
-              :phase-type="phaseType[4]"
-              this-phase-type="idle"
-
+              v-show="powerups['Jet']"
               title="Jet"
               :price="format(jetPrice)"
               :max-buy="true"
@@ -431,26 +603,8 @@
 
         <transition name="fade">
           <div class="row" :class="!day ? 'btn-night' :''">
-
             <buy-button
-              this-phase-type="either"
-              :phase-min="6"
-              :phase-type="phaseType[5]"
-              :phase="phase"
-
-              title="Email"
-              :price="format(emailBasePrice)"
-              :owned="email"
-              @buy="buyEmail()"
-              :description="emailDescription"
-            ></buy-button> 
-
-            <buy-button
-              :phase="phase"
-              :phase-min="6"
-              :phase-type="phaseType[5]"
-              this-phase-type="active"
-
+              v-show="powerups['Inflation']"
               title="Inflation"
               :description="inflationDescription"
               :price="format(inflationBasePrice)"
@@ -459,10 +613,16 @@
             ></buy-button>
 
             <buy-button
-              :phase="phase"
-              :phase-min="6"
-              this-phase-type="either"
+              v-show="powerups['Email']"
+              title="Email"
+              :price="format(emailBasePrice)"
+              :owned="email"
+              @buy="buyEmail()"
+              :description="emailDescription"
+            ></buy-button> 
 
+            <buy-button
+              v-show="powerups['Big Net']"
               title="Big Net"
               :description="bigNetDescription"
               :price="format(bigNetBasePrice)"
@@ -471,25 +631,16 @@
             ></buy-button>
              
             <buy-button
-               :phase="phase"
-               :phase-min="7"
-               :phase-type="phaseType[6]"
-               this-phase-type="active"
-
-               title="Self-Reliance"
-               :owned="selfReliance"
-               @buy="buySelfReliance()"
-               :price="format(selfRelianceBasePrice)"
-               :description="selfRelianceDescription"
+              v-show="powerups['Self-Reliance']"
+              title="Self-Reliance"
+              :owned="selfReliance"
+              @buy="buySelfReliance()"
+              :price="format(selfRelianceBasePrice)"
+              :description="selfRelianceDescription"
             ></buy-button>
  
-
             <buy-button
-              :phase="phase"
-              :phase-min="7"
-              :phase-type="phaseType[6]"
-              this-phase-type="idle"
-
+              v-show="powerups['Mail Drones']"
               title="Mail Drones"
               :description="mailDronesDescription"
               :price="format(mailDronesBasePrice)"
@@ -498,10 +649,7 @@
             ></buy-button> 
             
             <buy-button
-              :phase="phase"
-              :phase-min="7"
-              this-phase-type="either"
-
+              v-show="powerups['Mailware']"
               title="Mailware"
               @buy="buyMailware"
               :owned="mailware"
