@@ -6,6 +6,15 @@
     <script type="text/javascript" src="libs/vue.js"></script>
     <script type="module" src="js/game.js" defer></script>
     <title>More Letters</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-78436262-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-78436262-1');
+    </script>
   </head>
   <body id="body">
     <div class="container" id="app" :style="!day ? 'color: white;' : ''">
