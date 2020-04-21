@@ -130,7 +130,7 @@
          
       <!-- Read -->
 
-      <div v-show="read && readLetters > 0" class="buttons" :class="!day ? 'btn-night' : ''">
+      <div v-if="read && readLetters > 0" class="buttons" :class="!day ? 'btn-night' : ''">
         <div class="row">
           <div class="column">
             <div class="button" @click="clickRead">
@@ -160,7 +160,17 @@
         </div>
       </div>
 
-      <div v-show="read && readLetters <= 0" class="letter" :class="!day ? 'letter-night' : ''">
+      <div v-else-if="!openLetter && read && readLetters <= 0" class="buttons" :class="!day ? 'btn-night' : ''">
+        <div class="row">
+          <div class="column">
+            <div class="button" @click="openLetter = true">
+              Open Letter
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-else-if="openLetter" class="letter" :class="!day ? 'letter-night' : ''">
         <div class="letter">
           <transition name="fade">
             <div class="letter-container">

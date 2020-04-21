@@ -27,6 +27,7 @@ export const originalState = {
   clickDelivery: 0,
   clickInc: 1,
 
+  openLetter: false,
   read: false,
   readLetters:0,
   curiosity: 0,
