@@ -151,11 +151,11 @@ const vw = new Vue({
     },
 
     mailmanDescription: function() {
-      return `Mailmen deliver ${this.mailmanDelivery} ${this.mailmanDelivery > 1 ? 'letters' : 'letter'} per mailman automatically every ${this.round(this.mailmanDelay / 1000)} seconds.`;
+      return `Mailmen deliver ${this.mailmanDelivery} ${this.mailmanDelivery > 1 ? 'letters' : 'letter'} per mailman automatically every ${this.round(this.getMailmanDelay / 1000)} seconds.`;
     },
    
     mailboxDescription: function() {
-      return `Generates one letter per mailbox every ${this.mailboxDelay / 1000} seconds.`
+      return `Generates one letter per mailbox every ${this.getMailboxDelay / 1000} seconds.`
     },
 
     bootstrapDescription: function() {
@@ -163,11 +163,11 @@ const vw = new Vue({
     },
 
     recruiterDescription: function() {
-      return `Hires ${this.recruiterHire} mailmen per recruiter every ${this.recruiterDelay / 1000} seconds. Hiring does not cost money.`;
+      return `Hires ${this.recruiterHire} mailmen per recruiter every ${this.getRecruiterDelay / 1000} seconds. Hiring does not cost money.`;
     },
 
     factoryDescription: function() {
-      return `Generates ${this.factoryGenerate} ${this.factoryGenerate == 1 ? 'mailbox' : 'mailboxes'} per factory every ${this.factoryDelay / 1000} seconds. These mailboxes do not cost anything.`;
+      return `Generates ${this.factoryGenerate} ${this.factoryGenerate == 1 ? 'mailbox' : 'mailboxes'} per factory every ${this.getFactoryDelay / 1000} seconds. These mailboxes do not cost anything.`;
     },
 
     segwayDescription: function() {
@@ -183,15 +183,15 @@ const vw = new Vue({
     },
 
     postOfficeDescription: function() {
-      return `Generates two letters every ${this.postOfficeDelay / 1000} seconds.`;
+      return `Generates two letters every ${this.getPostOfficeDelay / 1000} seconds.`;
     },
 
     mailTruckDescription: function() {
-      return `Automatically delivers ${this.mailTruckInc} letters every ${this.mailTruckDelay / 1000} seconds`;
+      return `Automatically delivers ${this.mailTruckInc} letters every ${this.getMailTruckDelay / 1000} seconds`;
     },
 
     emailDescription: function() {
-      return `Accept letters via the internet. Generates ${this.emailInc} letters every ${this.emailDelay / 1000} seconds`;
+      return `Accept letters via the internet. Generates ${this.emailInc} letters every ${this.getEmailDelay / 1000} seconds`;
     },
 
     littleHelpDescription: function() {
@@ -199,7 +199,7 @@ const vw = new Vue({
     },
 
     bigNetDescription: function() {
-      return `Capture all the messages in bottles that are floating around the ocean. Generates ${this.bigNetInc} letters every ${this.bigNetDelay / 1000} seconds.`;
+      return `Capture all the messages in bottles that are floating around the ocean. Generates ${this.bigNetInc} letters every ${this.getBigNetDelay / 1000} seconds.`;
     },
 
     selfRelianceDescription: function() {
@@ -215,11 +215,11 @@ const vw = new Vue({
     },
 
     mailDronesDescription: function() {
-      return `Unleash a swarm of mail delivering drones. Delivers ${this.mailDronesDelivery} letters every ${this.mailDronesDelay / 1000} seconds.`;
+      return `Unleash a swarm of mail delivering drones. Delivers ${this.mailDronesDelivery} letters every ${this.getMailDronesDelay / 1000} seconds.`;
     },
 
     jetsDescription: function() {
-      return `Jets deliver ${this.jetDelivery} letters every ${this.jetDelay / 1000} seconds.`;
+      return `Jets deliver ${this.jetDelivery} letters every ${this.getJetDelay / 1000} seconds.`;
     },
 
     spontaneousGenerationDescription: function() {
@@ -227,13 +227,73 @@ const vw = new Vue({
     },
 
     postOfficDescription: function() {
-      return `Generates two letters every ${this.postOfficeDelay / 1000} seconds.`;
+      return `Generates two letters every ${this.getPostOfficeDelay / 1000} seconds.`;
     },
 
     caffeineDescription: function() {
       return `Every mailman gets put on a madatory drip of high octane espresso. Increases mailman efficiency by ${this.caffeineBoost * 100}%`
     },
-   
+  
+    getLettersDelay: function() {
+      return this.lettersDelay;
+    },
+
+    getPricePerLetter: function() {
+      const inflation = this.inflation ? this.inflationIncrease : 0;
+      const increase = this.pricePerLetter * inflation;
+      return this.pricePerLetter + increase;
+    },
+
+    getMailboxDelay: function() {
+      return this.mailboxDelay;
+    },
+
+    getBigNetDelay: function() {
+      return this.bigNetDelay;
+    },
+
+    getMailDronesDelay: function() {
+      return this.mailDronesDelay;
+    },
+
+    getMailwareDelay: function() {
+      return this.mailwareDelay;
+    },
+
+    getEmailDelay: function() {
+      return this.emailDelay;
+    },
+
+    getMailTruckDelay: function() {
+      return this.mailTruckDelay;
+    },
+
+    getPostOfficeDelay: function() {
+      return this.postOfficeDelay;
+    },
+
+    getMailmanDelay: function() {
+      const caffeineDecrease = this.caffeine ? (this.mailmanDelay - (this.mailmanDelay * this.caffeineBoost)) : 0;
+      const segwayDecrease = this.segways * this.segwayMailmanBoost;
+      const delay = this.mailmanDelay - caffeineDecrease - segwayDecrease;
+
+      return delay;
+    },
+
+    getFactoryDelay: function() {
+      const delay = this.factoryDelay / (this.scientificManagement ? 2 : 1);
+
+      return delay;
+    },
+
+    getJetDelay: function() {
+      return this.jetDelay;
+    },
+
+    getRecruiterDelay: function() {
+      return this.recruiterDelay;
+    },
+
     bootstrapInc: function() {
       let inc = this.bootstrapDelivery * this.multiplier * (this.twoForOne ? 2 : 1);
       if(this.selfReliance)
@@ -270,7 +330,7 @@ const vw = new Vue({
     },
 
     segwayPrice: function() {
-      return this.round(this.segwayBasePrice + (this.segways ** 1.8));
+      return this.round(this.segwayBasePrice + (this.segways ** 3));
     },
 
     factoryPrice: function() {
@@ -278,7 +338,7 @@ const vw = new Vue({
     },
 
     lettersPerSecond: function() {
-      return this.round((this.lettersInc * this.multiplier * (this.mailboxes + 1)) / (this.lettersDelay / 1000));
+      return this.round((this.lettersInc * this.multiplier * (this.mailboxes + 1)) / (this.getLettersDelay / 1000));
     },
 
     mailmanPrice: function() {
@@ -451,7 +511,7 @@ const vw = new Vue({
       }
 
       this.letters -= amount;
-      this.money += (this.pricePerLetter * this.multiplier) * amount;
+      this.money += ((this.getPricePerLetter) * this.multiplier) * amount;
       this.lettersDelivered += amount;
 
     },

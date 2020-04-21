@@ -16,15 +16,11 @@ export const originalState = {
   powerups: {},
   choosePowerups: false,
 
-  isActiveBootstrap: 10,
-  isActiveClick: 100,
-
   lastTick: new Date(),
   delta: 0,
 
   pricePerLetter: 0.25,
 
-  clickDelivery: 0,
   clickInc: 1,
 
   openLetter: false,
@@ -89,7 +85,7 @@ export const originalState = {
   bigNetDelay:300,
  
   jets: 0,
-  jetDelivery: 10,
+  jetDelivery: 25,
   jetDelay: 250,
   jetLast: 0,
   jetBasePrice: 500000, 
@@ -135,7 +131,7 @@ export const originalState = {
 
   segwayBasePrice: 5000,
   segways: 0,
-  segwayMailmanBoost: 0.025,
+  segwayMailmanBoost: 0.02,
 
   mailTrucks: 0,
   mailTruckDelay: 250,
@@ -179,6 +175,42 @@ export function calculateNewState() {
 }
 
 export function loadState() {
+  const keysToLoad = [
+    "mailmen",
+    "phase",
+    "day",
+    "powerups",
+    "choosePowerups",
+    "openLetter",
+    "read",
+    "lettersDelivered",
+    "curiosity",
+    "autoreader",
+    "money",
+    "letters",
+    "littleHelp",
+    "postOffices",
+    "twoForOne",
+    "twoHands",
+    "inflation",
+    "email",
+    "selfReliance",
+    "mailware",
+    "bigNet",
+    "jets",
+    "spontaneousGeneration",
+    "bootstrap",
+    "mailDrones",
+    "mailboxes",
+    "recruiters",
+    "factories",
+    "segways",
+    "mailTrucks",
+    "caffeine",
+    "scientificManagement",
+  ];
+  
+  
   const day = localStorage.getItem("day");
   let state = localStorage.getItem("state");
   let json;
@@ -189,6 +221,10 @@ export function loadState() {
     json = JSON.parse(state);
 
   for(const key in json) {
+    if(keysToLoad.indexOf(key) === -1) {
+      continue;
+    }
+
     this.$data[key] = json[key];
   } 
   

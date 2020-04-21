@@ -1,17 +1,86 @@
-Setting:
+Arc
 
-After a long war that has decimated a country, a powerful dictator has risen to power.
-Those who oppose him and are caught are violently executed. Many people have tried to 
-speak out and rebel against him, but all have failed. 
+- A new innovative postal service is started that changes the world of mailing letters
+- Millions of people start using the service sending billions of letters
+- People are very happy about the service and how fast it is
+- People start to become accustom to the service and start to wish for more feature, faster speeds, etc
+- The service fulfills these desires but goes to the extreme to fulfill it. Often infinging on people's privacy and safety to deliver mail faster and more efficiently
+- People start to become a bit weirded out. The service start doing things that would be impossible without some kind of privacy violation. Some are worried, others are still obvlious
+- As the service improves, more and more people start to become away to what is going on. Letters are being received before they are physically sent, mailmen are acting strangely, people
+  simply think about a letter from a friend and it shows up in their mailbox.
+- A college student is found dead on the street. What looks like a bullet hole in his head makes it appear to be a gunshot wound.
+- This is not an isolated incident. Other similar deaths have been reported around the world.
+- Rumours start circulating that people within the postal service have been monitoring letters and getting rid of people who oppose it.
+- Fearing that the postal system has become too powerful, the people start to boycott it. 
 
-The Dictator's power stretched across every inch of the country. Everything is moniored,
-from what people eat, to the conversations that they have, and most importantly the mail that they send.
+To be continued.....
 
-Even as The Dictator's power grows, there are still those who seek to take him down. This is the story
-of two of those people.
+# Letter 1
 
 Dear Alsa,
 
-We have changed the meeting time to 0015. I trust that you'll still be able to make it
+I had to try out Postal Inc. I hear that they are really taking the "snail" out of "snail mail" and
+keeping everything that made writing letters great! 
 
-- Lars
+So, yeah, just wanted to say hi. Hope all is well, isn't the weather great today? 
+See? I can say that now because you're going to get this in, like, an hour! Haha
+
+So cool.
+
+Best,
+Lars 
+
+# Letter 2
+
+Dear Alsa,
+
+Wow, PI really blew up huh? I guess I can see why. I am starting to see their mail trucks all over the place.
+It's like they never sleep. They seem happy though. I hear they are making really great money. 
+
+I was checking their job listings today and they are hiring drivers. What do you think? I am tempted to apply... 
+Couldn't hurt, and I could use the boost in pay.
+
+Hope you are doing well.
+
+Best,
+Lars
+
+# Letter 3
+
+Dear Alsa,
+
+So, a weird thing happened to me today. I was writing a letter to my brother this morning and I got a knock on the door.
+It was the mailman. I thought it was a little bit weird that he come to the door, but I shrugged it off. 
+
+There was something a bit off about him. He looked tired and sickly. Like he had been working non-stop for days. 
+
+He had a letter in his hand addressed to me from my brother. When I opened it, it was the response to the letter that I was writing just before.
+
+The letter that I didn't send yet. I don't know how that's possible... I was wondering if you had a similar experience.
+
+Best,
+Lars
+
+# Letter 4
+
+Alsa,
+
+Shit. Did you hear about that kid from that was found dead the other night? They're saying that he was murdered.
+
+Apparently he was one of those crazies that were boycotting PI. I can't help but think that maybe... 
+
+No, maybe I am just paranoid. 
+
+Hope you are holding up... let's get together soon, okay?
+
+Lars
+
+# Letter 5 (Encrypted)
+
+Something isn't right, Alsa. It seems like more people are turning up dead every single day. All dying the same way.
+
+This isn't a coincidence, something is very wrong. We are being watched, Alsa. I don't know what to do. 
+
+I can't sleep, I can't eat, I just sit here afraid to go outside. I hear the drones more and more frequently now. 
+
+We need to do something about this... I need your help... 

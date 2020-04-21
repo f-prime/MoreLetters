@@ -111,21 +111,21 @@
       </div>
       <div class="row stats" v-show="!read">
         <stat name="letters per click" :value="format(round(clickInc))"></stat>
-        <stat name="letter price" :value="'$' + format(round(pricePerLetter * multiplier))"></stat>
+        <stat name="letter price" :value="'$' + format(round(getPricePerLetter * multiplier))"></stat>
         <stat name="multiplier" :value="format(multiplier)"></stat>
       </div>
       
       <div class="row stats" v-show="!read">
-        <stat v-show="powerups['Mailman']" name="mailmen" :value="format(mailmen)"></stat>
-        <stat v-show="powerups['Mailbox']" name="mailboxes" :value="format(mailboxes)"></stat>
+        <stat v-show="powerups.Mailman" name="mailmen" :value="format(mailmen)"></stat>
+        <stat v-show="powerups.Mailbox" name="mailboxes" :value="format(mailboxes)"></stat>
         <stat v-show="powerups['Post Office']" name="post offices" :value="format(postOffices)"></stat>
         <stat v-show="powerups['Mail Truck']" name="mail trucks" :value="format(mailTrucks)"></stat>
       </div>
       <div class="row stats" v-show="!read">
-        <stat v-show="powerups['Segway']" name="segways" :value="format(segways)"></stat>
-        <stat v-show="powerups['Recruiter']" name="recruiters" :value="format(recruiters)"></stat>
-        <stat v-show="powerups['Factory']" :value="format(factories)" name="factories"></stat> 
-        <stat v-show="powerups['Jet']" name="jets" :value="format(jets)"></stat>
+        <stat v-show="powerups.Segway" name="segways" :value="format(segways)"></stat>
+        <stat v-show="powerups.Recruiter" name="recruiters" :value="format(recruiters)"></stat>
+        <stat v-show="powerups.Factory" :value="format(factories)" name="factories"></stat> 
+        <stat v-show="powerups.Jet" name="jets" :value="format(jets)"></stat>
       </div>
          
       <!-- Read -->
@@ -208,7 +208,7 @@
              :price="format(mailmanPrice)"
              :description="mailmanDescription"
              choose="true"
-             :chosen="powerups['Mailman']"
+             :chosen="powerups.Mailman"
              @chosen="choose('Mailman')"    
           >
           </buy-button>
@@ -218,7 +218,7 @@
              :price="format(mailboxPrice)"
              :description="mailboxDescription"
              choose="true"
-             :chosen="powerups['Mailbox']"
+             :chosen="powerups.Mailbox"
              @chosen="choose('Mailbox')"    
           ></buy-button>
           
@@ -227,7 +227,7 @@
              :price="format(bootstrapPrice)"
              :description="bootstrapDescription"
              choose="true"
-             :chosen="powerups['Bootstrap']"
+             :chosen="powerups.Bootstrap"
              @chosen="choose('Bootstrap')"    
           >
           </buy-button>
@@ -268,7 +268,7 @@
              :price="format(segwayPrice)"
              :description="segwayDescription"
              choose="true"
-             :chosen="powerups['Segway']"
+             :chosen="powerups.Segway"
              @chosen="choose('Segway')" 
           ></buy-button> 
           
@@ -298,7 +298,7 @@
              :price="format(factoryPrice)"
              :description="factoryDescription"
              choose="true"
-             :chosen="powerups['Factory']"
+             :chosen="powerups.Factory"
              @chosen="choose('Factory')" 
           ></buy-button>
 
@@ -317,7 +317,7 @@
              :price="format(recruiterPrice)"
              :description="recruiterDescription" 
              choose="true"
-             :chosen="powerups['Recruiter']"
+             :chosen="powerups.Recruiter"
              @chosen="choose('Recruiter')" 
          ></buy-button>  
         </div>
@@ -338,7 +338,7 @@
             :description="caffeineDescription"
             :price="format(caffeineBasePrice)"
             choose="true"
-            :chosen="powerups['Caffeine']"
+            :chosen="powerups.Caffeine"
             @chosen="choose('Caffeine')"
           ></buy-button>
 
@@ -347,7 +347,7 @@
             :price="format(jetPrice)"
             :description="jetsDescription"
             choose="true"
-            :chosen="powerups['Jet']"
+            :chosen="powerups.Jet"
             @chosen="choose('Jet')"
           ></buy-button> 
         </div>
@@ -360,7 +360,7 @@
             @buy="buyEmail()"
             :description="emailDescription"
             choose="true"
-            :chosen="powerups['Email']"
+            :chosen="powerups.Email"
             @chosen="choose('Email')"
           ></buy-button> 
 
@@ -369,7 +369,7 @@
             :description="inflationDescription"
             :price="format(inflationBasePrice)"
             choose="true"
-            :chosen="powerups['Inflation']"
+            :chosen="powerups.Inflation"
             @chosen="choose('Inflation')" 
           ></buy-button>
 
@@ -410,7 +410,7 @@
             :price="format(mailwareBasePrice)"
             :description="mailwareDescription"
             choose="true"
-            :chosen="powerups['Mailware']"
+            :chosen="powerups.Mailware"
             @chosen="choose('Mailware')" 
           ></buy-button>
         </div>
@@ -453,7 +453,7 @@
         <transition name="fade">
           <div class="row" :class="!day ? 'btn-night' :''">
             <buy-button
-              v-show="powerups['Mailman']" 
+              v-show="powerups.Mailman" 
               title="Mailman"
               @buy="buyMailman()"
               :price="format(mailmanPrice)"
@@ -463,7 +463,7 @@
             </buy-button>
 
             <buy-button
-              v-show="powerups['Mailbox']"
+              v-show="powerups.Mailbox"
               title="Mailbox"
               @buy="buyMailbox()"
               @buy-max="buyMax(buyMailbox)"
@@ -473,7 +473,7 @@
             ></buy-button>
             
             <buy-button
-              v-show="powerups['Bootstrap']"
+              v-show="powerups.Bootstrap"
               title="Bootstrap"
               @buy="buyBootstrap()"
               @buy-max="buyMax(buyBootstrap)"
@@ -558,7 +558,7 @@
         <transition name="fade">
           <div class="row" :class="!day ? 'btn-night' :''">
             <buy-button
-               v-show="powerups['Factory']"
+               v-show="powerups.Factory"
                title="Factory"
                @buy="buyFactory()"
                @buy-max="buyMax(buyFactory)"
@@ -578,7 +578,7 @@
             ></buy-button>
 
             <buy-button
-              v-show="powerups['Recruiter']"
+              v-show="powerups.Recruiter"
               title="Recruiter"
               @buy="buyRecruiter()"
               @buy-max="buyMax(buyRecruiter)"
@@ -598,7 +598,7 @@
             ></buy-button>
 
             <buy-button
-              v-show="powerups['Caffeine']"
+              v-show="powerups.Caffeine"
               title="Caffeine"
               :description="caffeineDescription"
               :price="format(caffeineBasePrice)"
@@ -607,7 +607,7 @@
             ></buy-button>
 
             <buy-button
-              v-show="powerups['Jet']"
+              v-show="powerups.Jet"
               title="Jet"
               :price="format(jetPrice)"
               :max-buy="true"
@@ -623,7 +623,7 @@
         <transition name="fade">
           <div class="row" :class="!day ? 'btn-night' :''">
             <buy-button
-              v-show="powerups['Inflation']"
+              v-show="powerups.Inflation"
               title="Inflation"
               :description="inflationDescription"
               :price="format(inflationBasePrice)"
@@ -632,7 +632,7 @@
             ></buy-button>
 
             <buy-button
-              v-show="powerups['Email']"
+              v-show="powerups.Email"
               title="Email"
               :price="format(emailBasePrice)"
               :owned="email"
@@ -668,7 +668,7 @@
             ></buy-button> 
             
             <buy-button
-              v-show="powerups['Mailware']"
+              v-show="powerups.Mailware"
               title="Mailware"
               @buy="buyMailware"
               :owned="mailware"

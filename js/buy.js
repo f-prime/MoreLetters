@@ -50,9 +50,7 @@ export function buyInflation() {
    * Increases letter price 
    */
   
-  if(this.buyOneTime("inflation", this.inflationBasePrice)) {
-    this.pricePerLetter += (this.pricePerLetter * this.inflationIncrease);
-  }
+  this.buyOneTime("inflation", this.inflationBasePrice);
 }
 
 export function buyEmail() {
@@ -124,7 +122,7 @@ export function buySegway() {
    * Increases mailman delivery speed by 2.5% per segway
    */
 
-  return this.buy(false, 1, "segways", "segwayPrice", "mailmanDelay", this.segwayMailmanBoost);  
+  return this.buy(false, 1, "segways", "segwayPrice");  
 }
 
 export function buySelfReliance() {
