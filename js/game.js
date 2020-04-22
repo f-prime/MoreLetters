@@ -451,12 +451,10 @@ const vw = new Vue({
     }, 
   
     getLetter: function() {
-      fetch(`/letters/${this.phase}.json`)
-        .then(resp => resp.json())
-        .then(json => {
-          this.letterHeader = json.header;
-          this.letterBody = json.body;
-          this.letterFooter = json.footer;
+      fetch(`/letters/${this.phase}.txt`)
+        .then(resp => resp.text())
+        .then(text => {
+          this.letter = text;
         });
     },
 

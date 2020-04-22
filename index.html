@@ -128,9 +128,6 @@
         <stat v-show="powerups.Segway" name="segways" :value="format(segways)"></stat>
         <stat v-show="powerups.Recruiter" name="recruiters" :value="format(recruiters)"></stat>
         <stat v-show="powerups.Factory" :value="format(factories)" name="factories"></stat> 
-      </div>
-      
-      <div class="row stats" v-show="!read">
         <stat v-show="powerups.Jet" name="jets" :value="format(jets)"></stat>
       </div>
 
@@ -182,12 +179,7 @@
             <div class="letter-container">
               <img v-show="day" src="assets/day/letter.png">
               <img v-show="!day" src="assets/night/letter.png">
-              <div class="letter-header" v-html="letterHeader">
-              </div>
-              <div class="letter-body" v-html="letterBody">
-              </div>
-              <div class="letter-footer" v-html="letterFooter">
-              </div>
+              <div class="letter-body" v-html="letter"></div>
             </div>
           </transition>
         </div>

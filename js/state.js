@@ -34,9 +34,7 @@ export const originalState = {
   
   lastPhase: 9,
   letterPhases: [7], // 1 less than the letter phase (7 means there is a letter on phase 8)
-  letterHeader: "",
-  letterBody: "",
-  letterFooter: "",
+  letter: "",
 
   autoreaderInc: 1,
   autoreader: 0,
@@ -216,9 +214,7 @@ export function loadState() {
     "openLetter",
     "read",
     "lettersDelivered",
-    "letterHeader",
-    "letterBody",
-    "letterFooter",
+    "letter",
     "numChosen",
     "curiosity",
     "pigeons",
