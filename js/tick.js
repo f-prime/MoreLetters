@@ -21,7 +21,7 @@ export function updatePigeons() {
     return;
 
   if(this.generalUpdate("pigeonsLast", this.getPigeonsDelay)) {
-    this.deliverLetter(this.getPigeonsDelivery * this.multiplier);
+    this.deliverLetter(this.getPigeonsDelivery * this.multiplier * this.pigeons);
   }
 }
 
