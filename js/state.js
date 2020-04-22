@@ -13,7 +13,8 @@ export const originalState = {
   phase6: 100000000,
   phase7: 1000000000,
   phase8: 10000000000,
-  phase9: 100000000000,
+  // 8 is a read
+  phase10: 100000000000,
 
   numChosen: 0,
   powerups: {},
@@ -46,7 +47,7 @@ export const originalState = {
   lettersInc: 1,
   lettersDelay: 1000,
   letters: 0,
-  lettersDelivered: 100000000000,
+  lettersDelivered: 0,
   lettersLast: 0,
 
   littleHelp: false,
@@ -54,10 +55,24 @@ export const originalState = {
   littleHelpBasePrice: 20000,
 
   postOffices: 0,
-  postOfficeDelay: 500,
+  postOfficeDelay: 350,
   postOfficeInc: 2,
   postOfficeBasePrice: 1500,
   postOfficeLast:0,
+
+  pigeons: 0,
+  pigeonsLast: 0,
+  pigeonsDelivery: 1,
+  pigeonsBasePrice: 2000,
+  pigeonsDelay: 600,
+
+  dogTreats: false,
+  dogTreatsBoost: 0.1,
+  dogTreatsBasePrice: 2500,
+
+  boxMod: false,
+  boxModBoost: 1,
+  boxModBasePrice: 2700,
 
   twoForOne: false,
   twoForOneBasePrice: 10000,
@@ -122,7 +137,7 @@ export const originalState = {
 
   mailboxBasePrice: 10,
   mailboxes: 0,
-  mailboxLettersIncrease: 1,
+  mailboxLettersInc: 1,
   mailboxDelay: 500,
   mailboxLast: 0,
 
@@ -196,7 +211,11 @@ export function loadState() {
     "letterHeader",
     "letterBody",
     "letterFooter",
+    "numChosen",
     "curiosity",
+    "pigeons",
+    "dogTreats",
+    "boxMod",
     "autoreader",
     "money",
     "letters",

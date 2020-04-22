@@ -37,6 +37,18 @@ export function buyOneTime(toggle, price) {
   return true;
 }
 
+export function buyPigeons() {
+  return this.buy(false, 1, "pigeons", this.pigeonsPrice); 
+}
+
+export function buyDogTreats() {
+  return this.buyOneTime("dogTreats", this.dogTreatsBasePrice);
+}
+
+export function buyBoxMod() {
+  return this.buyOneTime("boxMod", this.boxModBasePrice);
+}
+
 export function buyBigNet() {
   /*
    * Increases letters per second

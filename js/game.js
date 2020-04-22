@@ -19,6 +19,7 @@ import {
   updatePostOffices,
   updateMailmen, 
   updateRecruiters,
+  updatePigeons,
   updateJets,
   updateMailDrones,
   updateEmail,
@@ -37,6 +38,9 @@ import {
   buyMaxAutoReader,
   buySegway,
   buyJet,
+  buyPigeons,
+  buyBoxMod,
+  buyDogTreats,
   buyMailDrones,
   buySelfReliance,
   buyMailbox, 
@@ -155,7 +159,7 @@ const vw = new Vue({
     },
    
     mailboxDescription: function() {
-      return `Generates one letter per mailbox every ${this.getMailboxDelay / 1000} seconds.`
+      return `Generates ${this.getMailboxLettersInc} letter per mailbox every ${this.getMailboxDelay / 1000} seconds.`
     },
 
     bootstrapDescription: function() {
@@ -231,9 +235,29 @@ const vw = new Vue({
     },
 
     caffeineDescription: function() {
-      return `Every mailman gets put on a madatory drip of high octane espresso. Increases mailman efficiency by ${this.caffeineBoost * 100}%`
+      return `Every mailman gets put on a madatory drip of high octane espresso. Decreases mailman delivery delay by ${this.caffeineBoost * 100}%`
     },
-  
+
+    pigeonsDescription: function() {
+      return `Pigeons deliver ${this.getPigeonsDelivery} letters every ${this.getPigeonsDelay / 1000} seconds.`; 
+    },
+
+    dogTreatsDescription: function() {
+      return `Use to stave off the angry dogs on the block. Decreases mailman delivery delay by ${this.dogTreatsBoost * 100}%`;
+    },
+
+    boxModDescription: function() {
+      return `Increase the number of letters per second produced by a mailbox by ${this.boxModBoost}.`; 
+    },
+
+    getPigeonsDelivery: function() {
+      return this.pigeonDelivery;
+    },
+
+    getPigeonsDelay: function() {
+      return this.pigeonsDelay;
+    },
+
     getLettersDelay: function() {
       return this.lettersDelay;
     },
@@ -242,6 +266,11 @@ const vw = new Vue({
       const inflation = this.inflation ? this.inflationIncrease : 0;
       const increase = this.pricePerLetter * inflation;
       return this.pricePerLetter + increase;
+    },
+
+    getMailboxLettersInc: function() {
+      const boxMod = this.boxMod ? this.boxModBoost : 0;
+      return this.mailboxLettersInc + boxMod;
     },
 
     getMailboxDelay: function() {
@@ -275,7 +304,9 @@ const vw = new Vue({
     getMailmanDelay: function() {
       const caffeineDecrease = this.caffeine ? (this.mailmanDelay - (this.mailmanDelay * this.caffeineBoost)) : 0;
       const segwayDecrease = this.segways * this.segwayMailmanBoost;
-      const delay = this.mailmanDelay - caffeineDecrease - segwayDecrease;
+      const dogTreatsDecrease = this.dogTreats ? this.mailmanDelay * this.dogTreatsBoost : 0;
+      
+      const delay = this.mailmanDelay - caffeineDecrease - segwayDecrease - dogTreatsDecrease;
 
       return delay;
     },
@@ -307,6 +338,10 @@ const vw = new Vue({
         return 1;
 
       return 2 ** (this.phase - 1); 
+    },
+
+    pigeonsPrice: function() {
+      return this.round(this.pigeonsBasePrice + (this.pigeons ** 1.1));
     },
 
     jetPrice: function() {
@@ -371,8 +406,11 @@ const vw = new Vue({
           return this.phase7;
         case 7:
           return this.phase8;
+        // Phase 8 is a read so it is the same upper bound as 7
         case 8:
-          return this.phase9;
+          return this.phase8;
+        case 9:
+          return this.phase10;
         default:
           return Infinity;
       }
@@ -411,6 +449,9 @@ const vw = new Vue({
       if(chosen) {
         delete this.powerups[name];
         this.numChosen -= 1;
+        if(this.numChosen < 0) {
+          this.numChosen = 0;
+        }
       } else {
         this.powerups[name] = true;
         this.numChosen += 1;
@@ -480,7 +521,11 @@ const vw = new Vue({
       
       if(this.phase == 8) {
         this.getLetter();
-        this.readLetters = 10; //this.phase8; // Set letters to read to 1T otherwise it could get too big
+        this.readLetters = this.phase8; // Set letters to read to 1T otherwise it could get too big
+        this.read = true;
+      } else if(this.phase == 12) {
+        this.getLetters();
+        this.readLetters = this.phase10;;
         this.read = true;
       }
     },
@@ -547,6 +592,7 @@ const vw = new Vue({
         this.updateMailware();
         this.updateBigNet();
         this.updatePostOffices();
+        this.updatePigeons();
         this.updateMailmen();
         this.updateMailTruck();
         this.updateRecruiters();
@@ -565,6 +611,7 @@ const vw = new Vue({
     updateEmail,
     updateAutoReader,
     updateMailware,
+    updatePigeons,
     updateBigNet,
     updateMailTruck,
     updateJets,
@@ -597,6 +644,9 @@ const vw = new Vue({
     buyAutoReader,
     buySelfReliance,
     buyEmail,
+    buyBoxMod,
+    buyPigeons,
+    buyDogTreats,
     buyMailware,
     buyOneTime,
     buy,

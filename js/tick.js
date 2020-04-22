@@ -14,12 +14,21 @@ export function updateLetters() {
   }
 }
 
+export function updatePigeons() {
+  if(this.pigeons <= 0)
+    return;
+
+  if(this.generalUpdate("pigeonsLast", this.getPigeonsDelay)) {
+    this.deliverLetter(this.getPigeonsDelivery * this.multiplier);
+  }
+}
+
 export function updateMailboxes() {
   if(this.mailboxes <= 0)
     return;
 
   if(this.generalUpdate("mailboxLast", this.getMailboxDelay)) {
-    this.letters += (this.mailboxes * this.multiplier);
+    this.letters += (this.mailboxes * this.multiplier * this.getMailboxLettersInc);
   }
 }
 
