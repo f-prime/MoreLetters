@@ -19,6 +19,7 @@
   <body id="body">
     <div class="container" id="app" :style="!day ? 'color: white;' : ''">
       <div class="bg-color" :style="!day ? 'background-color: #383838;' : ''"></div>
+      <div v-show="scrolled" class="scrollable-money">${{ money }}</div>
       <div class="top-links">
         <div class="row">
           <div class="column align-right">
@@ -176,20 +177,24 @@
             <div class="letter-container">
               <img v-show="day" src="assets/day/letter.png">
               <img v-show="!day" src="assets/night/letter.png">
-              <div class="letter-header">
-                Dear Alsa,
+              <div class="letter-header" v-html="letterHeader">
               </div>
-              <div class="letter-body">
-                I wish I would have said all the things
-                that I <br/>wanted to say.
+              <div class="letter-body" v-html="letterBody">
               </div>
-              <div class="letter-footer">
-                Love,<br/>
-                Lars
+              <div class="letter-footer" v-html="letterFooter">
               </div>
             </div>
           </transition>
         </div>
+        <br/>
+        <div class="row" :class="!day ? 'btn-night' : ''">
+          <div class="column">
+            <div class="button" @click="read = false; openLetter = false; nextPhase()">
+              Continue
+            </div>
+          </div>
+        </div>
+        <br/><br/>
       </div>
 
       <!-- End Read -->

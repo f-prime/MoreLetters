@@ -143,7 +143,7 @@ Vue.component('buy-button', {
 const vw = new Vue({
   el:"#app",
   
-  data: Object.assign({}, originalState), 
+  data: Object.assign({scrolled: false}, originalState), 
  
   computed: {
     autoreaderDescription: function() {
@@ -371,6 +371,8 @@ const vw = new Vue({
           return this.phase7;
         case 7:
           return this.phase8;
+        case 8:
+          return this.phase9;
         default:
           return Infinity;
       }
@@ -382,14 +384,28 @@ const vw = new Vue({
   },
 
   methods: {
+    handleScrolled: function() {
+      this.scrolled = window.scrollY > 100;
+    },
+
     nextPhase: function() {
-      if(this.phase < 7) {
+      if(this.letterPhases.indexOf(this.phase) == -1 && this.phase !== this.lastPhase) {
         this.choosePowerups = true;
       } else {
         this.prestige();
       }
     }, 
-    
+  
+    getLetter: function() {
+      fetch(`/letters/${this.phase}.json`)
+        .then(resp => resp.json())
+        .then(json => {
+          this.letterHeader = json.header;
+          this.letterBody = json.body;
+          this.letterFooter = json.footer;
+        });
+    },
+
     choose: function(name) {
       const chosen = this.powerups[name];
       if(chosen) {
@@ -463,7 +479,8 @@ const vw = new Vue({
       this.lettersDelivered = lettersDelivered;
       
       if(this.phase == 8) {
-        this.readLetters = this.phase8; // Set letters to read to 1T otherwise it could get too big
+        this.getLetter();
+        this.readLetters = 10; //this.phase8; // Set letters to read to 1T otherwise it could get too big
         this.read = true;
       }
     },
@@ -588,6 +605,8 @@ const vw = new Vue({
   },
 
   created: function() {
+    document.addEventListener("scroll", this.handleScrolled);
+
     this.setupTests(),
     this.loadState();
     setInterval(this.update, 0);

@@ -17,17 +17,21 @@ To be continued.....
 
 # Letter 1
 
-Dear Alsa,
+Dear Alsa,<br/>
 
-I had to try out Postal Inc. I hear that they are really taking the "snail" out of "snail mail" and
-keeping everything that made writing letters great! 
+<p>
+I had to try out Postal Inc.<br/> 
+I hear that they are really taking the \"snail\" out of \"snail mail\".<br/>
+</p>
+<p>
+So, yeah, just wanted to say hi.
+</p>
+<p>
+Hope all is well, isn't the weather great today?<br/>
+See, I can say that now because you're going to get this in less than an hour!<br/> 
+</p>
 
-So, yeah, just wanted to say hi. Hope all is well, isn't the weather great today? 
-See? I can say that now because you're going to get this in, like, an hour! Haha
-
-So cool.
-
-Best,
+Best,<br/>
 Lars 
 
 # Letter 2

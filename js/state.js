@@ -3,6 +3,8 @@ export const originalState = {
   
   phase:0,
 
+  // Phase numbers are upper bound to reach that phase
+
   phase1: 50,
   phase2: 10000,
   phase3: 100000,
@@ -11,6 +13,7 @@ export const originalState = {
   phase6: 100000000,
   phase7: 1000000000,
   phase8: 10000000000,
+  phase9: 100000000000,
 
   numChosen: 0,
   powerups: {},
@@ -28,6 +31,12 @@ export const originalState = {
   readLetters:0,
   curiosity: 0,
   
+  lastPhase: 9,
+  letterPhases: [7], // 1 less than the letter phase (7 means there is a letter on phase 8)
+  letterHeader: "",
+  letterBody: "",
+  letterFooter: "",
+
   autoreaderInc: 1,
   autoreader: 0,
   autoreaderBasePrice: 10,
@@ -37,7 +46,7 @@ export const originalState = {
   lettersInc: 1,
   lettersDelay: 1000,
   letters: 0,
-  lettersDelivered: 0,
+  lettersDelivered: 100000000000,
   lettersLast: 0,
 
   littleHelp: false,
@@ -140,7 +149,7 @@ export const originalState = {
 
   caffeine: false,
   caffeineBasePrice: 100000,
-  caffeineBoost: 0.3,
+  caffeineBoost: 0.15,
 
   scientificManagementBasePrice: 100000,
   scientificManagement: false,
@@ -184,6 +193,9 @@ export function loadState() {
     "openLetter",
     "read",
     "lettersDelivered",
+    "letterHeader",
+    "letterBody",
+    "letterFooter",
     "curiosity",
     "autoreader",
     "money",
