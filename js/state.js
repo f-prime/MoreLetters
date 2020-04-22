@@ -44,6 +44,14 @@ export const originalState = {
 
   money: 0,
 
+  lettersPs: 0,
+  prevLettersPs: 0,
+  lastLettersPs: 0,
+
+  deliveryPs: 0,
+  prevDeliveryPs: 0,
+  lastDeliveryPs: 0,
+
   lettersInc: 1,
   lettersDelay: 1000,
   letters: 0,

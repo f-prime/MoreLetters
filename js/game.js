@@ -251,7 +251,7 @@ const vw = new Vue({
     },
 
     getPigeonsDelivery: function() {
-      return this.pigeonDelivery;
+      return this.pigeonsDelivery;
     },
 
     getPigeonsDelay: function() {
@@ -372,10 +372,6 @@ const vw = new Vue({
       return this.round(this.factoryBasePrice + (this.factories ** 2.5));
     },
 
-    lettersPerSecond: function() {
-      return this.round((this.lettersInc * this.multiplier * (this.mailboxes + 1)) / (this.getLettersDelay / 1000));
-    },
-
     mailmanPrice: function() {
       return this.round(this.mailmanBasePrice + (this.mailmen ** 1.5));
     },
@@ -422,6 +418,26 @@ const vw = new Vue({
   },
 
   methods: {
+    updateLettersPerSecond: function() {
+      if(this.lastLettersPs < 1000) {
+        this.lastLettersPs += this.delta;
+      } else {
+        this.prevLettersPs = this.lettersPs;
+        this.lastLettersPs = 0;
+        this.lettersPs = 0;
+      }
+    },
+
+    updateDeliveriesPerSecond: function() {
+      if(this.lastDeliveryPs < 1000) {
+        this.lastDeliveryPs += this.delta;
+      } else {
+        this.prevDeliveryPs = this.deliveryPs;
+        this.lastDeliveryPs = 0;
+        this.deliveryPs = 0;
+      }
+    },
+    
     handleScrolled: function() {
       this.scrolled = window.scrollY > 100;
     },
@@ -571,11 +587,17 @@ const vw = new Vue({
       if(this.letters < amount) {
         amount = this.letters;
       }
-
+      
+      this.deliveryPs += amount;
       this.letters -= amount;
       this.money += ((this.getPricePerLetter) * this.multiplier) * amount;
       this.lettersDelivered += amount;
 
+    },
+
+    handleDebug: function() {
+      this.lettersDelivered = 10 ** 50;
+      this.money = 10 ** 50;
     },
 
     update: function() {
@@ -584,6 +606,8 @@ const vw = new Vue({
       this.lastTick = now;
 
       if(!this.read) {
+        this.updateLettersPerSecond();
+        this.updateDeliveriesPerSecond();
         this.updateLetters();
         this.updateMailboxes();
         this.updateJets();
@@ -656,6 +680,7 @@ const vw = new Vue({
 
   created: function() {
     document.addEventListener("scroll", this.handleScrolled);
+    document.addEventListener("debug", this.handleDebug);
 
     this.setupTests(),
     this.loadState();

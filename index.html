@@ -108,7 +108,8 @@
       <div class="row stats" v-show="!read">
         <stat name="letters" :value="format(floor(letters))"></stat>
         <stat name="letters delivered" :value="format(floor(lettersDelivered))"></stat>
-        <stat name="letters per second" :value="format(lettersPerSecond)"></stat>
+        <stat name="letters per second" :value="format(prevLettersPs)"></stat>
+        <stat name="deliveries per second" :value="format(prevDeliveryPs)"></stat>
       </div>
       <div class="row stats" v-show="!read">
         <stat name="letters per click" :value="format(round(clickInc))"></stat>

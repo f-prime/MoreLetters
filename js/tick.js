@@ -1,16 +1,18 @@
 export function generalUpdate(last, delay) {
-  if(this._data[last] < delay) {
+  if(this._data[last] <= delay) {
     this._data[last] += this.delta;
     return false;
   }
-
+  
   this._data[last] = 0;
   return true;
 }
 
 export function updateLetters() {
   if(this.generalUpdate("lettersLast", this.getLettersDelay)) {
-    this.letters += (this.lettersInc * this.multiplier );
+    const inc = (this.lettersInc * this.multiplier );
+    this.letters += inc;
+    this.lettersPs += inc;
   }
 }
 
@@ -28,7 +30,9 @@ export function updateMailboxes() {
     return;
 
   if(this.generalUpdate("mailboxLast", this.getMailboxDelay)) {
-    this.letters += (this.mailboxes * this.multiplier * this.getMailboxLettersInc);
+    const inc = (this.mailboxes * this.multiplier * this.getMailboxLettersInc);
+    this.letters += inc;
+    this.lettersPs += inc;
   }
 }
 
@@ -37,7 +41,9 @@ export function updateBigNet() {
     return;
   
   if(this.generalUpdate("bigNetLast", this.getBigNetDelay)) {
-    this.letters += this.bigNetInc * this.multiplier;
+    const inc = this.bigNetInc * this.multiplier;
+    this.letters += inc;
+    this.lettersPs += inc;
   }
 }
 
@@ -55,7 +61,9 @@ export function updateMailware() {
     return;
 
   if(this.generalUpdate("mailwareLast", this.getMailwareDelay)) {
-    this.letters += this.mailwareInc * this.multiplier;
+    const inc = this.mailwareInc * this.multiplier;
+    this.letters += inc;
+    this.lettersPs += inc;
   }
 }
 
@@ -64,7 +72,9 @@ export function updateEmail() {
     return;
  
   if(this.generalUpdate("emailLast", this.getEmailDelay)) {
-    this.letters += this.emailInc * this.multiplier;
+    const inc = this.emailInc * this.multiplier;
+    this.letters += inc;
+    this.lettersPs += inc;
   }
 }
 
@@ -76,7 +86,9 @@ export function updateMailTruck() {
 
 export function updatePostOffices() {
   if(this.generalUpdate("postOfficeLast", this.getPostOfficeDelay)) {
-    this.letters += (this.postOffices * this.postOfficeInc * this.multiplier);
+    const inc = (this.postOffices * this.postOfficeInc * this.multiplier);
+    this.letters += inc;
+    this.lettersPs += inc;
   }
 }
 
