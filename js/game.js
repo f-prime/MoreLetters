@@ -14,6 +14,7 @@ import {
 
 import { 
   generalUpdate,
+  updateCorporateOffices,
   updateMailware,
   updateBigNet,
   updatePostOffices,
@@ -34,6 +35,8 @@ import {
   buy,
   buyScientificManagement,
   buyMailware,
+  buyAds,
+  buyCorporateOffices,
   buyAutoReader,
   buyMaxAutoReader,
   buySegway,
@@ -175,7 +178,7 @@ const vw = new Vue({
     },
 
     segwayDescription: function() {
-      return `Increases mailman efficiency by ${this.segwayMailmanBoost * 100}% for every segway purchased.`
+      return `Increases mailman efficiency by ${this.segwayMailmanBoost * 100}%.`
     },
 
     scientificManagementDescription: function() {
@@ -250,6 +253,30 @@ const vw = new Vue({
       return `Increase the number of letters per second produced by a mailbox by ${this.boxModBoost}.`; 
     },
 
+    corporateOfficesDescription: function() {
+      return `Automatically creates ${this.getCorporateOfficesIncrease} Recruiter and Factory per Corporate Office every ${this.corporateOfficesDelay / 1000} seconds.`; 
+    },
+
+    corporateOfficesPrice: function() {
+      return this.round(this.corporateOfficesBasePrice + (this.corporateOffices ** 2));
+    },
+
+    getCorporateOfficesDelay: function() {
+      return this.corporateOfficesDelay;
+    },
+
+    getCorporateOfficesIncrease: function() {
+      return this.corporateOfficesIncrease;
+    },
+
+    adsDescription: function() {
+      return `Generates ${this.format(this.getAdsLettersInc)} letters per click.`
+    },
+
+    getAdsLettersInc: function() {
+      return this.adsLettersInc;
+    },
+
     getPigeonsDelivery: function() {
       return this.pigeonsDelivery;
     },
@@ -302,8 +329,8 @@ const vw = new Vue({
     },
 
     getMailmanDelay: function() {
-      const caffeineDecrease = this.caffeine ? (this.mailmanDelay - (this.mailmanDelay * this.caffeineBoost)) : 0;
-      const segwayDecrease = this.segways * this.segwayMailmanBoost;
+      const caffeineDecrease = this.caffeine ? this.mailmanDelay * this.caffeineBoost : 0;
+      const segwayDecrease = this.segway ? this.mailmanDelay * this.segwayMailmanBoost : 0;
       const dogTreatsDecrease = this.dogTreats ? this.mailmanDelay * this.dogTreatsBoost : 0;
       
       const delay = this.mailmanDelay - caffeineDecrease - segwayDecrease - dogTreatsDecrease;
@@ -362,10 +389,6 @@ const vw = new Vue({
 
     recruiterPrice: function() {
       return this.round(this.recruiterBasePrice + (this.recruiters ** 3));
-    },
-
-    segwayPrice: function() {
-      return this.round(this.segwayBasePrice + (this.segways ** 3));
     },
 
     factoryPrice: function() {
@@ -429,7 +452,7 @@ const vw = new Vue({
     },
 
     updateDeliveriesPerSecond: function() {
-      if(this.lastDeliveryPs < 1000) {
+      if(this.lastDeliveryPs <= 1000) {
         this.lastDeliveryPs += this.delta;
       } else {
         this.prevDeliveryPs = this.deliveryPs;
@@ -604,8 +627,6 @@ const vw = new Vue({
       this.lastTick = now;
 
       if(!this.read) {
-        this.updateLettersPerSecond();
-        this.updateDeliveriesPerSecond();
         this.updateLetters();
         this.updateMailboxes();
         this.updateJets();
@@ -613,12 +634,15 @@ const vw = new Vue({
         this.updateMailDrones(),
         this.updateMailware();
         this.updateBigNet();
+        this.updateCorporateOffices();
         this.updatePostOffices();
         this.updatePigeons();
         this.updateMailmen();
         this.updateMailTruck();
         this.updateRecruiters();
         this.updateFactories();
+        this.updateLettersPerSecond();
+        this.updateDeliveriesPerSecond(); 
       } else {
         this.updateAutoReader();
       }
@@ -630,6 +654,7 @@ const vw = new Vue({
     updateLetters,
     updateRecruiters,
     updateMailmen,
+    updateCorporateOffices,
     updateEmail,
     updateAutoReader,
     updateMailware,
@@ -648,6 +673,8 @@ const vw = new Vue({
     buyMailman,
     buyMailDrones,
     buyJet,
+    buyAds,
+    buyCorporateOffices,
     buyMailTruck,
     buyMailbox,
     buyInflation,

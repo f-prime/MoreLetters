@@ -150,7 +150,7 @@ export function buySegway() {
    * Increases mailman delivery speed by 2.5% per segway
    */
 
-  return this.buy(false, 1, "segways", this.segwayPrice);  
+  this.buyOneTime("segway", this.segwayBasePrice);
 }
 
 export function buySelfReliance() {
@@ -176,13 +176,18 @@ export function buyBootstrap() {
   return true;
 }
 
-export function buyFactory() {
+export function buyFactory(free, amount) {
   /*
    * Automatically acquires mailboxes 
    * Time between getting mailbox decreases by 5% for every new factory
    */
 
-  return this.buy(false, 1, "factories", this.factoryPrice);
+  if(free == undefined || amount == undefined) {
+    free = false;
+    amount = 1;
+  }
+
+  return this.buy(free, amount, "factories", this.factoryPrice);
 }
 
 export function buyPostOffice() {
@@ -211,14 +216,19 @@ export function buyMailbox(free, amount) {
   return this.buy(free, amount, "mailboxes", this.mailboxPrice);
 }
 
-export function buyRecruiter() {
+export function buyRecruiter(free, amount) {
   /*
    * Automatically hires a mailman per second
    * Decreases time between hires by 5% for every new recruiter
    *
    */
 
-  return this.buy(false, 1, "recruiters", this.recruiterPrice);
+  if(free == undefined || amount == undefined) {
+    free = false;
+    amount = 1;
+  }
+
+  return this.buy(free, amount, "recruiters", this.recruiterPrice);
 }
 
 export function buyMailman(free, amount) {
@@ -248,6 +258,19 @@ export function buyMailTruck() {
    */
 
   return this.buy(false, 1, "mailTrucks", this.mailTruckPrice);
+}
+
+export function buyCorporateOffices() {
+  return this.buy(false, 1, "corporateOffices", this.corporateOfficesPrice);
+}
+
+export function buyAds() {
+  if(this.money < this.adsBasePrice)
+    return false;
+  
+  this.money -= this.adsBasePrice;
+  this.letters += this.getAdsLettersInc;
+  return true;
 }
 
 export function buyAutoReader() {

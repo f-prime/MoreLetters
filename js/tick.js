@@ -16,6 +16,21 @@ export function updateLetters() {
   }
 }
 
+export function updateCorporateOffices() {
+  if(this.corporateOffices <= 0)
+    return;
+
+  if(this.generalUpdate("corporateOfficesLast", this.getCorporateOfficesDelay)) {
+    if(this.powerups.Factory) {
+      this.factories += this.getCorporateOfficesIncrease;
+    }
+
+    if(this.powerups.Recruiter) {
+      this.recruiters += this.getCorporateOfficesIncrease;
+    }
+  }
+}
+
 export function updatePigeons() {
   if(this.pigeons <= 0)
     return;

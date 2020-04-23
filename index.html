@@ -19,7 +19,7 @@
   <body id="body">
     <div class="container" id="app" :style="!day ? 'color: white;' : ''">
       <div class="bg-color" :style="!day ? 'background-color: #383838;' : ''"></div>
-      <div v-show="scrolled" class="scrollable-money">${{ format(money) }}</div>
+      <div v-show="scrolled" class="scrollable-money">${{ format(round(money)) }}</div>
       <div class="top-links">
         <div class="row">
           <div class="column align-right">
@@ -125,7 +125,6 @@
       </div>
       <div class="row stats" v-show="!read">
         <stat v-show="powerups['Mail Truck']" name="mail trucks" :value="format(mailTrucks)"></stat>
-        <stat v-show="powerups.Segway" name="segways" :value="format(segways)"></stat>
         <stat v-show="powerups.Recruiter" name="recruiters" :value="format(recruiters)"></stat>
         <stat v-show="powerups.Factory" :value="format(factories)" name="factories"></stat> 
         <stat v-show="powerups.Jet" name="jets" :value="format(jets)"></stat>
@@ -239,7 +238,7 @@
           <buy-button
             title="Pigeons"
             :description="pigeonsDescription"
-            :price="pigeonsPrice"
+            :price="format(pigeonsPrice)"
             choose="true"
             :chosen="powerups.Pigeons"
             @chosen="choose('Pigeons')">
@@ -248,7 +247,7 @@
           <buy-button
             title="Dog Treats"
             :description="dogTreatsDescription"
-            :price="dogTreatsBasePrice"
+            :price="format(dogTreatsBasePrice)"
             choose="true"
             :chosen="powerups['Dog Treats']"
             @chosen="choose('Dog Treats')">
@@ -257,7 +256,7 @@
           <buy-button
             title="Box Mod"
             :description="boxModDescription"
-            :price="boxModBasePrice"
+            :price="format(boxModBasePrice)"
             choose="true"
             :chosen="powerups['Box Mod']"
             @chosen="choose('Box Mod')">
@@ -296,7 +295,7 @@
         <div class="row" v-show="phase == 3">
           <buy-button
              title="Segway"
-             :price="format(segwayPrice)"
+             :price="format(segwayBasePrice)"
              :description="segwayDescription"
              choose="true"
              :chosen="powerups.Segway"
@@ -427,6 +426,38 @@
           ></buy-button>
 
           <buy-button
+             title="Corporate Offices"
+             :description="corporateOfficesDescription"
+             :price="format(corporateOfficesPrice)"
+             choose="true"
+             :chosen="powerups['Corporate Offices']"
+             @chosen="choose('Corporate Offices')"
+          ></buy-button>
+
+          <buy-button
+             title="Run Ads"
+             :price="format(adsBasePrice)"
+             :description="adsDescription"
+             choose="true"
+             :chosen="powerups.Ads"
+             @chosen="choose('Ads')"
+          ></buy-button>
+
+        </div>
+
+        <div class="row" v-show="phase == 10">
+
+        </div>
+
+        <div class="row" v-show="phase == 12">
+          <buy-button
+            title="Security Cameras"
+            choose="true"
+            :chosen="powerups['Security Cameras']"
+            @chosen="choose('Security Cameras')"
+          ></buy-button>
+
+          <buy-button
             title="Mail Drones"
             :description="mailDronesDescription"
             :price="format(mailDronesBasePrice)"
@@ -520,7 +551,7 @@
             v-show="powerups.Pigeons"
             title="Pigeons"
             :description="pigeonsDescription"
-            :price="pigeonsPrice"
+            :price="format(pigeonsPrice)"
             @buy="buyPigeons()"
             @buy-max="buyMax(buyPigeons)"
             :max-buy="true">
@@ -530,7 +561,7 @@
             v-show="powerups['Dog Treats']"
             title="Dog Treats"
             :description="dogTreatsDescription"
-            :price="dogTreatsBasePrice"
+            :price="format(dogTreatsBasePrice)"
             @buy="buyDogTreats()"
             :owned="dogTreats">
           </buy-button>
@@ -539,7 +570,7 @@
             v-show="powerups['Box Mod']"
             title="Box Mod"
             :description="boxModDescription"
-            :price="boxModBasePrice"
+            :price="format(boxModBasePrice)"
             @buy="buyBoxMod()"
             :owned="boxMod">
           </buy-button>
@@ -586,9 +617,8 @@
             v-show="powerups['Segway']"
             title="Segway"
             @buy="buySegway()"
-            @buy-max="buyMax(buySegway)"
-            :max-buy="true"
-            :price="format(segwayPrice)"
+            :owned="segway"
+            :price="format(segwayBasePrice)"
             :description="segwayDescription"
           ></buy-button> 
           
@@ -710,6 +740,26 @@
             @buy="buySelfReliance()"
             :price="format(selfRelianceBasePrice)"
             :description="selfRelianceDescription"
+          ></buy-button>
+
+          <buy-button
+            v-show="powerups['Corporate Offices']"
+            title="Corporate Offices"
+            max-buy="true"
+            @buy="buyCorporateOffices()"
+            @buy-max="buyMax(buyCorporateOffices)"
+            :price="format(this.corporateOfficesPrice)"
+            :description="corporateOfficesDescription"
+          ></buy-button>
+
+          <buy-button
+            v-show="powerups.Ads"
+            title="Run Ads"
+            max-buy="true"
+            @buy="buyAds()"
+            @buy-max="buyMax(buyAds)"
+            :price="format(this.adsBasePrice)"
+            :description="adsDescription"
           ></buy-button>
 
           <buy-button

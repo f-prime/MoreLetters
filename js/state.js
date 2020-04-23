@@ -63,22 +63,22 @@ export const originalState = {
   postOffices: 0,
   postOfficeDelay: 350,
   postOfficeInc: 2,
-  postOfficeBasePrice: 1500,
+  postOfficeBasePrice: 2000,
   postOfficeLast:0,
 
   pigeons: 0,
   pigeonsLast: 0,
   pigeonsDelivery: 1,
-  pigeonsBasePrice: 2000,
+  pigeonsBasePrice: 1000,
   pigeonsDelay: 600,
 
   dogTreats: false,
   dogTreatsBoost: 0.1,
-  dogTreatsBasePrice: 2500,
+  dogTreatsBasePrice: 1300,
 
   boxMod: false,
   boxModBoost: 1,
-  boxModBasePrice: 2700,
+  boxModBasePrice: 1700,
 
   twoForOne: false,
   twoForOneBasePrice: 10000,
@@ -89,17 +89,26 @@ export const originalState = {
   twoHandsChance: 0.3,
 
   inflation: false,
-  inflationBasePrice: 500000,
+  inflationBasePrice: 50000000,
   inflationIncrease: 1,
+
+  corporateOffices: 0,
+  corporateOfficesLast:0,
+  corporateOfficesDelay: 2000,
+  corporateOfficesIncrease: 1,
+  corporateOfficesBasePrice: 50000000000, 
+
+  adsBasePrice: 10 ** 9,
+  adsLettersInc: 500000,
 
   email: false,
   emailInc: 10,
   emailDelay: 100,
   emailLast: 0,
-  emailBasePrice: 1000000,
+  emailBasePrice: 10 ** 9,
 
   selfReliance: false,
-  selfRelianceBasePrice: 10 ** 9,
+  selfRelianceBasePrice: 10 ** 10,
   selfRelianceInc: 1000,
 
   mailware: false,
@@ -160,12 +169,12 @@ export const originalState = {
   factoryLast: 0,
 
   segwayBasePrice: 5000,
-  segways: 0,
-  segwayMailmanBoost: 0.02,
+  segway: false,
+  segwayMailmanBoost: 0.08,
 
   mailTrucks: 0,
   mailTruckDelay: 250,
-  mailTruckBasePrice:1000,
+  mailTruckBasePrice:2200,
   mailTruckInc: 2,
 
   caffeine: false,
@@ -239,10 +248,11 @@ export function loadState() {
     "mailboxes",
     "recruiters",
     "factories",
-    "segways",
+    "segway",
     "mailTrucks",
     "caffeine",
     "scientificManagement",
+    "corporateOffices",
   ];
   
   
