@@ -6,16 +6,26 @@ export const originalState = {
   // Phase numbers are upper bound to reach that phase
 
   phase1: 50,
-  phase2: 10000,
-  phase3: 100000,
-  phase4: 1000000,
-  phase5: 10000000,
-  phase6: 100000000,
-  phase7: 1000000000,
-  phase8: 10000000000,
-  // 8 is a read
-  phase10: 100000000000,
-
+  phase2: 10 ** 4,
+  phase3: 10 ** 5,
+  phase4: 10 ** 6,
+  phase5: 10 ** 7,
+  phase6: 10 ** 8,
+  phase7: 10 ** 9,
+  phase8: 10 ** 10,
+  // 9 is a read
+  phase10: 10 ** 11,
+  phase11: 10 ** 12,
+  // 12 is a read
+  phase13: 10 ** 13,
+  phase14: 10 ** 14,
+  // 15 is a read
+  phase16: 10 ** 16,
+  phase17: 10 ** 17,
+  // 18 is a read
+  phase19: 10 ** 19,
+  phase20: 10 ** 20,
+  // 21 is a read
   numChosen: 0,
   powerups: {},
   choosePowerups: false,
@@ -32,8 +42,8 @@ export const originalState = {
   readLetters:0,
   curiosity: 0,
   
-  lastPhase: 9,
-  letterPhases: [7], // 1 less than the letter phase (7 means there is a letter on phase 8)
+  lastPhase: 21,
+  letterPhases: [8, 11, 14, 17, 20], // One less than read phase number 
   letter: "",
 
   autoreaderInc: 1,
@@ -41,6 +51,15 @@ export const originalState = {
   autoreaderBasePrice: 10,
 
   money: 0,
+
+  breeders: 0,
+  breederDelay: 1500,
+  breederPigeonInc: 10,
+  breederLast: 0,
+  breederBasePrice: 10 ** 11,
+
+  geneticEngineering: false,
+  geneticEngineeringBasePrice: 50 ** 11,
 
   lettersPs: 0,
   prevLettersPs: 0,

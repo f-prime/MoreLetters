@@ -176,18 +176,13 @@ export function buyBootstrap() {
   return true;
 }
 
-export function buyFactory(free, amount) {
+export function buyFactory() {
   /*
    * Automatically acquires mailboxes 
    * Time between getting mailbox decreases by 5% for every new factory
    */
 
-  if(free == undefined || amount == undefined) {
-    free = false;
-    amount = 1;
-  }
-
-  return this.buy(free, amount, "factories", this.factoryPrice);
+  return this.buy(false, 1, "factories", this.factoryPrice);
 }
 
 export function buyPostOffice() {
@@ -216,19 +211,14 @@ export function buyMailbox(free, amount) {
   return this.buy(free, amount, "mailboxes", this.mailboxPrice);
 }
 
-export function buyRecruiter(free, amount) {
+export function buyRecruiter() {
   /*
    * Automatically hires a mailman per second
    * Decreases time between hires by 5% for every new recruiter
    *
    */
 
-  if(free == undefined || amount == undefined) {
-    free = false;
-    amount = 1;
-  }
-
-  return this.buy(free, amount, "recruiters", this.recruiterPrice);
+  return this.buy(false, 1, "recruiters", this.recruiterPrice);
 }
 
 export function buyMailman(free, amount) {

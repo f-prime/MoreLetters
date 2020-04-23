@@ -115,6 +115,7 @@
         <stat name="letters per click" :value="format(round(clickInc))"></stat>
         <stat name="letter price" :value="'$' + format(round(getPricePerLetter * multiplier))"></stat>
         <stat name="multiplier" :value="format(multiplier)"></stat>
+        <stat name="phase" :value="phase"></stat>
       </div>
       
       <div class="row stats" v-show="!read">
@@ -449,11 +450,293 @@
 
         </div>
 
+        <div class="row" v-show="phase == 9">
+          <buy-button
+             title="Self-Reliance"
+             :price="format(selfRelianceBasePrice)"
+             :description="selfRelianceDescription"
+             choose="true"
+             :chosen="powerups['Self-Reliance']"
+             @chosen="choose('Self-Reliance')" 
+          ></buy-button>
+
+          <buy-button
+             title="Corporate Offices"
+             :description="corporateOfficesDescription"
+             :price="format(corporateOfficesPrice)"
+             choose="true"
+             :chosen="powerups['Corporate Offices']"
+             @chosen="choose('Corporate Offices')"
+          ></buy-button>
+
+          <buy-button
+             title="Run Ads"
+             :price="format(adsBasePrice)"
+             :description="adsDescription"
+             choose="true"
+             :chosen="powerups.Ads"
+             @chosen="choose('Ads')"
+          ></buy-button>
+
+        </div>
+
         <div class="row" v-show="phase == 10">
+          <buy-button
+             title="Self-Reliance"
+             :price="format(selfRelianceBasePrice)"
+             :description="selfRelianceDescription"
+             choose="true"
+             :chosen="powerups['Self-Reliance']"
+             @chosen="choose('Self-Reliance')" 
+          ></buy-button>
+
+          <buy-button
+             title="Corporate Offices"
+             :description="corporateOfficesDescription"
+             :price="format(corporateOfficesPrice)"
+             choose="true"
+             :chosen="powerups['Corporate Offices']"
+             @chosen="choose('Corporate Offices')"
+          ></buy-button>
+
+          <buy-button
+             title="Run Ads"
+             :price="format(adsBasePrice)"
+             :description="adsDescription"
+             choose="true"
+             :chosen="powerups.Ads"
+             @chosen="choose('Ads')"
+          ></buy-button>
 
         </div>
 
         <div class="row" v-show="phase == 12">
+          <buy-button
+             title="Self-Reliance"
+             :price="format(selfRelianceBasePrice)"
+             :description="selfRelianceDescription"
+             choose="true"
+             :chosen="powerups['Self-Reliance']"
+             @chosen="choose('Self-Reliance')" 
+          ></buy-button>
+
+          <buy-button
+             title="Corporate Offices"
+             :description="corporateOfficesDescription"
+             :price="format(corporateOfficesPrice)"
+             choose="true"
+             :chosen="powerups['Corporate Offices']"
+             @chosen="choose('Corporate Offices')"
+          ></buy-button>
+
+          <buy-button
+             title="Run Ads"
+             :price="format(adsBasePrice)"
+             :description="adsDescription"
+             choose="true"
+             :chosen="powerups.Ads"
+             @chosen="choose('Ads')"
+          ></buy-button>
+
+        </div>
+
+        <div class="row" v-show="phase == 13">
+          <buy-button
+            title="Security Cameras"
+            choose="true"
+            :chosen="powerups['Security Cameras']"
+            @chosen="choose('Security Cameras')"
+          ></buy-button>
+
+          <buy-button
+            title="Mail Drones"
+            :description="mailDronesDescription"
+            :price="format(mailDronesBasePrice)"
+            choose="true"
+            :chosen="powerups['Mail Drones']"
+            @chosen="choose('Mail Drones')" 
+
+          ></buy-button> 
+          
+          <buy-button
+            title="Mailware"
+            :price="format(mailwareBasePrice)"
+            :description="mailwareDescription"
+            choose="true"
+            :chosen="powerups.Mailware"
+            @chosen="choose('Mailware')" 
+          ></buy-button>
+        </div>
+
+        <div class="row" v-show="phase == 14">
+          <buy-button
+            title="Security Cameras"
+            choose="true"
+            :chosen="powerups['Security Cameras']"
+            @chosen="choose('Security Cameras')"
+          ></buy-button>
+
+          <buy-button
+            title="Mail Drones"
+            :description="mailDronesDescription"
+            :price="format(mailDronesBasePrice)"
+            choose="true"
+            :chosen="powerups['Mail Drones']"
+            @chosen="choose('Mail Drones')" 
+
+          ></buy-button> 
+          
+          <buy-button
+            title="Mailware"
+            :price="format(mailwareBasePrice)"
+            :description="mailwareDescription"
+            choose="true"
+            :chosen="powerups.Mailware"
+            @chosen="choose('Mailware')" 
+          ></buy-button>
+        </div>
+
+        <div class="row" v-show="phase == 15">
+          <buy-button
+            title="Security Cameras"
+            choose="true"
+            :chosen="powerups['Security Cameras']"
+            @chosen="choose('Security Cameras')"
+          ></buy-button>
+
+          <buy-button
+            title="Mail Drones"
+            :description="mailDronesDescription"
+            :price="format(mailDronesBasePrice)"
+            choose="true"
+            :chosen="powerups['Mail Drones']"
+            @chosen="choose('Mail Drones')" 
+
+          ></buy-button> 
+          
+          <buy-button
+            title="Mailware"
+            :price="format(mailwareBasePrice)"
+            :description="mailwareDescription"
+            choose="true"
+            :chosen="powerups.Mailware"
+            @chosen="choose('Mailware')" 
+          ></buy-button>
+        </div>
+
+        <div class="row" v-show="phase == 16">
+          <buy-button
+            title="Security Cameras"
+            choose="true"
+            :chosen="powerups['Security Cameras']"
+            @chosen="choose('Security Cameras')"
+          ></buy-button>
+
+          <buy-button
+            title="Mail Drones"
+            :description="mailDronesDescription"
+            :price="format(mailDronesBasePrice)"
+            choose="true"
+            :chosen="powerups['Mail Drones']"
+            @chosen="choose('Mail Drones')" 
+
+          ></buy-button> 
+          
+          <buy-button
+            title="Mailware"
+            :price="format(mailwareBasePrice)"
+            :description="mailwareDescription"
+            choose="true"
+            :chosen="powerups.Mailware"
+            @chosen="choose('Mailware')" 
+          ></buy-button>
+        </div>
+
+        <div class="row" v-show="phase == 17">
+          <buy-button
+            title="Security Cameras"
+            choose="true"
+            :chosen="powerups['Security Cameras']"
+            @chosen="choose('Security Cameras')"
+          ></buy-button>
+
+          <buy-button
+            title="Mail Drones"
+            :description="mailDronesDescription"
+            :price="format(mailDronesBasePrice)"
+            choose="true"
+            :chosen="powerups['Mail Drones']"
+            @chosen="choose('Mail Drones')" 
+
+          ></buy-button> 
+          
+          <buy-button
+            title="Mailware"
+            :price="format(mailwareBasePrice)"
+            :description="mailwareDescription"
+            choose="true"
+            :chosen="powerups.Mailware"
+            @chosen="choose('Mailware')" 
+          ></buy-button>
+        </div>
+
+        <div class="row" v-show="phase == 18">
+          <buy-button
+            title="Security Cameras"
+            choose="true"
+            :chosen="powerups['Security Cameras']"
+            @chosen="choose('Security Cameras')"
+          ></buy-button>
+
+          <buy-button
+            title="Mail Drones"
+            :description="mailDronesDescription"
+            :price="format(mailDronesBasePrice)"
+            choose="true"
+            :chosen="powerups['Mail Drones']"
+            @chosen="choose('Mail Drones')" 
+
+          ></buy-button> 
+          
+          <buy-button
+            title="Mailware"
+            :price="format(mailwareBasePrice)"
+            :description="mailwareDescription"
+            choose="true"
+            :chosen="powerups.Mailware"
+            @chosen="choose('Mailware')" 
+          ></buy-button>
+        </div>
+
+        <div class="row" v-show="phase == 19">
+          <buy-button
+            title="Security Cameras"
+            choose="true"
+            :chosen="powerups['Security Cameras']"
+            @chosen="choose('Security Cameras')"
+          ></buy-button>
+
+          <buy-button
+            title="Mail Drones"
+            :description="mailDronesDescription"
+            :price="format(mailDronesBasePrice)"
+            choose="true"
+            :chosen="powerups['Mail Drones']"
+            @chosen="choose('Mail Drones')" 
+
+          ></buy-button> 
+          
+          <buy-button
+            title="Mailware"
+            :price="format(mailwareBasePrice)"
+            :description="mailwareDescription"
+            choose="true"
+            :chosen="powerups.Mailware"
+            @chosen="choose('Mailware')" 
+          ></buy-button>
+        </div>
+
+        <div class="row" v-show="phase == 20">
           <buy-button
             title="Security Cameras"
             choose="true"

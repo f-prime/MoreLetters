@@ -425,11 +425,32 @@ const vw = new Vue({
           return this.phase7;
         case 7:
           return this.phase8;
-        // Phase 8 is a read so it is the same upper bound as 7
         case 8:
-          return this.phase8;
+          return this.phase8; // Phase 8 is a read so it is the same upper bound as 7
         case 9:
           return this.phase10;
+        case 10:
+          return this.phase11;
+        case 11:
+          return this.phase11; // Phase 11 is read
+        case 12: 
+          return this.phase13;
+        case 13:
+          return this.phase14;
+        case 14:
+          return this.phase14; // Phase 14 is a read
+        case 15:
+          return this.phase16;
+        case 16:
+          return this.phase17;
+        case 17:
+          return this.phase17; // Phase 17 is a read
+        case 18:
+          return this.phase19;
+        case 19:
+          return this.phase20;
+        case 20:
+          return this.phase20; // Phase 20 is a read
         default:
           return Infinity;
       }
@@ -466,7 +487,7 @@ const vw = new Vue({
     },
 
     nextPhase: function() {
-      if(this.letterPhases.indexOf(this.phase) == -1 && this.phase !== this.lastPhase) {
+      if(this.letterPhases.indexOf(this.phase + 1) == -1 && this.phase !== this.lastPhase) {
         this.choosePowerups = true;
       } else {
         this.prestige();
@@ -556,13 +577,9 @@ const vw = new Vue({
       this.phase = phase + 1;
       this.lettersDelivered = lettersDelivered;
       
-      if(this.phase == 8) {
+      if(this.letterPhases.indexOf(this.phase) !== -1) {
         this.getLetter();
-        this.readLetters = this.phase8; // Set letters to read to 1T otherwise it could get too big
-        this.read = true;
-      } else if(this.phase == 12) {
-        this.getLetters();
-        this.readLetters = this.phase10;;
+        this.readLetters = this[`phase${this.phase}`]; // Set letters to read to 1T otherwise it could get too big
         this.read = true;
       }
     },
@@ -619,6 +636,7 @@ const vw = new Vue({
     handleDebug: function() {
       this.lettersDelivered = 10 ** 50;
       this.money = 10 ** 50;
+      this.readLetters = 1;
     },
 
     update: function() {
