@@ -130,6 +130,10 @@
         <stat v-show="powerups.Jet" name="jets" :value="format(jets)"></stat>
       </div>
 
+      <div class="row stats" v-show="!read">
+        <stat v-show="powerups['Corporate Offices']" name="corporate offices" :value="format(corporateOffices)"></stat>
+      </div>
+
       <!-- Read -->
 
       <div v-if="read && readLetters > 0" class="buttons" :class="!day ? 'btn-night' : ''">
