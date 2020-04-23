@@ -267,14 +267,15 @@ export function buyAutoReader() {
   if(this.curiosity < this.autoreaderPrice)
     return false;
 
-  this.autoreader += this.autoreaderInc;;
+  this.autoreader += this.autoreaderInc;
   this.curiosity -= this.autoreaderPrice;
 
   return true;
 }
 
 export function buyMaxAutoReader() {
-  while(this.buyAutoReader()) {}
+  while(this.buyAutoReader()) {
+  }
 }
 
 export function buyMax(buyFunction) {

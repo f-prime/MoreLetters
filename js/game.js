@@ -590,7 +590,7 @@ const vw = new Vue({
 
       const inc = (amount && amount > 0 ? amount : 1);
 
-      this.readLetters -= inc;
+      this.readLetters -= inc * this.multiplier * 10;
       this.curiosity += inc;
 
       if(this.readLetters < 0)

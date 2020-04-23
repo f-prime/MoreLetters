@@ -507,8 +507,38 @@
              :chosen="powerups.Ads"
              @chosen="choose('Ads')"
           ></buy-button>
+        </div>
+
+        <div class="row" v-show="phase == 11">
+          <buy-button
+             title="Self-Reliance"
+             :price="format(selfRelianceBasePrice)"
+             :description="selfRelianceDescription"
+             choose="true"
+             :chosen="powerups['Self-Reliance']"
+             @chosen="choose('Self-Reliance')" 
+          ></buy-button>
+
+          <buy-button
+             title="Corporate Offices"
+             :description="corporateOfficesDescription"
+             :price="format(corporateOfficesPrice)"
+             choose="true"
+             :chosen="powerups['Corporate Offices']"
+             @chosen="choose('Corporate Offices')"
+          ></buy-button>
+
+          <buy-button
+             title="Run Ads"
+             :price="format(adsBasePrice)"
+             :description="adsDescription"
+             choose="true"
+             :chosen="powerups.Ads"
+             @chosen="choose('Ads')"
+          ></buy-button>
 
         </div>
+
 
         <div class="row" v-show="phase == 12">
           <buy-button
