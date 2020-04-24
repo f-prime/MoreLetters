@@ -378,7 +378,7 @@ const vw = new Vue({
       if(this.phase == 0)
         return 1;
 
-      return Math.floor(1.8 ** (this.phase - 1)); 
+      return Math.floor(2 ** (this.phase - 1)); 
     },
 
     pigeonsPrice: function() {
