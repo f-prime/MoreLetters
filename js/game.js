@@ -571,7 +571,7 @@ const vw = new Vue({
       this.lettersDelivered = lettersDelivered;
       this.letterOn = letterOn;
 
-      if(this.phase == 10 && this.letterOn < 4) {
+      if(this.phase == 10 && this.letterOn <= 4) {
         this.getLetter();
         this.readLetters = this.phase8; // Set letters to read to 1T otherwise it could get too big
         this.letterOn += 1;
