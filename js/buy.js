@@ -1,38 +1,23 @@
-export function buy(
-  free, 
-  amount,
-  countVar, 
-  priceVar, 
-  delayVar, 
-  delayPercentageDecrease) 
+export function buy(countVar, priceVar) { 
+  if(priceVar === undefined)
+    throw "Price Var Undefined (buy)";
 
-{ 
-  amount = amount || 1;
-  if(!free) {
-    if(priceVar === undefined)
-      throw "Price Var Undefined (buy)";
+  const price = priceVar;
 
-    const price = priceVar * amount;
-
-    if(isNaN(price)) {
-      throw "New price isn't a number (buy)";
-    }
-
-    if(this._data.money < price)
-      return false;
-
-    this._data.money -= price; 
+  if(isNaN(price)) {
+    throw "New price isn't a number (buy)";
   }
+
+  if(this._data.money < price)
+    return false;
+
+  this._data.money -= price; 
   
   if(this._data[countVar] === undefined) {
     throw "CountVar is undefined (buy)";
   }
 
-  this._data[countVar] += amount;
-
-  if(delayVar && delayPercentageDecrease) {
-    this._data[delayVar] -= (this._data[delayVar] * delayPercentageDecrease);
-  }
+  this._data[countVar] += 1;
 
   return true;
 }
@@ -53,8 +38,12 @@ export function buyOneTime(toggle, price) {
   return true;
 }
 
+export function buyMonopoly() {
+  this.buy("monopoly", this.monopolyPrice);
+}
+
 export function buyPigeons() {
-  return this.buy(false, 1, "pigeons", this.pigeonsPrice); 
+  return this.buy("pigeons", this.pigeonsPrice); 
 }
 
 export function buyDogTreats() {
@@ -167,8 +156,8 @@ export function buyBootstrap() {
    */
 
   if(this.money < this.bootstrapPrice) {
-    this.letters += this.bootstrap;
-    this.lettersPs += this.bootstrap;
+    this.letters += this.bootstrap * this.multiplier;
+    this.lettersPs += this.bootstrap * this.multiplier;
     return false;
   }
 
@@ -185,7 +174,7 @@ export function buyFactory() {
    * Time between getting mailbox decreases by 5% for every new factory
    */
 
-  return this.buy(false, 1, "factories", this.factoryPrice);
+  return this.buy("factories", this.factoryPrice);
 }
 
 export function buyPostOffice() {
@@ -193,7 +182,7 @@ export function buyPostOffice() {
    * Generates more letters in less time
    */
 
-  return this.buy(false, 1, "postOffices", this.postOfficePrice);
+  return this.buy("postOffices", this.postOfficePrice);
 
 }
 
@@ -205,13 +194,13 @@ export function buyCaffeine() {
   this.buyOneTime("caffeine", this.caffeineBasePrice);
 }
 
-export function buyMailbox(free, amount) {
+export function buyMailbox() {
   /*
    * Increases number of letters per second by one
    * Decreases letters delay by 2%
    */
   
-  return this.buy(free, amount, "mailboxes", this.mailboxPrice);
+  return this.buy("mailboxes", this.mailboxPrice);
 }
 
 export function buyRecruiter() {
@@ -221,10 +210,10 @@ export function buyRecruiter() {
    *
    */
 
-  return this.buy(false, 1, "recruiters", this.recruiterPrice);
+  return this.buy("recruiters", this.recruiterPrice);
 }
 
-export function buyMailman(free, amount) {
+export function buyMailman() {
   /*
    * Automates letter delivery
    * Delivers once ever 500ms
@@ -233,7 +222,7 @@ export function buyMailman(free, amount) {
    *
    */
 
-  return this.buy(free, amount, "mailmen", this.mailmanPrice);
+  return this.buy("mailmen", this.mailmanPrice);
 
 }
 
@@ -242,7 +231,7 @@ export function buyJet() {
    * Delivers 10 letters every 0.5 seconds
    */
 
-  return this.buy(false, 1, "jets", this.jetPrice);
+  return this.buy("jets", this.jetPrice);
 }
 
 export function buyMailTruck() {
@@ -250,11 +239,11 @@ export function buyMailTruck() {
    * Deliveres 2 letters every 0.5 seconds
    */
 
-  return this.buy(false, 1, "mailTrucks", this.mailTruckPrice);
+  return this.buy("mailTrucks", this.mailTruckPrice);
 }
 
 export function buyCorporateOffices() {
-  return this.buy(false, 1, "corporateOffices", this.corporateOfficesPrice);
+  return this.buy("corporateOffices", this.corporateOfficesPrice);
 }
 
 export function buyAds() {

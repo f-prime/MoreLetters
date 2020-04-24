@@ -51,6 +51,15 @@ export function updateMailboxes() {
   }
 }
 
+export function updateMonopoly() {
+  if(this.monopoly <= 0 || !this.powerups['Corporate Offices'])
+    return;
+
+  if(this.generalUpdate("monopolyLast", this.getMonopolyDelay)) {
+    this.corporateOffices += this.monopolyIncrease * this.monopoly;;
+  }
+}
+
 export function updateBigNet() {
   if(!this.bigNet)
     return;

@@ -15,6 +15,7 @@ import {
 import { 
   generalUpdate,
   updateCorporateOffices,
+  updateMonopoly,
   updateMailware,
   updateBigNet,
   updatePostOffices,
@@ -36,6 +37,7 @@ import {
   buyScientificManagement,
   buyMailware,
   buyAds,
+  buyMonopoly,
   buyCorporateOffices,
   buyAutoReader,
   buyMaxAutoReader,
@@ -253,6 +255,18 @@ const vw = new Vue({
       return `Increase the number of letters per second produced by a mailbox by ${this.boxModBoost}.`; 
     },
 
+    monopolyDescription: function() {
+      return `Establishes ${this.monopolyIncrease} Corporate Office every ${this.getMonopolyDelay / 1000} seconds.`;
+    },
+
+    getMonopolyDelay: function() {
+      return this.monopolyDelay;
+    },
+
+    monopolyPrice: function() {
+      return this.round(this.monopolyBasePrice + (this.monopoly ** 1.9));
+    },
+
     corporateOfficesDescription: function() {
       return `Automatically creates ${this.getCorporateOfficesIncrease} Recruiters and Factories per Corporate Office every ${this.corporateOfficesDelay / 1000} seconds.`; 
     },
@@ -364,7 +378,7 @@ const vw = new Vue({
       if(this.phase == 0)
         return 1;
 
-      return 2 ** (this.phase - 1); 
+      return Math.floor(1.8 ** (this.phase - 1)); 
     },
 
     pigeonsPrice: function() {
@@ -628,6 +642,7 @@ const vw = new Vue({
       if(!this.read) {
         this.updateLetters();
         this.updateMailboxes();
+        this.updateMonopoly();
         this.updateJets();
         this.updateEmail();
         this.updateMailDrones(),
@@ -655,6 +670,7 @@ const vw = new Vue({
     updateMailmen,
     updateCorporateOffices,
     updateEmail,
+    updateMonopoly,
     updateAutoReader,
     updateMailware,
     updatePigeons,
@@ -682,6 +698,7 @@ const vw = new Vue({
     buyPostOffice,
     buySegway,
     buyBigNet,
+    buyMonopoly,
     buySpontaneousGeneration,
     buyBootstrap,
     buyTwoHands,

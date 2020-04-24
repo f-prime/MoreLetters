@@ -137,6 +137,7 @@
 
       <div class="row stats" v-show="!read">
         <stat v-show="powerups['Corporate Offices']" name="corporate offices" :value="format(corporateOffices)"></stat>
+        <stat v-show="powerups.Monopoly" name="monopolies" :value="format(monopoly)"></stat>
       </div>
 
       <!-- Read -->
@@ -154,10 +155,6 @@
           <div class="column"></div>
           <div class="column">
              <buy-button 
-               this-phase-type="either"
-               :phase="phase"
-               :phase-min="1"
-               
                curiosity="true"
                title="Auto Reader"
                @buy="buyAutoReader()"
@@ -456,10 +453,12 @@
 
         <div class="row" v-show="phase == 8">
           <buy-button
-            title="Security Cameras"
+            title="Monopoly"
+            :description="monopolyDescription"
+            :price="format(monopolyPrice)"
             choose="true"
-            :chosen="powerups['Security Cameras']"
-            @chosen="choose('Security Cameras')"
+            :chosen="powerups.Monopoly"
+            @chosen="choose('Monopoly')"
           ></buy-button>
 
           <buy-button
@@ -766,6 +765,15 @@
             :price="format(this.adsBasePrice)"
             :description="adsDescription"
           ></buy-button>
+
+          <buy-button
+            v-show="powerups.Monopoly"
+            title="Monopoly"
+            :description="monopolyDescription"
+            :price="format(monopolyPrice)"
+            @buy="buyMonopoly()"
+            @buy-max="buyMax(buyMonopoly)"
+            max-buy="true"></buy-button>
 
           <buy-button
             v-show="powerups['Mail Drones']"

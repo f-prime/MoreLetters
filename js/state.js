@@ -87,7 +87,7 @@ export const originalState = {
   twoHandsChance: 0.3,
 
   inflation: false,
-  inflationBasePrice: 50000000,
+  inflationBasePrice: 5 * 10 ** 8,
   inflationIncrease: 1,
 
   corporateOffices: 0,
@@ -110,17 +110,23 @@ export const originalState = {
   selfRelianceInc: 1000,
 
   mailware: false,
-  mailwareBasePrice: 11 ** 9,
-  mailwareInc: 2,
+  mailwareBasePrice: 11 ** 11,
+  mailwareInc: 10,
   mailwareLast:0,
   mailwareDelay:0,
 
   bigNet: false,
   bigNetInc: 100,
-  bigNetBasePrice: 10 ** 8,
+  bigNetBasePrice: 10 ** 9,
   bigNetLast:0,
   bigNetDelay:300,
- 
+
+  monopoly:0,
+  monopolyBasePrice: 10 ** 11,
+  monopolyDelay: 500,
+  monopolyIncrease: 1,
+  monopolyLast:0,
+
   jets: 0,
   jetDelivery: 25,
   jetDelay: 250,
@@ -128,9 +134,9 @@ export const originalState = {
   jetBasePrice: 500000, 
 
   spontaneousGeneration: false,
-  spontaneousGenerationBasePrice: 300000,
+  spontaneousGenerationBasePrice: 3000000,
   spontaneousGenerationChance: 0.30,
-  spontaneousGenerationMult: 25,
+  spontaneousGenerationMult: 10,
   
   clickInc: 1,
   bootstrap: 0,
@@ -140,7 +146,7 @@ export const originalState = {
   mailDrones: false,
   mailDronesDelay: 50,
   mailDronesDelivery: 20,
-  mailDronesBasePrice: 10 ** 9,
+  mailDronesBasePrice: 500 * 10 ** 9,
   mailDronesLast: 0,
 
   mailmen: 0,
