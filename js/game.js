@@ -180,15 +180,15 @@ const vw = new Vue({
     },
 
     segwayDescription: function() {
-      return `Increases mailman efficiency by ${this.segwayMailmanBoost * 100}%.`
+      return `Increases mailman delivery speed by ${this.segwayMailmanBoost * 100}%. This is a one time purchase.`
     },
 
     scientificManagementDescription: function() {
-      return "Reduces the time it take for factories to generate mailboxes by 50%.";
+      return "Reduces the time it take for factories to generate mailboxes by 50%. THis is a one time purchase.";
     },
 
     twoHandsDescription: function() {
-      return `Each delivery click has a ${this.twoHandsChance * 100}% chance of delivering ${this.twoHandsMultiplier}x the amount of letters.`
+      return `Each delivery click has a ${this.twoHandsChance * 100}% chance of delivering ${this.twoHandsMultiplier}x the amount of letters. This is a one time purchase.`
     },
 
     postOfficeDescription: function() {
@@ -200,31 +200,31 @@ const vw = new Vue({
     },
 
     emailDescription: function() {
-      return `Accept letters via the internet. Generates ${this.emailInc} letters every ${this.getEmailDelay / 1000} seconds`;
+      return `Accept letters via the internet. Generates ${this.emailInc} letters every ${this.getEmailDelay / 1000} seconds. This is a one time purchase.`;
     },
 
     littleHelpDescription: function() {
-      return `${this.littleHelpChance * 100}% chance of hiring ${this.littleHelpIncrease} mailmen every delivery click.`;
+      return `${this.littleHelpChance * 100}% chance of hiring ${this.littleHelpIncrease} mailmen every delivery click. This is a one time purchase.`;
     },
 
     bigNetDescription: function() {
-      return `Capture all the messages in bottles that are floating around the ocean. Generates ${this.bigNetInc} letters every ${this.getBigNetDelay / 1000} seconds.`;
+      return `Capture all the messages in bottles that are floating around the ocean. Generates ${this.bigNetInc} letters every ${this.getBigNetDelay / 1000} seconds. This is a one time purchase.`;
     },
 
     selfRelianceDescription: function() {
-      return `Increases bootstrap increment by ${this.selfRelianceInc}.`;
+      return `Increases bootstrap increment by ${this.selfRelianceInc}. This is a one time purchase.`;
     },
 
     inflationDescription: function() {
-      return `Increases the price per letter by ${this.inflationIncrease * 100}%.`;
+      return `Increases the price per letter by ${this.inflationIncrease * 100}%. This is a one time purchase.`;
     },
 
     mailwareDescription: function() {
-      return `Infect people's computers and phones with 'mailware' capturing letters before they are even sent! Generates ${this.mailwareInc} letters per tick.`;
+      return `Infect people's computers and phones with 'mailware' capturing letters before they are even sent! Generates ${this.mailwareInc} letters per tick. This is a one time purchase.`;
     },
 
     mailDronesDescription: function() {
-      return `Unleash a swarm of mail delivering drones. Delivers ${this.mailDronesDelivery} letters every ${this.getMailDronesDelay / 1000} seconds.`;
+      return `Unleash a swarm of mail delivering drones. Delivers ${this.mailDronesDelivery} letters every ${this.getMailDronesDelay / 1000} seconds. This is a one time purchase.`;
     },
 
     jetsDescription: function() {
@@ -232,7 +232,7 @@ const vw = new Vue({
     },
 
     spontaneousGenerationDescription: function() {
-      return `${this.spontaneousGenerationChance * 100}% chance that clicking to deliver a letter will multiply your letters per click by ${this.spontaneousGenerationMult} for that click.`;
+      return `${this.spontaneousGenerationChance * 100}% chance that clicking to deliver a letter will multiply your letters per click by ${this.spontaneousGenerationMult} for that click. This is a one time purchase.`;
     },
 
     postOfficDescription: function() {
@@ -240,7 +240,7 @@ const vw = new Vue({
     },
 
     caffeineDescription: function() {
-      return `Every mailman gets put on a madatory drip of high octane espresso. Decreases mailman delivery delay by ${this.caffeineBoost * 100}%`
+      return `Every mailman gets put on a madatory drip of high octane espresso. Decreases mailman delivery delay by ${this.caffeineBoost * 100}%. This is a one time purchase.`
     },
 
     pigeonsDescription: function() {
@@ -248,11 +248,11 @@ const vw = new Vue({
     },
 
     dogTreatsDescription: function() {
-      return `Use to stave off the angry dogs on the block. Decreases mailman delivery delay by ${this.dogTreatsBoost * 100}%`;
+      return `Use to stave off the angry dogs on the block. Decreases mailman delivery delay by ${this.dogTreatsBoost * 100}%. This is a one time purchase.`;
     },
 
     boxModDescription: function() {
-      return `Increase the number of letters per second produced by a mailbox by ${this.boxModBoost}.`; 
+      return `Increase the number of letters per second produced by a mailbox by ${this.boxModBoost}. This is a one time purchase.`; 
     },
 
     monopolyDescription: function() {

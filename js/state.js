@@ -175,7 +175,7 @@ export const originalState = {
 
   segwayBasePrice: 5000,
   segway: false,
-  segwayMailmanBoost: 0.08,
+  segwayMailmanBoost: 0.1,
 
   mailTrucks: 0,
   mailTruckDelay: 250,
