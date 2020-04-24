@@ -39,7 +39,7 @@ export function buyOneTime(toggle, price) {
 }
 
 export function buyMonopoly() {
-  this.buy("monopoly", this.monopolyPrice);
+  return this.buy("monopoly", this.monopolyPrice);
 }
 
 export function buyPigeons() {
