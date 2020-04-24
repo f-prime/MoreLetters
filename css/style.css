@@ -252,6 +252,11 @@ html, body {
   margin-right: 1em;
 }
 
+.footer-link a {
+  color:white;
+  text-decoration: none;
+}
+
 .footer-link {
   cursor: pointer;
 }
