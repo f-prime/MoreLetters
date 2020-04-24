@@ -22,11 +22,11 @@ export function updateCorporateOffices() {
 
   if(this.generalUpdate("corporateOfficesLast", this.getCorporateOfficesDelay)) {
     if(this.powerups.Factory) {
-      this.factories += this.getCorporateOfficesIncrease;
+      this.factories += this.getCorporateOfficesIncrease * this.corporateOffices;
     }
 
     if(this.powerups.Recruiter) {
-      this.recruiters += this.getCorporateOfficesIncrease;
+      this.recruiters += this.getCorporateOfficesIncrease * this.corporateOffices;
     }
   }
 }

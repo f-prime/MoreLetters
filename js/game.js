@@ -166,7 +166,7 @@ const vw = new Vue({
     },
 
     bootstrapDescription: function() {
-      return `Increases letters per click by ${this.bootstrapInc}`;
+      return `Increases letters per click by ${this.bootstrapInc}. If you don't have enough funds, then an amount of letters equal to your letters per click will be generated instead.`;
     },
 
     recruiterDescription: function() {
@@ -190,7 +190,7 @@ const vw = new Vue({
     },
 
     postOfficeDescription: function() {
-      return `Generates two letters every ${this.getPostOfficeDelay / 1000} seconds.`;
+      return `Generates ${this.postOfficeInc} letters every ${this.getPostOfficeDelay / 1000} seconds.`;
     },
 
     mailTruckDescription: function() {
@@ -202,7 +202,7 @@ const vw = new Vue({
     },
 
     littleHelpDescription: function() {
-      return `${this.littleHelpChance * 100}% chance of hiring a mailman every delivery click.`;
+      return `${this.littleHelpChance * 100}% chance of hiring ${this.littleHelpIncrease} mailmen every delivery click.`;
     },
 
     bigNetDescription: function() {
@@ -254,7 +254,7 @@ const vw = new Vue({
     },
 
     corporateOfficesDescription: function() {
-      return `Automatically creates ${this.getCorporateOfficesIncrease} Recruiter and Factory per Corporate Office every ${this.corporateOfficesDelay / 1000} seconds.`; 
+      return `Automatically creates ${this.getCorporateOfficesIncrease} Recruiters and Factories per Corporate Office every ${this.corporateOfficesDelay / 1000} seconds.`; 
     },
 
     corporateOfficesPrice: function() {
@@ -372,15 +372,15 @@ const vw = new Vue({
     },
 
     jetPrice: function() {
-      return this.round(this.jetBasePrice + (this.jets ** 2));
+      return this.round(this.jetBasePrice + (this.jets ** 1.7));
     },
 
     postOfficePrice: function() {
-      return this.round(this.postOfficeBasePrice + (this.postOffices ** 1.5));
+      return this.round(this.postOfficeBasePrice + (this.postOffices ** 2.3));
     },
 
     bootstrapPrice: function() {
-      return this.round(this.bootstrapBasePrice + (this.bootstrap ** 2))
+      return this.round(this.bootstrapBasePrice + (this.bootstrap ** 1.5))
     },
 
     mailTruckPrice: function() {
@@ -429,28 +429,6 @@ const vw = new Vue({
           return this.phase8; // Phase 8 is a read so it is the same upper bound as 7
         case 9:
           return this.phase10;
-        case 10:
-          return this.phase11;
-        case 11:
-          return this.phase11; // Phase 11 is read
-        case 12: 
-          return this.phase13;
-        case 13:
-          return this.phase14;
-        case 14:
-          return this.phase14; // Phase 14 is a read
-        case 15:
-          return this.phase16;
-        case 16:
-          return this.phase17;
-        case 17:
-          return this.phase17; // Phase 17 is a read
-        case 18:
-          return this.phase19;
-        case 19:
-          return this.phase20;
-        case 20:
-          return this.phase20; // Phase 20 is a read
         default:
           return Infinity;
       }
@@ -487,7 +465,7 @@ const vw = new Vue({
     },
 
     nextPhase: function() {
-      if(this.letterPhases.indexOf(this.phase + 1) == -1 && this.phase !== this.lastPhase) {
+      if(this.phase != 9) {
         this.choosePowerups = true;
       } else {
         this.prestige();
@@ -495,7 +473,7 @@ const vw = new Vue({
     }, 
   
     getLetter: function() {
-      fetch(`/letters/${this.phase}.txt`)
+      fetch(`/letters/${this.letterOn}.txt`)
         .then(resp => resp.text())
         .then(text => {
           this.letter = text;
@@ -567,6 +545,7 @@ const vw = new Vue({
       const phase = this.phase;
       const day = this.day;
       const powerups = this.powerups;
+      const letterOn = this.letterOn;
 
       for(const key in originalState) {
         this.$data[key] = originalState[key];
@@ -576,10 +555,12 @@ const vw = new Vue({
       this.day = day;
       this.phase = phase + 1;
       this.lettersDelivered = lettersDelivered;
-      
-      if(this.letterPhases.indexOf(this.phase) !== -1) {
+      this.letterOn = letterOn;
+
+      if(this.phase == 10 && this.letterOn < 4) {
         this.getLetter();
-        this.readLetters = this[`phase${this.phase}`]; // Set letters to read to 1T otherwise it could get too big
+        this.readLetters = this.phase8; // Set letters to read to 1T otherwise it could get too big
+        this.letterOn += 1;
         this.read = true;
       }
     },
@@ -590,7 +571,7 @@ const vw = new Vue({
 
       const inc = (amount && amount > 0 ? amount : 1);
 
-      this.readLetters -= inc * this.multiplier * 10;
+      this.readLetters -= inc;
       this.curiosity += inc;
 
       if(this.readLetters < 0)
@@ -605,10 +586,10 @@ const vw = new Vue({
       const twoHandsMult = this.twoHands && Math.random() < this.twoHandsChance ? this.twoHandsMultiplier : 1;
       const spontGen = this.spontaneousGeneration && Math.random() < this.spontaneousGenerationChance ? this.spontaneousGenerationMult : 1;
      
-      if(this.littleHelp) {
+      if(this.littleHelp && this.powerups.Mailman) {
         const littleHelp = Math.random();
         if(littleHelp < this.littleHelpChance) {
-          this.mailmen += 1;
+          this.mailmen += this.littleHelpIncrease;
         }
       }
       

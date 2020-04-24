@@ -14,18 +14,8 @@ export const originalState = {
   phase7: 10 ** 9,
   phase8: 10 ** 10,
   // 9 is a read
-  phase10: 10 ** 11,
-  phase11: 10 ** 12,
-  // 12 is a read
-  phase13: 10 ** 13,
-  phase14: 10 ** 14,
-  // 15 is a read
-  phase16: 10 ** 16,
-  phase17: 10 ** 17,
-  // 18 is a read
-  phase19: 10 ** 19,
-  phase20: 10 ** 20,
-  // 21 is a read
+  phase10: 500 * 10 ** 11,
+  
   numChosen: 0,
   powerups: {},
   choosePowerups: false,
@@ -35,15 +25,12 @@ export const originalState = {
 
   pricePerLetter: 0.25,
 
-  clickInc: 1,
-
   openLetter: false,
   read: false,
   readLetters:0,
   curiosity: 0,
   
-  lastPhase: 21,
-  letterPhases: [8, 11, 14, 17, 20], // One less than read phase number 
+  letterOn:0,
   letter: "",
 
   autoreaderInc: 1,
@@ -51,15 +38,6 @@ export const originalState = {
   autoreaderBasePrice: 10,
 
   money: 0,
-
-  breeders: 0,
-  breederDelay: 1500,
-  breederPigeonInc: 10,
-  breederLast: 0,
-  breederBasePrice: 10 ** 11,
-
-  geneticEngineering: false,
-  geneticEngineeringBasePrice: 50 ** 11,
 
   lettersPs: 0,
   prevLettersPs: 0,
@@ -76,13 +54,14 @@ export const originalState = {
   lettersLast: 0,
 
   littleHelp: false,
-  littleHelpChance:0.30,
+  littleHelpChance:0.10,
+  littleHelpIncrease: 100,
   littleHelpBasePrice: 20000,
 
   postOffices: 0,
   postOfficeDelay: 350,
-  postOfficeInc: 2,
-  postOfficeBasePrice: 2000,
+  postOfficeInc: 20,
+  postOfficeBasePrice: 2700,
   postOfficeLast:0,
 
   pigeons: 0,
@@ -113,18 +92,18 @@ export const originalState = {
 
   corporateOffices: 0,
   corporateOfficesLast:0,
-  corporateOfficesDelay: 2000,
+  corporateOfficesDelay: 1000,
   corporateOfficesIncrease: 1,
   corporateOfficesBasePrice: 50000000000, 
 
   adsBasePrice: 10 ** 9,
-  adsLettersInc: 500000,
+  adsLettersInc: 5000000,
 
   email: false,
   emailInc: 10,
   emailDelay: 100,
   emailLast: 0,
-  emailBasePrice: 10 ** 9,
+  emailBasePrice: 80 * 10 ** 7,
 
   selfReliance: false,
   selfRelianceBasePrice: 10 ** 10,
@@ -137,8 +116,8 @@ export const originalState = {
   mailwareDelay:0,
 
   bigNet: false,
-  bigNetInc: 20,
-  bigNetBasePrice: 3000000,
+  bigNetInc: 100,
+  bigNetBasePrice: 10 ** 8,
   bigNetLast:0,
   bigNetDelay:300,
  
@@ -153,6 +132,7 @@ export const originalState = {
   spontaneousGenerationChance: 0.30,
   spontaneousGenerationMult: 25,
   
+  clickInc: 1,
   bootstrap: 0,
   bootstrapBasePrice: 25,
   bootstrapDelivery: 1,
@@ -197,7 +177,7 @@ export const originalState = {
   mailTruckInc: 2,
 
   caffeine: false,
-  caffeineBasePrice: 100000,
+  caffeineBasePrice: 1000000,
   caffeineBoost: 0.15,
 
   scientificManagementBasePrice: 100000,
@@ -213,6 +193,7 @@ export function saveState() {
     localStorage.setItem("state", JSON.stringify(this.$data));
     localStorage.setItem("lastSave", now);
     localStorage.setItem("day", this.day);
+    localStorage.setItem("letter", this.letterOn);
     this.lastSave = now;
   }
 }
@@ -264,12 +245,14 @@ export function loadState() {
     "jets",
     "spontaneousGeneration",
     "bootstrap",
+    "clickInc",
     "mailDrones",
     "mailboxes",
     "recruiters",
     "factories",
     "segway",
     "mailTrucks",
+    "letterOn",
     "caffeine",
     "scientificManagement",
     "corporateOffices",
@@ -277,6 +260,8 @@ export function loadState() {
   
   
   const day = localStorage.getItem("day");
+  const letterOn = localStorage.getItem("letter");
+
   let state = localStorage.getItem("state");
   let json;
 
@@ -295,6 +280,12 @@ export function loadState() {
   
   if(day) {
     this.day = JSON.parse(day); 
+  }
+
+  if(letterOn && Number(letterOn)) {
+    this.letterOn = Number(letterOn);
+  } else {
+    this.letterOn = 0;
   }
 
   this.calculateNewState();

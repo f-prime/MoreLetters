@@ -166,8 +166,11 @@ export function buyBootstrap() {
    * Increases number of letters per click
    */
 
-  if(this.money < this.bootstrapPrice)
+  if(this.money < this.bootstrapPrice) {
+    this.letters += this.bootstrap;
+    this.lettersPs += this.bootstrap;
     return false;
+  }
 
   this.money -= this.bootstrapPrice;
   this.bootstrap += this.bootstrapInc;  
