@@ -228,6 +228,9 @@
     IterableElementError_tooMany: function() {
       return new P.StateError("Too many elements");
     },
+    IterableElementError_tooFew: function() {
+      return new P.StateError("Too few elements");
+    },
     EfficientLengthIterable: function EfficientLengthIterable() {
     },
     ListIterable: function ListIterable() {
@@ -867,13 +870,6 @@
       if (typeof value === "string")
         return value;
       throw H.wrapException(H.TypeErrorImplementation$(value, "String"));
-    },
-    doubleTypeCheck: function(value) {
-      if (value == null)
-        return value;
-      if (typeof value === "number")
-        return value;
-      throw H.wrapException(H.TypeErrorImplementation$(value, "double"));
     },
     numTypeCheck: function(value) {
       if (value == null)
@@ -1556,6 +1552,23 @@
     },
     unmangleGlobalNameIfPreservedAnyways: function($name) {
       return init.mangledGlobalNames[$name];
+    },
+    printString: function(string) {
+      if (typeof dartPrint == "function") {
+        dartPrint(string);
+        return;
+      }
+      if (typeof console == "object" && typeof console.log != "undefined") {
+        console.log(string);
+        return;
+      }
+      if (typeof window == "object")
+        return;
+      if (typeof print == "function") {
+        print(string);
+        return;
+      }
+      throw "Unable to print message: " + String(string);
     }
   },
   J = {
@@ -1632,6 +1645,24 @@
         return receiver;
       return J.getNativeInterceptor(receiver);
     },
+    getInterceptor$ansx: function(receiver) {
+      if (typeof receiver == "number")
+        return J.JSNumber.prototype;
+      if (typeof receiver == "string")
+        return J.JSString.prototype;
+      if (receiver == null)
+        return receiver;
+      if (receiver.constructor == Array)
+        return J.JSArray.prototype;
+      if (typeof receiver != "object") {
+        if (typeof receiver == "function")
+          return J.JavaScriptFunction.prototype;
+        return receiver;
+      }
+      if (receiver instanceof P.Object)
+        return receiver;
+      return J.getNativeInterceptor(receiver);
+    },
     getInterceptor$asx: function(receiver) {
       if (typeof receiver == "string")
         return J.JSString.prototype;
@@ -1661,6 +1692,26 @@
       if (receiver instanceof P.Object)
         return receiver;
       return J.getNativeInterceptor(receiver);
+    },
+    getInterceptor$n: function(receiver) {
+      if (typeof receiver == "number")
+        return J.JSNumber.prototype;
+      if (receiver == null)
+        return receiver;
+      if (!(receiver instanceof P.Object))
+        return J.UnknownJavaScriptObject.prototype;
+      return receiver;
+    },
+    getInterceptor$ns: function(receiver) {
+      if (typeof receiver == "number")
+        return J.JSNumber.prototype;
+      if (typeof receiver == "string")
+        return J.JSString.prototype;
+      if (receiver == null)
+        return receiver;
+      if (!(receiver instanceof P.Object))
+        return J.UnknownJavaScriptObject.prototype;
+      return receiver;
     },
     getInterceptor$s: function(receiver) {
       if (typeof receiver == "string")
@@ -1704,6 +1755,11 @@
     get$onClick$x: function(receiver) {
       return J.getInterceptor$x(receiver).get$onClick(receiver);
     },
+    $add$ansx: function(receiver, a0) {
+      if (typeof receiver == "number" && typeof a0 == "number")
+        return receiver + a0;
+      return J.getInterceptor$ansx(receiver).$add(receiver, a0);
+    },
     $eq$: function(receiver, a0) {
       if (receiver == null)
         return a0 == null;
@@ -1717,6 +1773,26 @@
           if (a0 >>> 0 === a0 && a0 < receiver.length)
             return receiver[a0];
       return J.getInterceptor$asx(receiver).$index(receiver, a0);
+    },
+    $le$n: function(receiver, a0) {
+      if (typeof receiver == "number" && typeof a0 == "number")
+        return receiver <= a0;
+      return J.getInterceptor$n(receiver).$le(receiver, a0);
+    },
+    $lt$n: function(receiver, a0) {
+      if (typeof receiver == "number" && typeof a0 == "number")
+        return receiver < a0;
+      return J.getInterceptor$n(receiver).$lt(receiver, a0);
+    },
+    $mul$ns: function(receiver, a0) {
+      if (typeof receiver == "number" && typeof a0 == "number")
+        return receiver * a0;
+      return J.getInterceptor$ns(receiver).$mul(receiver, a0);
+    },
+    $sub$n: function(receiver, a0) {
+      if (typeof receiver == "number" && typeof a0 == "number")
+        return receiver - a0;
+      return J.getInterceptor$n(receiver).$sub(receiver, a0);
     },
     _addEventListener$3$x: function(receiver, a0, a1, a2) {
       return J.getInterceptor$x(receiver)._addEventListener$3(receiver, a0, a1, a2);
@@ -1732,6 +1808,9 @@
     },
     remove$0$x: function(receiver) {
       return J.getInterceptor$x(receiver).remove$0(receiver);
+    },
+    round$0$n: function(receiver) {
+      return J.getInterceptor$n(receiver).round$0(receiver);
     },
     toLowerCase$0$s: function(receiver) {
       return J.getInterceptor$s(receiver).toLowerCase$0(receiver);
@@ -2188,9 +2267,6 @@
       this.f = t1;
       this.T = t2;
     },
-    LinkedHashMap_LinkedHashMap: function($K, $V) {
-      return new H.JsLinkedHashMap([$K, $V]);
-    },
     LinkedHashMap_LinkedHashMap$_literal: function(keyValuePairs, $K, $V) {
       return H.assertSubtype(H.fillLiteralMap(keyValuePairs, new H.JsLinkedHashMap([$K, $V])), "$isLinkedHashMap", [$K, $V], "$asLinkedHashMap");
     },
@@ -2331,11 +2407,6 @@
       C.JSArray_methods.add$1(parts, penultimateString);
       C.JSArray_methods.add$1(parts, ultimateString);
     },
-    LinkedHashMap_LinkedHashMap$from: function(other, $K, $V) {
-      var result = P.LinkedHashMap_LinkedHashMap($K, $V);
-      other.forEach$1(0, new P.LinkedHashMap_LinkedHashMap$from_closure(result, $K, $V));
-      return result;
-    },
     LinkedHashSet_LinkedHashSet$from: function(elements, $E) {
       var t1, _i,
         result = P.LinkedHashSet_LinkedHashSet($E);
@@ -2379,11 +2450,6 @@
       _._modifications = t1;
       _._collection$_current = _._cell = null;
       _.$ti = t2;
-    },
-    LinkedHashMap_LinkedHashMap$from_closure: function LinkedHashMap_LinkedHashMap$from_closure(t0, t1, t2) {
-      this.result = t0;
-      this.K = t1;
-      this.V = t2;
     },
     ListBase: function ListBase() {
     },
@@ -2527,6 +2593,9 @@
         return "" + n;
       return "0" + n;
     },
+    Duration$: function(milliseconds) {
+      return new P.Duration(1000 * milliseconds);
+    },
     Error_safeToString: function(object) {
       if (typeof object === "number" || typeof object === "boolean" || null == object)
         return J.toString$0$(object);
@@ -2543,7 +2612,18 @@
     RangeError$range: function(invalidValue, minValue, maxValue, $name, message) {
       return new P.RangeError(minValue, maxValue, true, invalidValue, $name, "Invalid value");
     },
+    RangeError_checkValidRange: function(start, end, $length) {
+      if (0 > start || start > $length)
+        throw H.wrapException(P.RangeError$range(start, 0, $length, "start", null));
+      if (start > end || end > $length)
+        throw H.wrapException(P.RangeError$range(end, start, $length, "end", null));
+      return end;
+    },
     RangeError_checkNotNegative: function(value, $name) {
+      if (typeof value !== "number")
+        return value.$lt();
+      if (value < 0)
+        throw H.wrapException(P.RangeError$range(value, 0, null, $name, null));
     },
     IndexError$: function(invalidValue, indexable, $name, message, $length) {
       var t1 = H.intTypeCheck($length == null ? J.get$length$asx(indexable) : $length);
@@ -2560,6 +2640,9 @@
     },
     ConcurrentModificationError$: function(modifiedObject) {
       return new P.ConcurrentModificationError(modifiedObject);
+    },
+    print: function(object) {
+      H.printString(H.S(object));
     },
     bool: function bool() {
     },
@@ -2617,6 +2700,8 @@
     },
     ConcurrentModificationError: function ConcurrentModificationError(t0) {
       this.modifiedObject = t0;
+    },
+    OutOfMemoryError: function OutOfMemoryError() {
     },
     StackOverflowError: function StackOverflowError() {
     },
@@ -2898,35 +2983,50 @@
     __NamedNodeMap_Interceptor_ListMixin_ImmutableListMixin: function __NamedNodeMap_Interceptor_ListMixin_ImmutableListMixin() {
     }
   },
-  Z = {Button: function Button(t0, t1, t2, t3) {
+  Z = {
+    Button$: function(element, id, $name, onClick) {
+      return new Z.Button($name, element, id, onClick, P.LinkedHashMap_LinkedHashMap$_empty(P.String, null));
+    },
+    Button: function Button(t0, t1, t2, t3, t4) {
       var _ = this;
       _.name = t0;
       _.element = t1;
       _.id = t2;
       _.onClick = t3;
+      _.prevState = t4;
+      _.first = true;
+    }
+  },
+  T = {closure0: function closure0() {
+    }, closure: function closure() {
     }},
-  T = {closure: function closure() {
+  X = {DeliveredStat: function DeliveredStat(t0) {
+      this.element = t0;
     }},
   B = {LettersGenerator: function LettersGenerator(t0) {
       this.lastUpdate = t0;
     }, LettersStat: function LettersStat(t0) {
       this.element = t0;
     },
-    mapsAreEqual: function(a, b) {
-      var t2,
-        t1 = a.get$keys(a);
-      t1 = t1.get$length(t1);
-      t2 = b.get$keys(b);
-      if (t1 !== t2.get$length(t2))
-        return false;
-      for (t1 = a.get$keys(a), t1 = t1.get$iterator(t1); t1.moveNext$0();) {
-        t2 = t1.get$current();
-        if (!J.$eq$(b.$index(0, t2), a.$index(0, t2)))
-          return false;
-      }
-      return true;
+    round: function(number) {
+      return J.round$0$n(J.$mul$ns(number, 100)) / 100;
+    },
+    nextPhaseAvailable: function() {
+      var t1,
+        nextPhase = $.nextPhaseAt.$index(0, J.$add$ansx($.state.$index(0, "phase"), 1));
+      if (nextPhase != null) {
+        t1 = H.numTypeCheck($.state.$index(0, "delivered"));
+        if (typeof t1 !== "number")
+          return H.iae(t1);
+        t1 = nextPhase <= t1;
+      } else
+        t1 = false;
+      return t1;
     }
   },
+  Q = {MailmanConsumer: function MailmanConsumer(t0) {
+      this.lastUpdate = t0;
+    }},
   F = {
     main: function() {
       G.loadState();
@@ -2940,20 +3040,52 @@
     }},
   U = {MultiplierStat: function MultiplierStat(t0) {
       this.element = t0;
+    },
+    deliveryAction: function(amount) {
+      var t1, delivered, t2, t3, t4,
+        _s7_ = "letters",
+        _s10_ = "multiplier",
+        _s9_ = "delivered";
+      if (J.$lt$n($.state.$index(0, _s7_), amount))
+        return;
+      t1 = $.state.$index(0, _s10_);
+      if (typeof t1 !== "number")
+        return H.iae(t1);
+      delivered = amount * t1;
+      t1 = $.state;
+      t1.$indexSet(0, _s7_, J.$sub$n(t1.$index(0, _s7_), delivered));
+      t1 = $.state;
+      t1.$indexSet(0, _s9_, J.$add$ansx(t1.$index(0, _s9_), delivered));
+      t1 = $.state;
+      t2 = t1.$index(0, "money");
+      t3 = $.state.$index(0, "pricePerLetter");
+      if (typeof t3 !== "number")
+        return H.iae(t3);
+      t4 = $.state.$index(0, _s10_);
+      if (typeof t4 !== "number")
+        return H.iae(t4);
+      t1.$indexSet(0, "money", J.$add$ansx(t2, delivered * t3 * t4));
+    }
+  },
+  N = {NextPhaseAtElm: function NextPhaseAtElm(t0) {
+      this.element = t0;
+    }},
+  Y = {Phase1Powerups: function Phase1Powerups() {
     }},
   G = {
     loadState: function() {
-      var t1, t2, key,
-        loaded = H.interceptedTypeCheck(C.C_JsonCodec.decode$2$reviver(0, window.localStorage.getItem("state"), null), "$isMap"),
-        output = P.LinkedHashMap_LinkedHashMap$_empty(P.String, P.double);
+      var loaded, t1, t2, t3;
+      if (window.localStorage.getItem("state") == null)
+        return;
+      loaded = H.interceptedTypeCheck(C.C_JsonCodec.decode$2$reviver(0, window.localStorage.getItem("state"), null), "$isMap");
       for (t1 = J.getInterceptor$x(loaded), t2 = J.get$iterator$ax(t1.get$keys(loaded)); t2.moveNext$0();) {
-        key = H.stringTypeCheck(t2.get$current());
-        output.$indexSet(0, key, H.doubleTypeCheck(t1.$index(loaded, key)));
+        t3 = H.stringTypeCheck(t2.get$current());
+        if (t1.$index(loaded, t3) != null)
+          $.state.$indexSet(0, t3, t1.$index(loaded, t3));
       }
-      $.state = output;
     }
   };
-  var holders = [C, H, J, P, W, Z, T, B, F, R, U, G];
+  var holders = [C, H, J, P, W, Z, T, X, B, Q, F, R, U, N, Y, G];
   hunkHelpers.setFunctionNamesIfNecessary(holders);
   var $ = {};
   H.JS_CONST.prototype = {};
@@ -3019,9 +3151,31 @@
       receiver.push(value);
     },
     elementAt$1: function(receiver, index) {
-      if (index >= receiver.length)
+      if (index < 0 || index >= receiver.length)
         return H.ioore(receiver, index);
       return receiver[index];
+    },
+    setRange$3: function(receiver, start, end, iterable) {
+      var $length, i,
+        t1 = H.getTypeArgumentByIndex(receiver, 0);
+      H.assertSubtype(iterable, "$isIterable", [t1], "$asIterable");
+      if (!!receiver.immutable$list)
+        H.throwExpression(P.UnsupportedError$("setRange"));
+      P.RangeError_checkValidRange(start, end, receiver.length);
+      $length = end - start;
+      if ($length === 0)
+        return;
+      P.RangeError_checkNotNegative(0, "skipCount");
+      H.assertSubtype(iterable, "$isList", [t1], "$asList");
+      t1 = J.getInterceptor$asx(iterable);
+      if ($length > t1.get$length(iterable))
+        throw H.wrapException(H.IterableElementError_tooFew());
+      if (0 < start)
+        for (i = $length - 1; i >= 0; --i)
+          receiver[start + i] = t1.$index(iterable, i);
+      else
+        for (i = 0; i < $length; ++i)
+          receiver[start + i] = t1.$index(iterable, i);
     },
     any$1: function(receiver, test) {
       var end, i;
@@ -3060,6 +3214,13 @@
     get$length: function(receiver) {
       return receiver.length;
     },
+    set$length: function(receiver, newLength) {
+      if (!!receiver.fixed$length)
+        H.throwExpression(P.UnsupportedError$("set length"));
+      if (newLength < 0)
+        throw H.wrapException(P.RangeError$range(newLength, 0, null, "newLength", null));
+      receiver.length = newLength;
+    },
     $index: function(receiver, index) {
       if (index >= receiver.length || index < 0)
         throw H.wrapException(H.diagnoseIndexError(receiver, index));
@@ -3072,6 +3233,17 @@
       if (index >= receiver.length || false)
         throw H.wrapException(H.diagnoseIndexError(receiver, index));
       receiver[index] = value;
+    },
+    $add: function(receiver, other) {
+      var totalLength,
+        t1 = [H.getTypeArgumentByIndex(receiver, 0)];
+      H.assertSubtype(other, "$isList", t1, "$asList");
+      totalLength = C.JSInt_methods.$add(receiver.length, other.get$length(other));
+      t1 = H.setRuntimeTypeInfo([], t1);
+      this.set$length(t1, totalLength);
+      this.setRange$3(t1, 0, receiver.length, receiver);
+      this.setRange$3(t1, receiver.length, totalLength, other);
+      return t1;
     },
     $isIterable: 1,
     $isList: 1
@@ -3102,6 +3274,14 @@
     $isIterator: 1
   };
   J.JSNumber.prototype = {
+    round$0: function(receiver) {
+      if (receiver > 0) {
+        if (receiver !== 1 / 0)
+          return Math.round(receiver);
+      } else if (receiver > -1 / 0)
+        return 0 - Math.round(0 - receiver);
+      throw H.wrapException(P.UnsupportedError$("" + receiver + ".round()"));
+    },
     toString$0: function(receiver) {
       if (receiver === 0 && 1 / receiver < 0)
         return "-0.0";
@@ -3118,6 +3298,18 @@
       factor = Math.pow(2, floorLog2);
       scaled = absolute < 1 ? absolute / factor : factor / absolute;
       return 536870911 & ((scaled * 9007199254740992 | 0) + (scaled * 3542243181176521 | 0)) * 599197 + floorLog2 * 1259;
+    },
+    $add: function(receiver, other) {
+      return receiver + other;
+    },
+    $sub: function(receiver, other) {
+      return receiver - other;
+    },
+    $mul: function(receiver, other) {
+      H.numTypeCheck(other);
+      if (typeof other !== "number")
+        throw H.wrapException(H.argumentErrorValue(other));
+      return receiver * other;
     },
     $tdiv: function(receiver, other) {
       if ((receiver | 0) === receiver)
@@ -3152,7 +3344,16 @@
     _shrBothPositive$1: function(receiver, other) {
       return other > 31 ? 0 : receiver >>> other;
     },
-    $isdouble: 1,
+    $lt: function(receiver, other) {
+      if (typeof other !== "number")
+        throw H.wrapException(H.argumentErrorValue(other));
+      return receiver < other;
+    },
+    $le: function(receiver, other) {
+      if (typeof other !== "number")
+        throw H.wrapException(H.argumentErrorValue(other));
+      return receiver <= other;
+    },
     $isnum: 1
   };
   J.JSInt.prototype = {$isint: 1};
@@ -3164,6 +3365,7 @@
       return receiver.charCodeAt(index);
     },
     $add: function(receiver, other) {
+      H.stringTypeCheck(other);
       if (typeof other !== "string")
         throw H.wrapException(P.ArgumentError$value(other, null, null));
       return receiver + other;
@@ -3188,6 +3390,24 @@
     },
     toLowerCase$0: function(receiver) {
       return receiver.toLowerCase();
+    },
+    $mul: function(receiver, times) {
+      var s, result;
+      if (0 >= times)
+        return "";
+      if (times === 1 || receiver.length === 0)
+        return receiver;
+      if (times !== times >>> 0)
+        throw H.wrapException(C.C_OutOfMemoryError);
+      for (s = receiver, result = ""; true;) {
+        if ((times & 1) === 1)
+          result = s + result;
+        times = times >>> 1;
+        if (times === 0)
+          break;
+        s += s;
+      }
+      return result;
     },
     toString$0: function(receiver) {
       return receiver;
@@ -3446,18 +3666,18 @@
         return _this.internalGet$1(key);
     },
     internalGet$1: function(key) {
-      var bucket, index, _this = this,
-        rest = _this.__js_helper$_rest;
+      var bucket, index,
+        rest = this.__js_helper$_rest;
       if (rest == null)
         return;
-      bucket = _this._getTableBucket$2(rest, _this.internalComputeHashCode$1(key));
-      index = _this.internalFindBucketIndex$2(bucket, key);
+      bucket = this._getTableBucket$2(rest, J.get$hashCode$(key) & 0x3ffffff);
+      index = this.internalFindBucketIndex$2(bucket, key);
       if (index < 0)
         return;
       return bucket[index].hashMapCellValue;
     },
     $indexSet: function(_, key, value) {
-      var strings, nums, _this = this;
+      var strings, nums, rest, hash, bucket, index, _this = this;
       H.assertSubtypeOfRuntimeType(key, H.getTypeArgumentByIndex(_this, 0));
       H.assertSubtypeOfRuntimeType(value, H.getTypeArgumentByIndex(_this, 1));
       if (typeof key === "string") {
@@ -3466,26 +3686,21 @@
       } else if (typeof key === "number" && (key & 0x3ffffff) === key) {
         nums = _this.__js_helper$_nums;
         _this.__js_helper$_addHashTableEntry$3(nums == null ? _this.__js_helper$_nums = _this._newHashTable$0() : nums, key, value);
-      } else
-        _this.internalSet$2(key, value);
-    },
-    internalSet$2: function(key, value) {
-      var rest, hash, bucket, index, _this = this;
-      H.assertSubtypeOfRuntimeType(key, H.getTypeArgumentByIndex(_this, 0));
-      H.assertSubtypeOfRuntimeType(value, H.getTypeArgumentByIndex(_this, 1));
-      rest = _this.__js_helper$_rest;
-      if (rest == null)
-        rest = _this.__js_helper$_rest = _this._newHashTable$0();
-      hash = _this.internalComputeHashCode$1(key);
-      bucket = _this._getTableBucket$2(rest, hash);
-      if (bucket == null)
-        _this._setTableEntry$3(rest, hash, [_this.__js_helper$_newLinkedCell$2(key, value)]);
-      else {
-        index = _this.internalFindBucketIndex$2(bucket, key);
-        if (index >= 0)
-          bucket[index].hashMapCellValue = value;
-        else
-          bucket.push(_this.__js_helper$_newLinkedCell$2(key, value));
+      } else {
+        rest = _this.__js_helper$_rest;
+        if (rest == null)
+          rest = _this.__js_helper$_rest = _this._newHashTable$0();
+        hash = J.get$hashCode$(key) & 0x3ffffff;
+        bucket = _this._getTableBucket$2(rest, hash);
+        if (bucket == null)
+          _this._setTableEntry$3(rest, hash, [_this.__js_helper$_newLinkedCell$2(key, value)]);
+        else {
+          index = _this.internalFindBucketIndex$2(bucket, key);
+          if (index >= 0)
+            bucket[index].hashMapCellValue = value;
+          else
+            bucket.push(_this.__js_helper$_newLinkedCell$2(key, value));
+        }
       }
     },
     forEach$1: function(_, action) {
@@ -3526,9 +3741,6 @@
       ++_this.__js_helper$_length;
       _this._modified$0();
       return cell;
-    },
-    internalComputeHashCode$1: function(key) {
-      return J.get$hashCode$(key) & 0x3ffffff;
     },
     internalFindBucketIndex$2: function(bucket, key) {
       var $length, i;
@@ -3630,7 +3842,7 @@
       t1.storedCallback = null;
       f.call$0();
     },
-    $signature: 5
+    $signature: 3
   };
   P._AsyncRun__initializeScheduleImmediate_closure.prototype = {
     call$1: function(callback) {
@@ -3836,7 +4048,7 @@
       t1._state = 0;
       t1._complete$1(value);
     },
-    $signature: 5
+    $signature: 3
   };
   P._Future__chainForeignFuture_closure0.prototype = {
     call$2: function(error, stackTrace) {
@@ -4202,12 +4414,6 @@
     },
     $isIterator: 1
   };
-  P.LinkedHashMap_LinkedHashMap$from_closure.prototype = {
-    call$2: function(k, v) {
-      this.result.$indexSet(0, H.assertSubtypeOfRuntimeType(k, this.K), H.assertSubtypeOfRuntimeType(v, this.V));
-    },
-    $signature: 3
-  };
   P.ListBase.prototype = {$isIterable: 1, $isList: 1};
   P.ListMixin.prototype = {
     get$iterator: function(receiver) {
@@ -4218,6 +4424,16 @@
     },
     get$isNotEmpty: function(receiver) {
       return this.get$length(receiver) !== 0;
+    },
+    $add: function(receiver, other) {
+      var result, _this = this,
+        t1 = [H.getRuntimeTypeArgumentIntercepted(_this, receiver, "ListMixin", 0)];
+      H.assertSubtype(other, "$isList", t1, "$asList");
+      result = H.setRuntimeTypeInfo([], t1);
+      C.JSArray_methods.set$length(result, C.JSInt_methods.$add(_this.get$length(receiver), other.get$length(other)));
+      C.JSArray_methods.setRange$3(result, 0, _this.get$length(receiver), receiver);
+      C.JSArray_methods.setRange$3(result, _this.get$length(receiver), result.length, other);
+      return result;
     },
     toString$0: function(receiver) {
       return P.IterableBase_iterableToFullString(receiver, "[", "]");
@@ -4236,7 +4452,7 @@
       t1._contents = t2 + ": ";
       t1._contents += H.S(v);
     },
-    $signature: 3
+    $signature: 5
   };
   P.MapMixin.prototype = {
     forEach$1: function(receiver, action) {
@@ -4285,13 +4501,7 @@
       }
     },
     get$length: function(_) {
-      var t1;
-      if (this._processed == null) {
-        t1 = this._data;
-        t1 = t1.get$length(t1);
-      } else
-        t1 = this._computeKeys$0().length;
-      return t1;
+      return this._processed == null ? this._data.__js_helper$_length : this._computeKeys$0().length;
     },
     get$isEmpty: function(_) {
       return this.get$length(this) === 0;
@@ -4300,7 +4510,7 @@
       var t1;
       if (this._processed == null) {
         t1 = this._data;
-        return t1.get$keys(t1);
+        return new H.LinkedHashMapKeyIterable(t1, [H.getTypeArgumentByIndex(t1, 0)]);
       }
       return new P._JsonMapKeyIterable(this);
     },
@@ -4353,7 +4563,7 @@
         t1 = t1.get$keys(t1).elementAt$1(0, index);
       else {
         t1 = t1._computeKeys$0();
-        if (index >= t1.length)
+        if (index < 0 || index >= t1.length)
           return H.ioore(t1, index);
         t1 = t1[index];
       }
@@ -4603,7 +4813,7 @@
       C.JSArray_methods.$indexSet(t1, t2.i++, key);
       C.JSArray_methods.$indexSet(t1, t2.i++, value);
     },
-    $signature: 3
+    $signature: 5
   };
   P._JsonStringStringifier.prototype = {
     get$_partialResult: function() {
@@ -4637,6 +4847,21 @@
   };
   P.double.prototype = {};
   P.Duration.prototype = {
+    $add: function(_, other) {
+      return new P.Duration(C.JSInt_methods.$add(this._duration, H.interceptedTypeCheck(other, "$isDuration")._duration));
+    },
+    $sub: function(_, other) {
+      return new P.Duration(C.JSInt_methods.$sub(this._duration, H.interceptedTypeCheck(other, "$isDuration")._duration));
+    },
+    $mul: function(_, factor) {
+      return new P.Duration(C.JSInt_methods.round$0(this._duration * factor));
+    },
+    $lt: function(_, other) {
+      return C.JSInt_methods.$lt(this._duration, H.interceptedTypeCheck(other, "$isDuration")._duration);
+    },
+    $le: function(_, other) {
+      return C.JSInt_methods.$le(this._duration, H.interceptedTypeCheck(other, "$isDuration")._duration);
+    },
     $eq: function(_, other) {
       if (other == null)
         return false;
@@ -4778,6 +5003,12 @@
         return "Concurrent modification during iteration.";
       return "Concurrent modification during iteration: " + P.Error_safeToString(t1) + ".";
     }
+  };
+  P.OutOfMemoryError.prototype = {
+    toString$0: function(_) {
+      return "Out of Memory";
+    },
+    $isError: 1
   };
   P.StackOverflowError.prototype = {
     toString$0: function(_) {
@@ -5074,7 +5305,7 @@
       return receiver[index];
     },
     elementAt$1: function(receiver, index) {
-      if (index >= receiver.length)
+      if (index < 0 || index >= receiver.length)
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -5213,7 +5444,7 @@
       return receiver[index];
     },
     elementAt$1: function(receiver, index) {
-      if (index >= receiver.length)
+      if (index < 0 || index >= receiver.length)
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -5288,7 +5519,7 @@
   W._Html5NodeValidator.prototype = {
     _Html5NodeValidator$1$uriPolicy: function(uriPolicy) {
       var _i;
-      if ($._Html5NodeValidator__attributeValidators.get$isEmpty($._Html5NodeValidator__attributeValidators)) {
+      if ($._Html5NodeValidator__attributeValidators.__js_helper$_length === 0) {
         for (_i = 0; _i < 262; ++_i)
           $._Html5NodeValidator__attributeValidators.$indexSet(0, C.List_2Zi[_i], W.html__Html5NodeValidator__standardAttributeValidator$closure());
         for (_i = 0; _i < 12; ++_i)
@@ -5628,83 +5859,114 @@
     },
     $isSvgElement: 1
   };
-  Z.Button.prototype = {};
-  T.closure.prototype = {
-    call$1: function(e) {
-      var t2, t3, t4,
-        _s7_ = "letters",
-        _s10_ = "multiplier",
-        t1 = $.state.$index(0, _s7_);
-      if (typeof t1 !== "number")
-        return t1.$gt();
-      if (t1 > 0) {
-        t1 = $.state;
-        t2 = t1.$index(0, _s7_);
-        t3 = $.state.$index(0, "deliveryInc");
-        t4 = $.state.$index(0, _s10_);
-        if (typeof t3 !== "number")
-          return t3.$mul();
-        if (typeof t4 !== "number")
-          return H.iae(t4);
-        if (typeof t2 !== "number")
-          return t2.$sub();
-        t1.$indexSet(0, _s7_, t2 - t3 * t4);
-        t4 = $.state;
-        t3 = t4.$index(0, "money");
-        t2 = $.state.$index(0, "pricePerLetter");
-        t1 = $.state.$index(0, _s10_);
-        if (typeof t2 !== "number")
-          return t2.$mul();
-        if (typeof t1 !== "number")
-          return H.iae(t1);
-        if (typeof t3 !== "number")
-          return t3.$add();
-        t4.$indexSet(0, "money", t3 + t2 * t1);
+  Z.Button.prototype = {
+    reRender$0: function() {
+      var t1, output, _i, key;
+      for (t1 = this.prevState, output = false, _i = 0; false; ++_i) {
+        if (_i >= 0)
+          return H.ioore(C.List_empty, _i);
+        key = C.List_empty[_i];
+        if (!J.$eq$(t1.$index(0, key), $.state.$index(0, key))) {
+          t1.$indexSet(0, key, $.state.$index(0, key));
+          output = true;
+        }
       }
-      return;
+      return output;
+    },
+    render$0: function() {
+      var t1, t2, t3, t4, _this = this;
+      if (!_this.reRender$0() && !_this.first)
+        return;
+      _this.first = false;
+      t1 = "#" + _this.element;
+      t2 = document;
+      t1 = t2.querySelector(t1);
+      t3 = _this.id;
+      t4 = '        <div class="button" id="' + t3 + '">\n          <div class="button-name">' + _this.name;
+      J.set$innerHtml$x(t1, t4 + "</div>\n          \n          \n        </div>\n    ");
+      t1 = J.get$onClick$x(t2.querySelector("#" + t3));
+      t2 = H.getTypeArgumentByIndex(t1, 0);
+      W._EventStreamSubscription$(t1._html$_target, t1._eventType, H.functionTypeCheck(H.functionTypeCheck(_this.onClick, {func: 1, ret: -1, args: [W.MouseEvent]}), {func: 1, ret: -1, args: [t2]}), false, t2);
+    }
+  };
+  T.closure0.prototype = {
+    call$1: function(e) {
+      return U.deliveryAction(1);
     },
     $signature: 20
   };
+  T.closure.prototype = {
+    call$1: function(e) {
+      var _s14_ = "choosePowerups";
+      P.print("HEREH");
+      P.print($.state.$index(0, _s14_));
+      $.state.$indexSet(0, _s14_, true);
+    },
+    $signature: 3
+  };
+  X.DeliveredStat.prototype = {};
   B.LettersGenerator.prototype = {};
   B.LettersStat.prototype = {};
+  Q.MailmanConsumer.prototype = {
+    update$0: function(_) {
+      var diff, t1, t2;
+      if (J.$le$n($.state.$index(0, "mailmen"), 0))
+        return;
+      diff = C.JSInt_methods._tdivFast$1(P.Duration$(Date.now() - this.lastUpdate._value)._duration, 1000);
+      t1 = H.numTypeCheck($.state.$index(0, "multiplier"));
+      if (typeof t1 !== "number")
+        return H.iae(t1);
+      t2 = H.numTypeCheck($.state.$index(0, "mailmen"));
+      if (typeof t2 !== "number")
+        return H.iae(t2);
+      U.deliveryAction(diff / 750 * t1 * t2);
+      this.lastUpdate = new P.DateTime(Date.now(), false);
+    }
+  };
   F.main_closure.prototype = {
     call$1: function(timer) {
-      var t1, t2, t3, t4,
-        _s7_ = "letters";
+      var t1, t2, difference, t3, t4, t5,
+        _s7_ = "letters",
+        _s10_ = "multiplier",
+        _s14_ = "choosePowerups";
       H.interceptedTypeCheck(timer, "$isTimer");
-      if (!B.mapsAreEqual($.prevState, $.state)) {
-        t1 = $.$get$deliverBtn();
-        t2 = t1.element;
-        t3 = t1.id;
-        t4 = '        <div class="button" id="' + t3 + '">\n          <div class="button-name">' + t1.name;
-        t1.toString;
-        J.set$innerHtml$x(t2, t4 + "</div>\n          \n          \n        </div>\n    ");
-        t2 = "#" + t3;
-        t2 = J.get$onClick$x(document.querySelector(t2));
-        t3 = H.getTypeArgumentByIndex(t2, 0);
-        W._EventStreamSubscription$(t2._html$_target, t2._eventType, H.functionTypeCheck(H.functionTypeCheck(t1.onClick, {func: 1, ret: -1, args: [W.MouseEvent]}), {func: 1, ret: -1, args: [t3]}), false, t3);
-        J.set$innerHtml$x($.$get$lettersStat().element, H.S($.state.$index(0, _s7_)) + " letters");
-        J.set$innerHtml$x($.$get$moneyStat().element, "$" + H.S($.state.$index(0, "money")));
-        J.set$innerHtml$x($.$get$multiplierStat().element, H.S($.state.$index(0, "multiplier")) + " multiplier");
-        $.prevState = P.LinkedHashMap_LinkedHashMap$from($.state, P.String, P.double);
+      $.$get$deliverBtn().render$0();
+      J.set$innerHtml$x($.$get$lettersStat().element, "letters: " + H.S(B.round($.state.$index(0, _s7_))));
+      J.set$innerHtml$x($.$get$moneyStat().element, "$" + H.S(B.round($.state.$index(0, "money"))));
+      J.set$innerHtml$x($.$get$multiplierStat().element, "multiplier: " + H.S($.state.$index(0, _s10_)));
+      J.set$innerHtml$x($.$get$deliveredStat().element, "letters delivered: " + H.S(B.round($.state.$index(0, "delivered"))));
+      if (H.boolConversionCheck(H.boolTypeCheck($.state.$index(0, _s14_)))) {
+        $.$get$phase1Powerups().toString;
+        J.set$innerHtml$x(document.querySelector("#next-phase-at"), "Choose Two");
+      } else if (B.nextPhaseAvailable())
+        $.$get$nextPhaseBtn().render$0();
+      else if (!H.boolConversionCheck(H.boolTypeCheck($.state.$index(0, _s14_))))
+        J.set$innerHtml$x($.$get$nextPhaseAtElm().element, "Next phase available at " + H.S($.nextPhaseAt.$index(0, J.$add$ansx($.state.$index(0, "phase"), 1))) + " letters delivered.\n    ");
+      if (C.JSInt_methods._tdivFast$1(P.Duration$(Date.now() - $.$get$lastSave()._value)._duration, 1000) > 1000) {
         window.localStorage.setItem("state", C.C_JsonCodec.encode$2$toEncodable($.state, null));
+        $.lastSave = new P.DateTime(Date.now(), false);
       }
-      t1 = $.$get$lettersGenerator();
-      t1.toString;
-      t2 = Date.now();
-      if (C.JSInt_methods._tdivFast$1(1000 * (t2 - t1.lastUpdate._value), 1000) >= 1000) {
+      if (!B.nextPhaseAvailable()) {
+        t1 = $.$get$lettersGenerator();
+        t1.toString;
+        t2 = Date.now();
+        difference = C.JSInt_methods._tdivFast$1(P.Duration$(t2 - t1.lastUpdate._value)._duration, 1000);
         t3 = $.state;
         t4 = t3.$index(0, _s7_);
-        if (typeof t4 !== "number")
-          return t4.$add();
-        t3.$indexSet(0, _s7_, t4 + 1);
+        t5 = H.numTypeCheck($.state.$index(0, _s10_));
+        if (typeof t5 !== "number")
+          return H.iae(t5);
+        t3.$indexSet(0, _s7_, J.$add$ansx(t4, difference / 1000 * t5));
         t1.lastUpdate = new P.DateTime(t2, false);
+        $.$get$mailmanConsumer().update$0(0);
       }
     },
     $signature: 21
   };
   R.MoneyStat.prototype = {};
   U.MultiplierStat.prototype = {};
+  N.NextPhaseAtElm.prototype = {};
+  Y.Phase1Powerups.prototype = {};
   (function aliases() {
     var _ = J.Interceptor.prototype;
     _.super$Interceptor$toString = _.toString$0;
@@ -5734,7 +5996,7 @@
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.TypeErrorDecoder, P.Error, H.Closure, H._StackTrace, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, P._TimerImpl, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.Stream, P.StreamSubscription, P.StreamTransformerBase, P.Timer, P.AsyncError, P._Zone, P._SetBase, P._LinkedHashSetCell, P._LinkedHashSetIterator, P._ListBase_Object_ListMixin, P.ListMixin, P.Codec, P._JsonStringifier, P.bool, P.DateTime, P.num, P.Duration, P.StackOverflowError, P._Exception, P.FormatException, P.Function, P.List, P.Null, P.StackTrace, P.String, P.StringBuffer, W._Html5NodeValidator, W.ImmutableListMixin, W.NodeValidatorBuilder, W._SimpleNodeValidator, W._SvgNodeValidator, W.FixedSizeListIterator, W.NodeValidator, W._SameOriginUriPolicy, W._ValidatingTreeSanitizer, Z.Button, B.LettersGenerator, B.LettersStat, R.MoneyStat, U.MultiplierStat]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.TypeErrorDecoder, P.Error, H.Closure, H._StackTrace, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, P._TimerImpl, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.Stream, P.StreamSubscription, P.StreamTransformerBase, P.Timer, P.AsyncError, P._Zone, P._SetBase, P._LinkedHashSetCell, P._LinkedHashSetIterator, P._ListBase_Object_ListMixin, P.ListMixin, P.Codec, P._JsonStringifier, P.bool, P.DateTime, P.num, P.Duration, P.OutOfMemoryError, P.StackOverflowError, P._Exception, P.FormatException, P.Function, P.List, P.Null, P.StackTrace, P.String, P.StringBuffer, W._Html5NodeValidator, W.ImmutableListMixin, W.NodeValidatorBuilder, W._SimpleNodeValidator, W._SvgNodeValidator, W.FixedSizeListIterator, W.NodeValidator, W._SameOriginUriPolicy, W._ValidatingTreeSanitizer, Z.Button, X.DeliveredStat, B.LettersGenerator, B.LettersStat, Q.MailmanConsumer, R.MoneyStat, U.MultiplierStat, N.NextPhaseAtElm, Y.Phase1Powerups]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, W.EventTarget, W.DomException, W.Event, W.Location, W._NodeList_Interceptor_ListMixin, W._Storage_Interceptor_MapMixin, W.__NamedNodeMap_Interceptor_ListMixin]);
     _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
@@ -5744,7 +6006,7 @@
     _inheritMany(H.ListIterable, [H.MappedListIterable, P._JsonMapKeyIterable]);
     _inherit(H.WhereIterator, P.Iterator);
     _inheritMany(P.Error, [H.NullError, H.JsNoSuchMethodError, H.UnknownJsTypeError, H.TypeErrorImplementation, H.RuntimeError, P.AssertionError, P.JsonUnsupportedObjectError, P.NullThrownError, P.ArgumentError, P.UnsupportedError, P.UnimplementedError, P.StateError, P.ConcurrentModificationError, P.CyclicInitializationError]);
-    _inheritMany(H.Closure, [H.unwrapException_saveStackTrace, H.TearOffClosure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._rootHandleUncaughtError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._RootZone_bindUnaryCallbackGuarded_closure, P.LinkedHashMap_LinkedHashMap$from_closure, P.MapBase_mapToString_closure, P._JsonStringifier_writeMap_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.Element_Element$html_closure, W.Storage_keys_closure, W._EventStreamSubscription_closure, W.NodeValidatorBuilder_allowsElement_closure, W.NodeValidatorBuilder_allowsAttribute_closure, W._SimpleNodeValidator_closure, W._SimpleNodeValidator_closure0, W._TemplatingNodeValidator_closure, W._ValidatingTreeSanitizer_sanitizeTree_walk, T.closure, F.main_closure]);
+    _inheritMany(H.Closure, [H.unwrapException_saveStackTrace, H.TearOffClosure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._rootHandleUncaughtError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._RootZone_bindUnaryCallbackGuarded_closure, P.MapBase_mapToString_closure, P._JsonStringifier_writeMap_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.Element_Element$html_closure, W.Storage_keys_closure, W._EventStreamSubscription_closure, W.NodeValidatorBuilder_allowsElement_closure, W.NodeValidatorBuilder_allowsAttribute_closure, W._SimpleNodeValidator_closure, W._SimpleNodeValidator_closure0, W._TemplatingNodeValidator_closure, W._ValidatingTreeSanitizer_sanitizeTree_walk, T.closure0, T.closure, F.main_closure]);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(H._AssertionError, P.AssertionError);
     _inherit(P.MapBase, P.MapMixin);
@@ -5784,7 +6046,7 @@
     _mixin(W.__NamedNodeMap_Interceptor_ListMixin, P.ListMixin);
     _mixin(W.__NamedNodeMap_Interceptor_ListMixin_ImmutableListMixin, W.ImmutableListMixin);
   })();
-  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: P.Null}, {func: 1, ret: -1}, {func: 1, args: [,]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: P.String, args: [P.int]}, {func: 1, ret: P.bool, args: [W.NodeValidator]}, {func: 1, ret: P.bool, args: [P.String]}, {func: 1, ret: P.bool, args: [W.Element, P.String, P.String, W._Html5NodeValidator]}, {func: 1, args: [, P.String]}, {func: 1, args: [P.String]}, {func: 1, ret: P.Null, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: P.bool, args: [W.Node]}, {func: 1, ret: -1, args: [P.String, P.String]}, {func: 1, args: [W.Event]}, {func: 1, ret: P.String, args: [P.String]}, {func: 1, ret: -1, args: [W.Node, W.Node]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: P.Null, args: [P.Timer]}], interceptorsByTag: null, leafTags: null};
+  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: P.Null}, {func: 1, ret: -1}, {func: 1, args: [,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: P.String, args: [P.int]}, {func: 1, ret: P.bool, args: [W.NodeValidator]}, {func: 1, ret: P.bool, args: [P.String]}, {func: 1, ret: P.bool, args: [W.Element, P.String, P.String, W._Html5NodeValidator]}, {func: 1, args: [, P.String]}, {func: 1, args: [P.String]}, {func: 1, ret: P.Null, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: P.bool, args: [W.Node]}, {func: 1, ret: -1, args: [P.String, P.String]}, {func: 1, args: [W.Event]}, {func: 1, ret: P.String, args: [P.String]}, {func: 1, ret: -1, args: [W.Node, W.Node]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: P.Null, args: [P.Timer]}], interceptorsByTag: null, leafTags: null};
   (function constants() {
     var makeConstList = hunkHelpers.makeConstList;
     C.BodyElement_methods = W.BodyElement.prototype;
@@ -5919,6 +6181,7 @@
     C.C_JS_CONST3 = function(hooks) { return hooks; }
 ;
     C.C_JsonCodec = new P.JsonCodec();
+    C.C_OutOfMemoryError = new P.OutOfMemoryError();
     C.C__RootZone = new P._RootZone();
     C.Duration_0 = new P.Duration(0);
     C.JsonDecoder_null = new P.JsonDecoder(null);
@@ -5951,8 +6214,11 @@
     $.Element__defaultValidator = null;
     $.Element__defaultSanitizer = null;
     $._Html5NodeValidator__attributeValidators = P.LinkedHashMap_LinkedHashMap$_empty(P.String, P.Function);
-    $.state = P.LinkedHashMap_LinkedHashMap$_literal(["letters", 0, "money", 0, "phase", 0, "multiplier", 1, "deliveryInc", 1, "pricePerLetter", 0.25], P.String, P.double);
-    $.prevState = P.LinkedHashMap_LinkedHashMap$_empty(P.String, P.double);
+    $.nextPhaseAt = function() {
+      var t1 = P.int;
+      return P.LinkedHashMap_LinkedHashMap$_literal([1, 50], t1, t1);
+    }();
+    $.state = P.LinkedHashMap_LinkedHashMap$_literal(["letters", 0, "money", 0, "phase", 0, "multiplier", 1, "mailmen", 0, "delivered", 0, "pricePerLetter", 0.25, "choosePowerups", false, "claimPowerups", false], P.String, null);
   })();
   (function lazyInitializers() {
     var _lazy = hunkHelpers.lazy;
@@ -6033,10 +6299,25 @@
       return P.LinkedHashSet_LinkedHashSet$from(["A", "ABBR", "ACRONYM", "ADDRESS", "AREA", "ARTICLE", "ASIDE", "AUDIO", "B", "BDI", "BDO", "BIG", "BLOCKQUOTE", "BR", "BUTTON", "CANVAS", "CAPTION", "CENTER", "CITE", "CODE", "COL", "COLGROUP", "COMMAND", "DATA", "DATALIST", "DD", "DEL", "DETAILS", "DFN", "DIR", "DIV", "DL", "DT", "EM", "FIELDSET", "FIGCAPTION", "FIGURE", "FONT", "FOOTER", "FORM", "H1", "H2", "H3", "H4", "H5", "H6", "HEADER", "HGROUP", "HR", "I", "IFRAME", "IMG", "INPUT", "INS", "KBD", "LABEL", "LEGEND", "LI", "MAP", "MARK", "MENU", "METER", "NAV", "NOBR", "OL", "OPTGROUP", "OPTION", "OUTPUT", "P", "PRE", "PROGRESS", "Q", "S", "SAMP", "SECTION", "SELECT", "SMALL", "SOURCE", "SPAN", "STRIKE", "STRONG", "SUB", "SUMMARY", "SUP", "TABLE", "TBODY", "TD", "TEXTAREA", "TFOOT", "TH", "THEAD", "TIME", "TR", "TRACK", "TT", "U", "UL", "VAR", "VIDEO", "WBR"], P.String);
     });
     _lazy($, "deliverBtn", "$get$deliverBtn", function() {
-      return new Z.Button("Deliver Letter", W.querySelector("#buttons"), "delivery", new T.closure());
+      return Z.Button$("delivery-btn", "delivery", "Deliver Letter", new T.closure0());
+    });
+    _lazy($, "nextPhaseBtn", "$get$nextPhaseBtn", function() {
+      return Z.Button$("next-phase-at", "next-phase", "Next Phase", new T.closure());
+    });
+    _lazy($, "mailmanConsumer", "$get$mailmanConsumer", function() {
+      return new Q.MailmanConsumer(P.DateTime$now());
+    });
+    _lazy($, "phase1Powerups", "$get$phase1Powerups", function() {
+      return new Y.Phase1Powerups();
+    });
+    _lazy($, "nextPhaseAtElm", "$get$nextPhaseAtElm", function() {
+      return new N.NextPhaseAtElm(W.querySelector("#next-phase-at"));
     });
     _lazy($, "lettersGenerator", "$get$lettersGenerator", function() {
       return new B.LettersGenerator(P.DateTime$now());
+    });
+    _lazy($, "lastSave", "$get$lastSave", function() {
+      return P.DateTime$now();
     });
     _lazy($, "moneyStat", "$get$moneyStat", function() {
       return new R.MoneyStat(W.querySelector("#money"));
@@ -6046,6 +6327,9 @@
     });
     _lazy($, "multiplierStat", "$get$multiplierStat", function() {
       return new U.MultiplierStat(W.querySelector("#multiplier"));
+    });
+    _lazy($, "deliveredStat", "$get$deliveredStat", function() {
+      return new X.DeliveredStat(W.querySelector("#delivered"));
     });
   })();
   (function nativeSupport() {

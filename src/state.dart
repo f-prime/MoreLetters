@@ -1,29 +1,42 @@
 import "dart:html";
 import 'dart:convert';
 
-Map<String, double> state = {
+DateTime lastSave = DateTime.now();
+
+Map<int, int> nextPhaseAt = {
+  1: 50,
+};
+
+Map<String, dynamic> state = {
   "letters": 0,
   "money":0,
   "phase":0,
   "multiplier":1,
-  "deliveryInc":1,
+  "mailmen":0,
+  "delivered":0,
   "pricePerLetter":0.25,
+  "choosePowerups": false,
+  "claimPowerups": false,
 };
 
-Map<String, double> prevState = {};
+Map<String, dynamic> prevState = {};
 
 void saveState() {
-  window.localStorage['state'] = jsonEncode(state);  
+  if(DateTime.now().difference(lastSave).inMilliseconds > 1000) {
+    window.localStorage['state'] = jsonEncode(state); 
+    lastSave = DateTime.now();
+  } 
 }
 
 void loadState() {
+  if(window.localStorage['state'] == null)
+    return;
+
   Map loaded = jsonDecode(window.localStorage['state']);
-
-  Map<String, double> output = {};
-
-  for(var key in loaded.keys) {
-    output[key] = loaded[key];
+  
+  for(String key in loaded.keys) {
+    if(loaded[key] != null) {
+      state[key] = loaded[key];
+    }
   }
-
-  state = output;
 }

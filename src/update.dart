@@ -1,23 +1,35 @@
 import "buttons.dart";
 import "stats.dart";
 import "generators.dart";
-import "state.dart" as state;
+import "consumers.dart";
+import "state.dart";
 import "utils.dart";
+import "elements.dart";
 
 void render() {
   deliverBtn.render();
   lettersStat.render();
   moneyStat.render();
   multiplierStat.render();
+  deliveredStat.render();
 
-  state.prevState = Map.from(state.state);
-  state.saveState();
+  if(state['choosePowerups']) {
+    phase1Powerups.render();
+  } else if(nextPhaseAvailable()) {
+    nextPhaseBtn.render();
+  } else if(!state['choosePowerups']) {
+    nextPhaseAtElm.render();
+  }
+
+  saveState();
 }
 
 void update() {
-  if(!mapsAreEqual(state.prevState, state.state)) {
-    render();
+  render();
+  
+  if(!nextPhaseAvailable()) {
+    lettersGenerator.update();
+    mailmanConsumer.update();
   }
 
-  lettersGenerator.update(); 
 }

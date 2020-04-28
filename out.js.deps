@@ -2,8 +2,14 @@ file:///home/gazo/Projects/PostalIdle/main.dart
 file:///home/gazo/Projects/PostalIdle/src/actions.dart
 file:///home/gazo/Projects/PostalIdle/src/button.dart
 file:///home/gazo/Projects/PostalIdle/src/buttons.dart
+file:///home/gazo/Projects/PostalIdle/src/consumer/mailman.dart
+file:///home/gazo/Projects/PostalIdle/src/consumers.dart
+file:///home/gazo/Projects/PostalIdle/src/elements.dart
+file:///home/gazo/Projects/PostalIdle/src/elements/next_phase_at.dart
+file:///home/gazo/Projects/PostalIdle/src/elements/phase_1_powerups.dart
 file:///home/gazo/Projects/PostalIdle/src/generators.dart
 file:///home/gazo/Projects/PostalIdle/src/generators/letters.dart
+file:///home/gazo/Projects/PostalIdle/src/stat/delivered.dart
 file:///home/gazo/Projects/PostalIdle/src/stat/letters.dart
 file:///home/gazo/Projects/PostalIdle/src/stat/money.dart
 file:///home/gazo/Projects/PostalIdle/src/stat/multiplier.dart

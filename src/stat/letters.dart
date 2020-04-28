@@ -1,10 +1,11 @@
 import "dart:html";
 import "../state.dart";
+import "../utils.dart";
 
 class LettersStat {
   final element = querySelector("#letters");
 
   void render() {
-    element.innerHtml = "${state['letters']} letters"; 
+    element.innerHtml = "letters: ${round(state['letters'])}"; 
   }
 }

@@ -5,6 +5,6 @@ class MultiplierStat {
   final element = querySelector("#multiplier");
 
   void render() {
-    element.innerHtml = "${state['multiplier']} multiplier"; 
+    element.innerHtml = "multiplier: ${state['multiplier']}"; 
   }
 }

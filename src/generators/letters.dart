@@ -8,9 +8,8 @@ class LettersGenerator {
     final now = DateTime.now();
     final int difference = now.difference(lastUpdate).inMilliseconds;
 
-    if(difference >= delay) {
-      state['letters'] += 1;
-      lastUpdate = now;
-    }
+    state['letters'] += (difference / delay) * state['multiplier'];
+    
+    lastUpdate = now;
   }
 }

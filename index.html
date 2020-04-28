@@ -6,17 +6,38 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
+    <div class="top-bar">
+      <div class="link" onClick="resetState()">
+        <a href="#">new game</a>
+      </div>
+      <div class="link">
+        <a href="https://discord.gg/FMRCRB">discord</a>
+      </div>
+    </div>
+    <div id="background">
+      <img src="assets/night/1.png">
+    </div>
     <div class="container">
       <div class="row">
         <div class="column">
-          <div id="buttons"></div>
+          <div id="delivery-btn"></div>
         </div>
-        <div class="column">
+        <div class="column" id="next-phase-at">
+        </div>
+        <div class="column right">
           <div class="big-stat" id="money"></div>
           <div class="stat" id="letters"></div>
+          <div class="stat" id="delivered"></div>
           <div class="stat" id="multiplier"></div>
+          <div class="stat" id="mailmen"></div>
         </div>
       </div>
     </div>
+  <script type="text/javascript">
+    function resetState() {
+      localStorage.removeItem("state");
+      window.location.reload();
+    }
+  </script>
   </body>
 </html>

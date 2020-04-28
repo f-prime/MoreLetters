@@ -1,8 +1,12 @@
 import "state.dart";
 
-void deliveryAction() {
-  if(state['letters'] > 0) {
-    state['letters'] -= state['deliveryInc'] * state['multiplier'];
-    state['money'] += state['pricePerLetter'] * state['multiplier'];
+void deliveryAction({amount: 1}) {
+  if(state['letters'] < amount) {
+    return;
   }
+  
+  final delivered = amount * state['multiplier'];
+  state['letters'] -= delivered;
+  state['delivered'] += delivered; 
+  state['money'] += delivered * state['pricePerLetter'] * state['multiplier'];
 }
