@@ -16,15 +16,10 @@ import {
   generalUpdate,
   updateCorporateOffices,
   updateMonopoly,
-  updateMailware,
-  updateBigNet,
   updatePostOffices,
   updateMailmen, 
   updateRecruiters,
   updatePigeons,
-  updateJets,
-  updateMailDrones,
-  updateEmail,
   updateMailTruck,
   updateMailboxes,
   updateAutoReader,
@@ -34,37 +29,21 @@ import {
 
 import { 
   buy,
-  buyScientificManagement,
-  buyMailware,
   buyAds,
   buyMonopoly,
   buyCorporateOffices,
   buyAutoReader,
   buyMaxAutoReader,
-  buySegway,
-  buyJet,
   buyPigeons,
-  buyBoxMod,
-  buyDogTreats,
-  buyMailDrones,
-  buySelfReliance,
   buyMailbox, 
   buyRecruiter,
   buyMailTruck,
-  buyCaffeine,
-  buyBigNet,
-  buyInflation,
-  buyEmail,
-  buyLittleHelp,
-  buyTwoHands,
   buyMailman,
-  buySpontaneousGeneration,
   buyFactory,
   buyBootstrap,
   buyOneTime,
   buyPostOffice,
   buyMax,
-  buyTwoForOne,
 } from "./buy.js";
 
 Vue.component("timed-event", {
@@ -132,10 +111,12 @@ Vue.component('buy-button', {
   },
 
   template: `
-    <div class="button column" :class="isChosen ? 'chosen' : ''"  @click='action'>
+    <div class="button column powerup-btn" :class="isChosen ? 'chosen' : ''"  @click='action'>
       <div class="button-name">
-        <div>{{ title }}</div>
-        <div v-if="!owned && !curiosity">(\${{ price }})</div>
+        <div class="button-title">
+          {{ title }}
+          <span v-if="!owned && !curiosity">(\${{ price }})</span>
+        </div>
         <div v-else-if="curiosity">({{ price }} curiosity)</div>
         <div v-else>(owned)</div>
       </div>
@@ -152,7 +133,7 @@ Vue.component('buy-button', {
 const vw = new Vue({
   el:"#app",
   
-  data: Object.assign({scrolled: false}, originalState), 
+  data: Object.assign({}, originalState), 
  
   computed: {
     autoreaderDescription: function() {
@@ -183,14 +164,6 @@ const vw = new Vue({
       return `Increases mailman delivery speed by ${this.segwayMailmanBoost * 100}%. This is a one time purchase.`
     },
 
-    scientificManagementDescription: function() {
-      return "Reduces the time it take for factories to generate mailboxes by 50%. THis is a one time purchase.";
-    },
-
-    twoHandsDescription: function() {
-      return `Each delivery click has a ${this.twoHandsChance * 100}% chance of delivering ${this.twoHandsMultiplier}x the amount of letters. This is a one time purchase.`
-    },
-
     postOfficeDescription: function() {
       return `Generates ${this.postOfficeInc} letters every ${this.getPostOfficeDelay / 1000} seconds.`;
     },
@@ -199,60 +172,12 @@ const vw = new Vue({
       return `Automatically delivers ${this.mailTruckInc} letters every ${this.getMailTruckDelay / 1000} seconds`;
     },
 
-    emailDescription: function() {
-      return `Accept letters via the internet. Generates ${this.emailInc} letters every ${this.getEmailDelay / 1000} seconds. This is a one time purchase.`;
-    },
-
-    littleHelpDescription: function() {
-      return `${this.littleHelpChance * 100}% chance of hiring ${this.littleHelpIncrease} mailmen every delivery click. This is a one time purchase.`;
-    },
-
-    bigNetDescription: function() {
-      return `Capture all the messages in bottles that are floating around the ocean. Generates ${this.bigNetInc} letters every ${this.getBigNetDelay / 1000} seconds. This is a one time purchase.`;
-    },
-
-    selfRelianceDescription: function() {
-      return `Increases bootstrap increment by ${this.selfRelianceInc}. This is a one time purchase.`;
-    },
-
-    inflationDescription: function() {
-      return `Increases the price per letter by ${this.inflationIncrease * 100}%. This is a one time purchase.`;
-    },
-
-    mailwareDescription: function() {
-      return `Infect people's computers and phones with 'mailware' capturing letters before they are even sent! Generates ${this.mailwareInc} letters per tick. This is a one time purchase.`;
-    },
-
-    mailDronesDescription: function() {
-      return `Unleash a swarm of mail delivering drones. Delivers ${this.mailDronesDelivery} letters every ${this.getMailDronesDelay / 1000} seconds. This is a one time purchase.`;
-    },
-
-    jetsDescription: function() {
-      return `Jets deliver ${this.jetDelivery} letters every ${this.getJetDelay / 1000} seconds.`;
-    },
-
-    spontaneousGenerationDescription: function() {
-      return `${this.spontaneousGenerationChance * 100}% chance that clicking to deliver a letter will multiply your letters per click by ${this.spontaneousGenerationMult} for that click. This is a one time purchase.`;
-    },
-
     postOfficDescription: function() {
       return `Generates two letters every ${this.getPostOfficeDelay / 1000} seconds.`;
     },
 
-    caffeineDescription: function() {
-      return `Every mailman gets put on a madatory drip of high octane espresso. Decreases mailman delivery delay by ${this.caffeineBoost * 100}%. This is a one time purchase.`
-    },
-
     pigeonsDescription: function() {
       return `Pigeons deliver ${this.getPigeonsDelivery} letters every ${this.getPigeonsDelay / 1000} seconds.`; 
-    },
-
-    dogTreatsDescription: function() {
-      return `Use to stave off the angry dogs on the block. Decreases mailman delivery delay by ${this.dogTreatsBoost * 100}%. This is a one time purchase.`;
-    },
-
-    boxModDescription: function() {
-      return `Increase the number of letters per second produced by a mailbox by ${this.boxModBoost}. This is a one time purchase.`; 
     },
 
     monopolyDescription: function() {
@@ -318,22 +243,6 @@ const vw = new Vue({
       return this.mailboxDelay;
     },
 
-    getBigNetDelay: function() {
-      return this.bigNetDelay;
-    },
-
-    getMailDronesDelay: function() {
-      return this.mailDronesDelay;
-    },
-
-    getMailwareDelay: function() {
-      return this.mailwareDelay;
-    },
-
-    getEmailDelay: function() {
-      return this.emailDelay;
-    },
-
     getMailTruckDelay: function() {
       return this.mailTruckDelay;
     },
@@ -358,19 +267,12 @@ const vw = new Vue({
       return delay;
     },
 
-    getJetDelay: function() {
-      return this.jetDelay;
-    },
-
     getRecruiterDelay: function() {
       return this.recruiterDelay;
     },
 
     bootstrapInc: function() {
       let inc = this.bootstrapDelivery * this.multiplier * (this.twoForOne ? 2 : 1);
-      if(this.selfReliance)
-        inc += this.selfRelianceInc;
-
       return inc;
     },
 
@@ -383,10 +285,6 @@ const vw = new Vue({
 
     pigeonsPrice: function() {
       return this.round(this.pigeonsBasePrice + (this.pigeons ** 1.1));
-    },
-
-    jetPrice: function() {
-      return this.round(this.jetBasePrice + (this.jets ** 1.7));
     },
 
     postOfficePrice: function() {
@@ -435,14 +333,6 @@ const vw = new Vue({
           return this.phase5;
         case 5:
           return this.phase6;
-        case 6:
-          return this.phase7;
-        case 7:
-          return this.phase8;
-        case 8:
-          return this.phase8; // Phase 8 is a read so it is the same upper bound as 7
-        case 9:
-          return this.phase10;
         default:
           return Infinity;
       }
@@ -474,10 +364,6 @@ const vw = new Vue({
       }
     },
     
-    handleScrolled: function() {
-      this.scrolled = window.scrollY > 100;
-    },
-
     nextPhase: function() {
       if(this.phase != 9) {
         this.choosePowerups = true;
@@ -596,18 +482,7 @@ const vw = new Vue({
       if(this.letters == 0)
         return;
      
-
-      const twoHandsMult = this.twoHands && Math.random() < this.twoHandsChance ? this.twoHandsMultiplier : 1;
-      const spontGen = this.spontaneousGeneration && Math.random() < this.spontaneousGenerationChance ? this.spontaneousGenerationMult : 1;
-     
-      if(this.littleHelp && this.powerups.Mailman) {
-        const littleHelp = Math.random();
-        if(littleHelp < this.littleHelpChance) {
-          this.mailmen += this.littleHelpIncrease;
-        }
-      }
-      
-      this.deliverLetter(Math.ceil(this.clickInc) * twoHandsMult * spontGen);
+      this.deliverLetter(Math.ceil(this.clickInc));
       this.clickDelivery += 1;
 
     },
@@ -629,8 +504,8 @@ const vw = new Vue({
     },
 
     handleDebug: function() {
-      this.lettersDelivered = 10 ** 50;
-      this.money = 10 ** 50;
+      this.lettersDelivered = 10 ** 15;
+      this.money = 10 ** 15;
       this.readLetters = 1;
     },
 
@@ -643,11 +518,6 @@ const vw = new Vue({
         this.updateLetters();
         this.updateMailboxes();
         this.updateMonopoly();
-        this.updateJets();
-        this.updateEmail();
-        this.updateMailDrones(),
-        this.updateMailware();
-        this.updateBigNet();
         this.updateCorporateOffices();
         this.updatePostOffices();
         this.updatePigeons();
@@ -669,50 +539,29 @@ const vw = new Vue({
     updateRecruiters,
     updateMailmen,
     updateCorporateOffices,
-    updateEmail,
     updateMonopoly,
     updateAutoReader,
-    updateMailware,
     updatePigeons,
-    updateBigNet,
     updateMailTruck,
-    updateJets,
-    updateMailDrones,
     updateMailboxes,
     updatePostOffices,
     saveState,
     loadState,
     calculateNewState,
     newGame,
-    buyScientificManagement,
     buyMailman,
-    buyMailDrones,
-    buyJet,
     buyAds,
     buyCorporateOffices,
     buyMailTruck,
     buyMailbox,
-    buyInflation,
     buyRecruiter,
     buyFactory,
     buyPostOffice,
-    buySegway,
-    buyBigNet,
     buyMonopoly,
-    buySpontaneousGeneration,
     buyBootstrap,
-    buyTwoHands,
-    buyTwoForOne,
-    buyLittleHelp,
     buyMaxAutoReader,
-    buyCaffeine,
     buyAutoReader,
-    buySelfReliance,
-    buyEmail,
-    buyBoxMod,
     buyPigeons,
-    buyDogTreats,
-    buyMailware,
     buyOneTime,
     buy,
     buyMax,
@@ -720,7 +569,6 @@ const vw = new Vue({
   },
 
   created: function() {
-    document.addEventListener("scroll", this.handleScrolled);
     document.addEventListener("debug", this.handleDebug);
 
     this.setupTests(),

@@ -46,110 +46,6 @@ export function buyPigeons() {
   return this.buy("pigeons", this.pigeonsPrice); 
 }
 
-export function buyDogTreats() {
-  return this.buyOneTime("dogTreats", this.dogTreatsBasePrice);
-}
-
-export function buyBoxMod() {
-  return this.buyOneTime("boxMod", this.boxModBasePrice);
-}
-
-export function buyBigNet() {
-  /*
-   * Increases letters per second
-   */
-
-  return this.buyOneTime("bigNet", this.bigNetBasePrice);
-}
-
-export function buyInflation() {
-  /*
-   * Increases letter price 
-   */
-  
-  this.buyOneTime("inflation", this.inflationBasePrice);
-}
-
-export function buyEmail() {
-  /*
-   * Generates more letters per second
-   */
-
-  return this.buyOneTime("email", this.emailBasePrice);
-}
-
-export function buySpontaneousGeneration() {
-  /*
-   * Random chance to quadruple number of letters per click
-   */
-  return this.buyOneTime("spontaneousGeneration", this.spontaneousGenerationBasePrice);
-}
-
-export function buyLittleHelp() {
-  /*
-   * Randomly generates a mailman per delivery click
-   */
-  
-  return this.buyOneTime("littleHelp", this.littleHelpBasePrice);
-}
-
-export function buyTwoForOne() {
-  /*
-   * Doubles Bootstrap increment
-   */
-
-  return this.buyOneTime("twoForOne", this.twoForOneBasePrice);
-}
-
-export function buyScientificManagement() {
-  /*
-   * One time upgrade. Cuts factory time in half
-   */
-
-  this.buyOneTime("scientificManagement", this.scientificManagementBasePrice)
-
-}
-
-export function buyMailDrones() {
-  /*
-   * Delivers 10 letters every 0.1 second
-   */
-
-  this.buyOneTime("mailDrones", this.mailDronesBasePrice);
-}
-
-export function buyMailware() {
-  /*
-   * Dramatically increases letters per second
-   */
-
-  this.buyOneTime("mailware", this.mailwareBasePrice);
-}
-
-export function buyTwoHands() {
-  /*
-   *  One time upgrade. Random chance that a click to deliver will be multiplied by some multiplier.
-   */
-  
-  this.buyOneTime("twoHands", this.twoHandsBasePrice);
-}
-
-export function buySegway() {
-  /*
-   * Increases mailman delivery speed by 2.5% per segway
-   */
-
-  this.buyOneTime("segway", this.segwayBasePrice);
-}
-
-export function buySelfReliance() {
-  /*
-   *  Increases bootstrap inc
-   */
-
-  return this.buyOneTime("selfReliance", this.selfRelianceBasePrice);
-}
-
 export function buyBootstrap() {
   /*
    * Increases number of letters per click
@@ -186,14 +82,6 @@ export function buyPostOffice() {
 
 }
 
-export function buyCaffeine() {
-  /*
-   * Increases mailman efficiency
-   */
-
-  this.buyOneTime("caffeine", this.caffeineBasePrice);
-}
-
 export function buyMailbox() {
   /*
    * Increases number of letters per second by one
@@ -224,14 +112,6 @@ export function buyMailman() {
 
   return this.buy("mailmen", this.mailmanPrice);
 
-}
-
-export function buyJet() {
-  /*
-   * Delivers 10 letters every 0.5 seconds
-   */
-
-  return this.buy("jets", this.jetPrice);
 }
 
 export function buyMailTruck() {

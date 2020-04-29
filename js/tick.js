@@ -1,105 +1,47 @@
-export function generalUpdate(last, delay) {
-  if(this._data[last] <= delay) {
-    this._data[last] += this.delta;
-    return false;
-  }
-  
-  this._data[last] = 0;
-  return true;
+export function generalUpdate(delay) {
+  return this.delta / delay;
 }
 
 export function updateLetters() {
-  if(this.generalUpdate("lettersLast", this.getLettersDelay)) {
-    const inc = (this.lettersInc * this.multiplier );
-    this.letters += inc;
-    this.lettersPs += inc;
-  }
+  const increment = this.generalUpdate(this.getLettersDelay);
+  const inc = (this.lettersInc * this.multiplier ) * increment;
+  this.letters += inc;
+  this.lettersPs += inc;
 }
 
 export function updateCorporateOffices() {
   if(this.corporateOffices <= 0)
     return;
 
-  if(this.generalUpdate("corporateOfficesLast", this.getCorporateOfficesDelay)) {
-    if(this.powerups.Factory) {
-      this.factories += this.getCorporateOfficesIncrease * this.corporateOffices;
-    }
-
-    if(this.powerups.Recruiter) {
-      this.recruiters += this.getCorporateOfficesIncrease * this.corporateOffices;
-    }
-  }
+  const delta = this.generalUpdate(this.getCorporateOfficesDelay);
+  this.factories += this.getCorporateOfficesIncrease * this.corporateOffices * delta;
+  this.recruiters += this.getCorporateOfficesIncrease * this.corporateOffices * delta;
 }
 
 export function updatePigeons() {
   if(this.pigeons <= 0)
     return;
 
-  if(this.generalUpdate("pigeonsLast", this.getPigeonsDelay)) {
-    this.deliverLetter(this.getPigeonsDelivery * this.multiplier * this.pigeons);
-  }
+  const delta = this.generalUpdate(this.getPigeonsDelay);
+  this.deliverLetter(this.getPigeonsDelivery * this.multiplier * this.pigeons * delta);
 }
 
 export function updateMailboxes() {
   if(this.mailboxes <= 0)
     return;
 
-  if(this.generalUpdate("mailboxLast", this.getMailboxDelay)) {
-    const inc = (this.mailboxes * this.multiplier * this.getMailboxLettersInc);
-    this.letters += inc;
-    this.lettersPs += inc;
-  }
+  const delta = this.generalUpdate(this.getMailboxDelay);
+  const inc = this.mailboxes * this.multiplier * this.getMailboxLettersInc * delta;
+  this.letters += inc;
+  this.lettersPs += inc;
 }
 
 export function updateMonopoly() {
-  if(this.monopoly <= 0 || !this.powerups['Corporate Offices'])
+  if(this.monopoly <= 0)
     return;
 
-  if(this.generalUpdate("monopolyLast", this.getMonopolyDelay)) {
-    this.corporateOffices += this.monopolyIncrease * this.monopoly;;
-  }
-}
-
-export function updateBigNet() {
-  if(!this.bigNet)
-    return;
-  
-  if(this.generalUpdate("bigNetLast", this.getBigNetDelay)) {
-    const inc = this.bigNetInc * this.multiplier;
-    this.letters += inc;
-    this.lettersPs += inc;
-  }
-}
-
-export function updateMailDrones() {
-  if(!this.mailDrones)
-    return;
-
-  if(this.generalUpdate("mailDronesLast", this.getMailDronesDelay)) {
-    this.deliverLetter(this.mailDronesDelivery * this.multiplier);
-  }
-}
-
-export function updateMailware() {
-  if(!this.mailware)
-    return;
-
-  if(this.generalUpdate("mailwareLast", this.getMailwareDelay)) {
-    const inc = this.mailwareInc * this.multiplier;
-    this.letters += inc;
-    this.lettersPs += inc;
-  }
-}
-
-export function updateEmail() {
-  if(!this.email)
-    return;
- 
-  if(this.generalUpdate("emailLast", this.getEmailDelay)) {
-    const inc = this.emailInc * this.multiplier;
-    this.letters += inc;
-    this.lettersPs += inc;
-  }
+  const delta = this.generalUpdate(this.getMonopolyDelay);
+  this.corporateOffices += this.monopolyIncrease * this.monopoly * delta;;
 }
 
 export function updateMailTruck() {
@@ -133,15 +75,6 @@ export function updateFactories() {
     this.mailboxes += this.factoryGenerate * this.factories;
   }
 
-}
-
-export function updateJets() {
-  if(this.jets <= 0)
-    return;
-
-  if(this.generalUpdate("jetLast", this.getJetDelay)) {
-    this.deliverLetter(this.jetDelivery * this.jets * this.multiplier);
-  }
 }
 
 export function updateRecruiters() {
