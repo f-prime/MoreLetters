@@ -117,15 +117,15 @@
           <stat name="letters delivered" :value="format(floor(lettersDelivered))"></stat>
           <stat name="letters per second" :value="format(round(prevLettersPs))"></stat>
           <stat name="deliveries per second" :value="format(round(prevDeliveryPs))"></stat>
-          <stat name="letters per click" :value="format(round(clickInc))"></stat>
+          <stat name="letters per click" :value="format(floor(clickInc))"></stat>
           <stat name="letter price" :value="'$' + format(round(getPricePerLetter * multiplier))"></stat>
           <stat name="multiplier" :value="format(multiplier)"></stat>
           <stat name="phase" :value="phase"></stat>
-          <stat v-show="powerups.Pigeons" name="pigeons" :value="format(pigeons)"></stat>
-          <stat v-show="powerups.Mailman" name="mailmen" :value="format(mailmen)"></stat>
-          <stat v-show="powerups.Mailbox" name="mailboxes" :value="format(mailboxes)"></stat>
-          <stat v-show="powerups['Post Office']" name="post offices" :value="format(postOffices)"></stat>
-          <stat v-show="powerups['Mail Truck']" name="mail trucks" :value="format(mailTrucks)"></stat>
+          <stat v-show="powerups.Pigeons || powerups.Breeder" name="pigeons" :value="format(floor(pigeons))"></stat>
+          <stat v-show="powerups.Breeder || powerups.Breeder" name="breeders" :value="format(floor(breeders))"></stat>
+          <stat v-show="powerups.Mailman || powerups.Recruiter || powerups['Corporate Offices']" name="mailmen" :value="format(floor(mailmen))"></stat>
+          <stat v-show="powerups.Mailbox || powerups.Factory || powerups['Corporate Offices']" name="mailboxes" :value="format(floor(mailboxes))"></stat>
+          <stat v-show="powerups.Advertisers" name="advertisers" :value="format(round(advertisers))"></stat>
           <stat v-show="powerups.Recruiter" name="recruiters" :value="format(recruiters)"></stat>
           <stat v-show="powerups.Factory" :value="format(factories)" name="factories"></stat> 
           <stat v-show="powerups['Corporate Offices']" name="corporate offices" :value="format(corporateOffices)"></stat>
@@ -237,34 +237,12 @@
           <buy-button
             title="Pigeons"
             :description="pigeonsDescription"
-            :price="format(pigeonsPrice)"
+            :price="format(pigeonsBasePrice)"
             choose="true"
             :chosen="powerups.Pigeons"
             @chosen="choose('Pigeons')">
           </buy-button>
-        </div>
-
-        <div class="column" v-show="phase == 2">
-          <buy-button
-            title="Mail Truck"
-            :description="mailTruckDescription"
-            :price="format(mailTruckPrice)"
-            choose="true"
-            :chosen="powerups['Mail Truck']"
-            @chosen="choose('Mail Truck')"    
-          ></buy-button>
-         
-          <buy-button
-            title="Post Office"
-            :price="format(postOfficePrice)"
-            :description="postOfficeDescription"
-            choose="true"
-            :chosen="powerups['Post Office']"
-            @chosen="choose('Post Office')"    
-          ></buy-button> 
-        </div>
-
-        <div class="column" v-show="phase == 3">
+          
           <buy-button
              title="Factory"
              :price="format(factoryPrice)"
@@ -273,7 +251,18 @@
              :chosen="powerups.Factory"
              @chosen="choose('Factory')" 
           ></buy-button>
+          
+          <buy-button
+             title="Advertisers"
+             :price="format(advertisersPrice)"
+             :description="advertisersDescription"
+             choose="true"
+             :chosen="powerups.Advertisers"
+             @chosen="choose('Advertisers')"
+          ></buy-button>
+        </div>
 
+        <div class="column" v-show="phase == 2">
           <buy-button
              title="Recruiter"
              :price="format(recruiterPrice)"
@@ -282,9 +271,18 @@
              :chosen="powerups.Recruiter"
              @chosen="choose('Recruiter')" 
          ></buy-button>  
+        
+          <buy-button
+            title="Breeder"
+            :price="format(breederPrice)"
+            :description="breederDescription"
+            choose="true"
+            :chosen="powerups.Breeder"
+            @chosen="choose('Breeder')"    
+          ></buy-button> 
         </div>
 
-        <div class="column" v-show="phase == 6">
+        <div class="column" v-show="phase == 3">
           <buy-button
              title="Corporate Offices"
              :description="corporateOfficesDescription"
@@ -294,25 +292,6 @@
              @chosen="choose('Corporate Offices')"
           ></buy-button>
 
-          <buy-button
-             title="Run Ads"
-             :price="format(adsBasePrice)"
-             :description="adsDescription"
-             choose="true"
-             :chosen="powerups.Ads"
-             @chosen="choose('Ads')"
-          ></buy-button>
-        </div>
-
-        <div class="column" v-show="phase == 7">
-          <buy-button
-            title="Monopoly"
-            :description="monopolyDescription"
-            :price="format(monopolyPrice)"
-            choose="true"
-            :chosen="powerups.Monopoly"
-            @chosen="choose('Monopoly')"
-          ></buy-button>
         </div>
       </div>
 
@@ -329,7 +308,7 @@
               </div>
             </div>
           </div>
-          <div v-else class="column">
+          <div v-else class="column" id="next-phase-text">
             Next phase at {{ format(nextPhaseAt) }} letters delivered
           </div>
         </div>
@@ -339,15 +318,16 @@
 
       <!-- Main Game -->
 
-      <div class="buttons buttons-container" v-show="!read && !choosePowerups" class="buttons" :class="!day ? 'btn-night' :''">
-        <div class="row">
-          <div class="column">
-            <div class="button button-title" @click="clickDeliver">
-              Deliver Letter
-            </div>
+      <div :style="nextPhaseAvailable ? 'margin-top: 13rem;' : ''" class="row" :class="!day ? 'btn-night' : ''" id="delivery-btn">
+        <div class="column">
+          <div class="button button-title" @click="clickDeliver">
+            Deliver Letter
           </div>
         </div>
-        
+      </div>
+ 
+
+      <div class="buttons buttons-container" v-show="!read && !choosePowerups" class="buttons" :class="!day ? 'btn-night' :''">       
         <!-- End Delivery Button -->
 
         <div class="row" :class="!day ? 'btn-night' :''">
@@ -370,8 +350,7 @@
             :max-buy="true"
             :description="mailboxDescription"
           ></buy-button>
-        </div>
-        <div class="column">  
+
           <buy-button
             v-show="powerups.Bootstrap"
             title="Bootstrap"
@@ -380,41 +359,19 @@
             :price="format(bootstrapPrice)"
             :description="bootstrapDescription"
             :max-buy="true">
-          </buy-button>
-          <!-- end -->
-       
-          <!-- Phase 2 -->
+          </buy-button> 
+        </div>
+
+        <div class="row" :class="!day ? 'btn-night' : ''">
           <buy-button
             v-show="powerups.Pigeons"
             title="Pigeons"
             :description="pigeonsDescription"
-            :price="format(pigeonsPrice)"
+            :price="format(pigeonsBasePrice)"
             @buy="buyPigeons()"
             @buy-max="buyMax(buyPigeons)"
             :max-buy="true">
           </buy-button>
-
-          <buy-button
-            v-show="powerups['Mail Truck']"
-            title="Mail Truck"
-            :description="mailTruckDescription"
-            :price="format(mailTruckPrice)"
-            @buy="buyMailTruck()"
-            @buy-max="buyMax(buyMailTruck)"
-            :max-buy="true" 
-          ></buy-button>
-         
-          <buy-button
-            v-show="powerups['Post Office']"
-            title="Post Office"
-            @buy="buyPostOffice()"
-            @buy-max="buyMax(buyPostOffice)"
-            :price="format(postOfficePrice)"
-            :max-buy="true"
-            :description="postOfficeDescription"
-          ></buy-button>
-          
-          <!-- end -->
 
           <buy-button
              v-show="powerups.Factory"
@@ -424,9 +381,21 @@
              :max-buy="true"
              :price="format(factoryPrice)"
              :description="factoryDescription"
-
           ></buy-button>
 
+          <buy-button
+             v-show="powerups.Advertisers"
+             title="Advertisers"
+             @buy="buyAdvertisers()"
+             @buy-max="buyMax(buyAdvertisers)"
+             :max-buy="true"
+             :price="format(advertisersPrice)"
+             :description="advertisersDescription"
+          ></buy-button>
+
+        </div>
+        
+        <div class="row" :class="!day ? 'btn-night' : ''">
           <buy-button
             v-show="powerups.Recruiter"
             title="Recruiter"
@@ -437,25 +406,16 @@
             :max-buy="true"
             :description="recruiterDescription" 
          ></buy-button> 
-         
+        
           <buy-button
-            v-show="powerups['Corporate Offices']"
-            title="Corporate Offices"
-            max-buy="true"
-            @buy="buyCorporateOffices()"
-            @buy-max="buyMax(buyCorporateOffices)"
-            :price="format(this.corporateOfficesPrice)"
-            :description="corporateOfficesDescription"
-          ></buy-button>
-
-          <buy-button
-            v-show="powerups.Monopoly"
-            title="Monopoly"
-            :description="monopolyDescription"
-            :price="format(monopolyPrice)"
-            @buy="buyMonopoly()"
-            @buy-max="buyMax(buyMonopoly)"
-            max-buy="true"></buy-button>
+            v-show="powerups.Breeder"
+            title="Breeder"
+            :price="format(breederPrice)"
+            :description="breederDescription"
+            @buy="buyBreeder()"
+            @buy-max="buyMax(buyBreeder)"
+            :max-buy="true"
+          ></buy-button> 
         </div>
       </div>
     </div>

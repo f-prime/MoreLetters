@@ -42,8 +42,12 @@ export function buyMonopoly() {
   return this.buy("monopoly", this.monopolyPrice);
 }
 
+export function buyBreeder() {
+  return this.buy("breeders", this.breederBasePrice);
+}
+
 export function buyPigeons() {
-  return this.buy("pigeons", this.pigeonsPrice); 
+  return this.buy("pigeons", this.pigeonsBasePrice); 
 }
 
 export function buyBootstrap() {
@@ -126,13 +130,8 @@ export function buyCorporateOffices() {
   return this.buy("corporateOffices", this.corporateOfficesPrice);
 }
 
-export function buyAds() {
-  if(this.money < this.adsBasePrice)
-    return false;
-  
-  this.money -= this.adsBasePrice;
-  this.letters += this.getAdsLettersInc;
-  return true;
+export function buyAdvertisers() {
+  return this.buy("advertisers", this.advertisersPrice);
 }
 
 export function buyAutoReader() {

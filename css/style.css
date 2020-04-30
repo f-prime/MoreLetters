@@ -10,18 +10,11 @@ html, body {
   overflow-x: hidden;
 }
 
-.scrollable-money {
-  position: fixed;
-  font-size: 2em;
-  top: 0.5em;
-  left: 2em;
-}
-
 .background {
   position: fixed;
   top: 0;
   right:0;
-  opacity:0.6;
+  opacity:0.2;
   z-index:-1;
 }
 
@@ -162,7 +155,6 @@ html, body {
 
 .stats {
   margin-top: 2em;
-
 }
 
 .stat-value {
@@ -178,8 +170,8 @@ html, body {
 }
 
 .main-stat {
-  font-size: 50px;
-  text-align: center;
+  font-size: 3rem;
+  margin-left: 2rem;
   display:flex;
   flex-direction: column;
   margin-top:0em;
@@ -248,10 +240,10 @@ html, body {
 
 .milestone {
   margin-top: 3em;
+  width: 10vw;
 }
 
 .top-links {
-  width: 20%;
   position: absolute;
   top: 1em;
   right: 1em;
@@ -269,20 +261,33 @@ html, body {
 
 .footer-link {
   cursor: pointer;
+  margin-right: 5rem;
+  white-space: nowrap;
 }
 
 .footer-link:hover {
   text-decoration: underline;
 }
 
+#delivery-btn {
+  position: absolute;
+  margin-top: 7%;
+}
+
+#next-phase-text {
+  white-space: nowrap;
+}
+
 .stats-container {
   position: absolute;
   left: 8vw;
-  top: 15vh;
+  top: 13vh;
 }
 
 .buttons-container {
   position: absolute;
   top: 15vh;
   right: 4vw;
+  height: 60vh;
+  overflow: auto;
 }

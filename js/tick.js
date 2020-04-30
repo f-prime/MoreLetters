@@ -18,12 +18,28 @@ export function updateCorporateOffices() {
   this.recruiters += this.getCorporateOfficesIncrease * this.corporateOffices * delta;
 }
 
+export function updateAdvertisers() {
+  if(this.advertisers <= 0)
+    return;
+
+  const delta = this.generalUpdate(this.advertisersDelay);
+  this.clickInc += this.advertisersInc * this.advertisers * this.multiplier * delta;
+}
+
+export function updateBreeder() {
+  if(this.breeders <= 0)
+    return;
+
+  const delta = this.generalUpdate(this.breederDelay);
+  this.pigeons += this.breederBreed * this.breeders * delta;
+}
+
 export function updatePigeons() {
   if(this.pigeons <= 0)
     return;
 
   const delta = this.generalUpdate(this.getPigeonsDelay);
-  this.deliverLetter(this.getPigeonsDelivery * this.multiplier * this.pigeons * delta);
+  this.deliverLetter(this.getPigeonsDelivery * this.pigeons * this.multiplier * delta);
 }
 
 export function updateMailboxes() {
@@ -62,18 +78,16 @@ export function updateMailmen() {
   if(this.letters < 1)
     return;
 
-  if(this.generalUpdate("mailmanLast", this.getMailmanDelay)) {
-    this.deliverLetter(this.mailmen * this.multiplier);
-  }
+  const delta = this.generalUpdate(this.getMailmanDelay);
+  this.deliverLetter(this.mailmen * this.multiplier * delta);
 }
 
 export function updateFactories() {
   if(this.factories <= 0)
     return;
 
-  if(this.generalUpdate("factoryLast", this.getFactoryDelay)) {
-    this.mailboxes += this.factoryGenerate * this.factories;
-  }
+  const delta = this.generalUpdate(this.getFactoryDelay);
+  this.mailboxes += this.factoryGenerate * this.factories * delta;
 
 }
 
@@ -81,9 +95,8 @@ export function updateRecruiters() {
   if(this.recruiters <= 0)
     return;
 
-  if(this.generalUpdate("recruiterLast", this.getRecruiterDelay)) {
-    this.mailmen += this.recruiterHire * this.recruiters;
-  }
+  const delta = this.generalUpdate(this.getRecruiterDelay);
+  this.mailmen += this.recruiterHire * this.recruiters * delta;
 }
 
 export function updateAutoReader() {

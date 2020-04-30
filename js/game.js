@@ -23,17 +23,20 @@ import {
   updateMailTruck,
   updateMailboxes,
   updateAutoReader,
+  updateBreeder,
   updateFactories,
   updateLetters,
+  updateAdvertisers,
 } from "./tick.js";
 
 import { 
   buy,
-  buyAds,
+  buyAdvertisers,
   buyMonopoly,
   buyCorporateOffices,
   buyAutoReader,
   buyMaxAutoReader,
+  buyBreeder,
   buyPigeons,
   buyMailbox, 
   buyRecruiter,
@@ -140,8 +143,16 @@ const vw = new Vue({
       return `Auto reads letters.`;
     },
 
+    breederDescription: function() {
+      return `Generates ${this.breederBreed} ${this.breederBreed > 1 ? 'pigeons' : 'pigeon'} every ${this.breederDelay / 1000} seconds. Breeders' price does not scale`;
+    },
+
+    breederPrice: function() {
+      return this.round(this.breederBasePrice + (this.breeders ** 2));
+    },
+
     mailmanDescription: function() {
-      return `Mailmen deliver ${this.mailmanDelivery} ${this.mailmanDelivery > 1 ? 'letters' : 'letter'} per mailman automatically every ${this.round(this.getMailmanDelay / 1000)} seconds.`;
+      return `Deliver ${this.mailmanDelivery} ${this.mailmanDelivery > 1 ? 'letters' : 'letter'} per mailman automatically every ${this.round(this.getMailmanDelay / 1000)} seconds.`;
     },
    
     mailboxDescription: function() {
@@ -149,7 +160,7 @@ const vw = new Vue({
     },
 
     bootstrapDescription: function() {
-      return `Increases letters per click by ${this.bootstrapInc}. If you don't have enough funds, then an amount of letters equal to your letters per click will be generated instead.`;
+      return `Multiplies letters per click by ${this.bootstrapInc}. If you don't have enough funds, then an amount of letters equal to your letters per click will be generated instead.`;
     },
 
     recruiterDescription: function() {
@@ -177,7 +188,7 @@ const vw = new Vue({
     },
 
     pigeonsDescription: function() {
-      return `Pigeons deliver ${this.getPigeonsDelivery} letters every ${this.getPigeonsDelay / 1000} seconds.`; 
+      return `Pigeons deliver ${this.getPigeonsDelivery} letters every ${this.getPigeonsDelay / 1000} seconds. Pigeons' price does not scale with the number purchased.`; 
     },
 
     monopolyDescription: function() {
@@ -208,12 +219,12 @@ const vw = new Vue({
       return this.corporateOfficesIncrease;
     },
 
-    adsDescription: function() {
-      return `Generates ${this.format(this.getAdsLettersInc)} letters per click.`
+    advertisersDescription: function() {
+      return `Increases deliveries per click by ${this.advertisersInc} every ${this.advertisersDelay / 1000} seconds.`;
     },
 
-    getAdsLettersInc: function() {
-      return this.adsLettersInc;
+    advertisersPrice: function() {
+      return this.round(this.advertisersBasePrice + (this.advertisers ** 1.5));
     },
 
     getPigeonsDelivery: function() {
@@ -272,7 +283,7 @@ const vw = new Vue({
     },
 
     bootstrapInc: function() {
-      let inc = this.bootstrapDelivery * this.multiplier * (this.twoForOne ? 2 : 1);
+      let inc = this.bootstrapDelivery * this.multiplier ;
       return inc;
     },
 
@@ -281,10 +292,6 @@ const vw = new Vue({
         return 1;
 
       return Math.floor(2 ** (this.phase - 1)); 
-    },
-
-    pigeonsPrice: function() {
-      return this.round(this.pigeonsBasePrice + (this.pigeons ** 1.1));
     },
 
     postOfficePrice: function() {
@@ -492,6 +499,9 @@ const vw = new Vue({
        * Delivers N amount of letters if possible
        */
 
+      if(this.letters < 1)
+        return;
+
       if(this.letters < amount) {
         amount = this.letters;
       }
@@ -515,7 +525,9 @@ const vw = new Vue({
       this.lastTick = now;
 
       if(!this.read) {
+        this.updateAdvertisers();
         this.updateLetters();
+        this.updateBreeder();
         this.updateMailboxes();
         this.updateMonopoly();
         this.updateCorporateOffices();
@@ -535,6 +547,7 @@ const vw = new Vue({
 
     generalUpdate,
     updateFactories,
+    updateBreeder,
     updateLetters,
     updateRecruiters,
     updateMailmen,
@@ -545,12 +558,13 @@ const vw = new Vue({
     updateMailTruck,
     updateMailboxes,
     updatePostOffices,
+    updateAdvertisers,
     saveState,
     loadState,
     calculateNewState,
     newGame,
     buyMailman,
-    buyAds,
+    buyAdvertisers,
     buyCorporateOffices,
     buyMailTruck,
     buyMailbox,
@@ -558,6 +572,7 @@ const vw = new Vue({
     buyFactory,
     buyPostOffice,
     buyMonopoly,
+    buyBreeder,
     buyBootstrap,
     buyMaxAutoReader,
     buyAutoReader,
