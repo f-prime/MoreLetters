@@ -15,14 +15,9 @@ import {
 import { 
   generalUpdate,
   updateCorporateOffices,
-  updateMonopoly,
-  updatePostOffices,
   updateMailmen, 
-  updateRecruiters,
   updatePigeons,
-  updateMailTruck,
   updateMailboxes,
-  updateAutoReader,
   updateBreeder,
   updateFactories,
   updateLetters,
@@ -32,20 +27,15 @@ import {
 import { 
   buy,
   buyAdvertisers,
-  buyMonopoly,
+  buyTwoHands,
   buyCorporateOffices,
-  buyAutoReader,
-  buyMaxAutoReader,
   buyBreeder,
   buyPigeons,
   buyMailbox, 
-  buyRecruiter,
-  buyMailTruck,
   buyMailman,
   buyFactory,
   buyBootstrap,
   buyOneTime,
-  buyPostOffice,
   buyMax,
 } from "./buy.js";
 
@@ -118,7 +108,7 @@ Vue.component('buy-button', {
       <div class="button-name">
         <div class="button-title">
           {{ title }}
-          <span v-if="!owned && !curiosity">(\${{ price }})</span>
+          <div v-if="!owned && !curiosity">(\${{ price }})</div>
         </div>
         <div v-else-if="curiosity">({{ price }} curiosity)</div>
         <div v-else>(owned)</div>
@@ -139,12 +129,8 @@ const vw = new Vue({
   data: Object.assign({}, originalState), 
  
   computed: {
-    autoreaderDescription: function() {
-      return `Auto reads letters.`;
-    },
-
     breederDescription: function() {
-      return `Generates ${this.breederBreed} ${this.breederBreed > 1 ? 'pigeons' : 'pigeon'} every ${this.breederDelay / 1000} seconds. Breeders' price does not scale`;
+      return `Generates ${this.breederBreed} ${this.breederBreed > 1 ? 'pigeons' : 'pigeon'} every ${this.breederDelay / 1000} seconds at no cost.`;
     },
 
     breederPrice: function() {
@@ -152,67 +138,39 @@ const vw = new Vue({
     },
 
     mailmanDescription: function() {
-      return `Deliver ${this.mailmanDelivery} ${this.mailmanDelivery > 1 ? 'letters' : 'letter'} per mailman automatically every ${this.round(this.getMailmanDelay / 1000)} seconds.`;
+      return `Delivers ${this.mailmanDelivery} ${this.mailmanDelivery > 1 ? 'letters' : 'letter'} every ${this.round(this.getMailmanDelay / 1000)} seconds.`;
     },
    
     mailboxDescription: function() {
-      return `Generates ${this.getMailboxLettersInc} letter per mailbox every ${this.getMailboxDelay / 1000} seconds.`
+      return `Generates ${this.getMailboxLettersInc} ${this.getMailboxLettersInc > 1 ? 'letters' : 'letter'} every ${this.getMailboxDelay / 1000} seconds.`
     },
 
     bootstrapDescription: function() {
-      return `Multiplies letters per click by ${this.bootstrapInc}. If you don't have enough funds, then an amount of letters equal to your letters per click will be generated instead.`;
-    },
-
-    recruiterDescription: function() {
-      return `Hires ${this.recruiterHire} mailmen per recruiter every ${this.getRecruiterDelay / 1000} seconds. Hiring does not cost money.`;
+      return `Increases letters per click by ${this.bootstrapInc}. Also gives the ability to manually generate letters.`;
     },
 
     factoryDescription: function() {
-      return `Generates ${this.factoryGenerate} ${this.factoryGenerate == 1 ? 'mailbox' : 'mailboxes'} per factory every ${this.getFactoryDelay / 1000} seconds. These mailboxes do not cost anything.`;
-    },
-
-    segwayDescription: function() {
-      return `Increases mailman delivery speed by ${this.segwayMailmanBoost * 100}%. This is a one time purchase.`
-    },
-
-    postOfficeDescription: function() {
-      return `Generates ${this.postOfficeInc} letters every ${this.getPostOfficeDelay / 1000} seconds.`;
-    },
-
-    mailTruckDescription: function() {
-      return `Automatically delivers ${this.mailTruckInc} letters every ${this.getMailTruckDelay / 1000} seconds`;
-    },
-
-    postOfficDescription: function() {
-      return `Generates two letters every ${this.getPostOfficeDelay / 1000} seconds.`;
+      return `Generates ${this.factoryGenerate} ${this.factoryGenerate == 1 ? 'mailbox' : 'mailboxes'} every ${this.getFactoryDelay / 1000} seconds at no cost.`;
     },
 
     pigeonsDescription: function() {
-      return `Pigeons deliver ${this.getPigeonsDelivery} letters every ${this.getPigeonsDelay / 1000} seconds. Pigeons' price does not scale with the number purchased.`; 
+      return `Deliver ${this.getPigeonsDelivery} letter every ${this.getPigeonsDelay / 1000} seconds. Pigeons do not get more expensive.`; 
     },
 
-    monopolyDescription: function() {
-      return `Establishes ${this.monopolyIncrease} Corporate Office every ${this.getMonopolyDelay / 1000} seconds.`;
+    twoHandsDescription: function() {
+      return `Multiplies letters per click and Bootstrap increase by ${this.twoHandsMult}.`
     },
 
-    getMonopolyDelay: function() {
-      return this.monopolyDelay;
-    },
-
-    monopolyPrice: function() {
-      return this.round(this.monopolyBasePrice + (this.monopoly ** 1.9));
+    twoHandsPrice: function() {
+      return this.round(this.twoHandsBasePrice + (this.twoHands ** 7));
     },
 
     corporateOfficesDescription: function() {
-      return `Automatically creates ${this.getCorporateOfficesIncrease} Recruiters and Factories per Corporate Office every ${this.corporateOfficesDelay / 1000} seconds.`; 
+      return `Generates ${this.getCorporateOfficesIncrease} mailman and factory every ${this.corporateOfficesDelay / 1000} seconds at no cost.`; 
     },
 
     corporateOfficesPrice: function() {
       return this.round(this.corporateOfficesBasePrice + (this.corporateOffices ** 2));
-    },
-
-    getCorporateOfficesDelay: function() {
-      return this.corporateOfficesDelay;
     },
 
     getCorporateOfficesIncrease: function() {
@@ -254,22 +212,8 @@ const vw = new Vue({
       return this.mailboxDelay;
     },
 
-    getMailTruckDelay: function() {
-      return this.mailTruckDelay;
-    },
-
-    getPostOfficeDelay: function() {
-      return this.postOfficeDelay;
-    },
-
     getMailmanDelay: function() {
-      const caffeineDecrease = this.caffeine ? this.mailmanDelay * this.caffeineBoost : 0;
-      const segwayDecrease = this.segway ? this.mailmanDelay * this.segwayMailmanBoost : 0;
-      const dogTreatsDecrease = this.dogTreats ? this.mailmanDelay * this.dogTreatsBoost : 0;
-      
-      const delay = this.mailmanDelay - caffeineDecrease - segwayDecrease - dogTreatsDecrease;
-
-      return delay;
+      return this.mailmanDelay;
     },
 
     getFactoryDelay: function() {
@@ -278,20 +222,10 @@ const vw = new Vue({
       return delay;
     },
 
-    getRecruiterDelay: function() {
-      return this.recruiterDelay;
-    },
-
     bootstrapInc: function() {
-      let inc = this.bootstrapDelivery * this.multiplier ;
+      const mult = this.twoHands ? (this.twoHands * this.twoHandsMult) : 1;
+      let inc = this.bootstrapDelivery * mult;
       return inc;
-    },
-
-    multiplier: function() {
-      if(this.phase == 0)
-        return 1;
-
-      return Math.floor(2 ** (this.phase - 1)); 
     },
 
     postOfficePrice: function() {
@@ -302,28 +236,16 @@ const vw = new Vue({
       return this.round(this.bootstrapBasePrice + (this.bootstrap ** 1.5))
     },
 
-    mailTruckPrice: function() {
-      return this.round(this.mailTruckBasePrice + (this.mailTrucks ** 1.8));
-    },
-
-    recruiterPrice: function() {
-      return this.round(this.recruiterBasePrice + (this.recruiters ** 3));
-    },
-
     factoryPrice: function() {
-      return this.round(this.factoryBasePrice + (this.factories ** 2.5));
+      return this.round(this.factoryBasePrice + (this.factories ** 2.0));
     },
 
     mailmanPrice: function() {
-      return this.round(this.mailmanBasePrice + (this.mailmen ** 1.5));
+      return this.round(this.mailmanBasePrice + (this.mailmen ** 1.2));
     },
 
     mailboxPrice: function() {
-      return this.round(this.mailboxBasePrice + (this.mailboxes ** 1.8));
-    },
-
-    autoreaderPrice: function() {
-      return this.round(this.autoreaderBasePrice + ((this.autoreader / 10) ** 1.05)); 
+      return this.round(this.mailboxBasePrice + (this.mailboxes ** 1.5));
     },
 
     nextPhaseAt: function() {
@@ -338,8 +260,6 @@ const vw = new Vue({
           return this.phase4;
         case 4:
           return this.phase5;
-        case 5:
-          return this.phase6;
         default:
           return Infinity;
       }
@@ -372,7 +292,7 @@ const vw = new Vue({
     },
     
     nextPhase: function() {
-      if(this.phase != 9) {
+      if(this.phase != this.readPhase - 1) {
         this.choosePowerups = true;
       } else {
         this.prestige();
@@ -463,10 +383,11 @@ const vw = new Vue({
       this.phase = phase + 1;
       this.lettersDelivered = lettersDelivered;
       this.letterOn = letterOn;
+      this.letters = 0;
 
-      if(this.phase == 10 && this.letterOn <= 4) {
+      if(this.phase == this.readPhase) {
         this.getLetter();
-        this.readLetters = this.phase8; // Set letters to read to 1T otherwise it could get too big
+        this.readLetters = this.readAmount; // Set letters to read to 1T otherwise it could get too big
         this.letterOn += 1;
         this.read = true;
       }
@@ -479,10 +400,17 @@ const vw = new Vue({
       const inc = (amount && amount > 0 ? amount : 1);
 
       this.readLetters -= inc;
-      this.curiosity += inc;
 
       if(this.readLetters < 0)
         this.readLetters = 0;
+    },
+
+    clickGenerate: function() {
+      if(!this.powerups.Bootstrap)
+        return;
+
+      this.letters += this.clickInc;
+      this.lettersPs += this.clickInc;
     },
 
     clickDeliver: function() {
@@ -508,7 +436,7 @@ const vw = new Vue({
       
       this.deliveryPs += amount;
       this.letters -= amount;
-      this.money += ((this.getPricePerLetter) * this.multiplier) * amount;
+      this.money += this.getPricePerLetter * amount;
       this.lettersDelivered += amount;
 
     },
@@ -525,23 +453,18 @@ const vw = new Vue({
       this.lastTick = now;
 
       if(!this.read) {
-        this.updateAdvertisers();
         this.updateLetters();
+        this.updateMailmen();
+        this.updateAdvertisers();
         this.updateBreeder();
         this.updateMailboxes();
-        this.updateMonopoly();
         this.updateCorporateOffices();
-        this.updatePostOffices();
         this.updatePigeons();
-        this.updateMailmen();
-        this.updateMailTruck();
-        this.updateRecruiters();
+        this.updateDeliveriesPerSecond(); 
         this.updateFactories();
         this.updateLettersPerSecond();
-        this.updateDeliveriesPerSecond(); 
-      } else {
-        this.updateAutoReader();
       }
+      
       this.saveState();
     },
 
@@ -549,33 +472,23 @@ const vw = new Vue({
     updateFactories,
     updateBreeder,
     updateLetters,
-    updateRecruiters,
     updateMailmen,
     updateCorporateOffices,
-    updateMonopoly,
-    updateAutoReader,
     updatePigeons,
-    updateMailTruck,
     updateMailboxes,
-    updatePostOffices,
     updateAdvertisers,
     saveState,
     loadState,
     calculateNewState,
     newGame,
     buyMailman,
+    buyTwoHands,
     buyAdvertisers,
     buyCorporateOffices,
-    buyMailTruck,
     buyMailbox,
-    buyRecruiter,
     buyFactory,
-    buyPostOffice,
-    buyMonopoly,
     buyBreeder,
     buyBootstrap,
-    buyMaxAutoReader,
-    buyAutoReader,
     buyPigeons,
     buyOneTime,
     buy,

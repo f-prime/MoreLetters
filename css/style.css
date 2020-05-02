@@ -55,6 +55,10 @@ html, body {
   height: 100%;
 }
 
+.letter {
+  margin-top: 2rem;
+}
+
 .letter-container {
   position: relative;
   top:-5%;
@@ -135,8 +139,8 @@ html, body {
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 30px;
-  grid-row-gap: 30px;
+  grid-column-gap: 1vw;
+  grid-row-gap: 2vh;
 }
 
 .row {
@@ -169,13 +173,21 @@ html, body {
   font-size: 30px;
 }
 
-.main-stat {
+.main-stat, .main-stat-centered {
   font-size: 3rem;
-  margin-left: 2rem;
+  margin-left: 1rem;
   display:flex;
   flex-direction: column;
   margin-top:0em;
 }
+
+.main-stat-centered {
+  margin: 0;
+  margin-top: 10rem;
+  margin-bottom: 5rem;
+  align-items: center;
+}
+
 
 .buttons .column {
   margin: 1em;
@@ -194,6 +206,10 @@ html, body {
   align-items: center;
   justify-content: center;
   background-color: white;
+}
+
+.read {
+  font-size: 1.5rem;
 }
 
 .powerup-btn {
@@ -239,8 +255,8 @@ html, body {
 }
 
 .milestone {
-  margin-top: 3em;
-  width: 10vw;
+  margin-top: 2rem;
+  width: 18vw;
 }
 
 .top-links {
@@ -288,6 +304,6 @@ html, body {
   position: absolute;
   top: 15vh;
   right: 4vw;
-  height: 60vh;
+  height: 80vh;
   overflow: auto;
 }

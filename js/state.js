@@ -2,19 +2,11 @@ export const originalState = {
   day: true,
   
   phase:0,
-
-  // Phase numbers are upper bound to reach that phase
-
   phase1: 50,
   phase2: 10 ** 4,
-  phase3: 10 ** 5,
-  phase4: 10 ** 7,
+  phase3: 500 * 10 ** 5,
+  phase4: 10 ** 6,
   phase5: 10 ** 7,
-  phase6: 10 ** 8,
-  phase7: 10 ** 9,
-  phase8: 10 ** 10,
-  // 9 is a read
-  phase10: 500 * 10 ** 11,
   
   numChosen: 0,
   powerups: {},
@@ -28,14 +20,10 @@ export const originalState = {
   openLetter: false,
   read: false,
   readLetters:0,
-  curiosity: 0,
+  readAmount: 25,
+  readPhase: 4,
   
-  letterOn:0,
   letter: "",
-
-  autoreaderInc: 1,
-  autoreader: 0,
-  autoreaderBasePrice: 10,
 
   money: 0,
 
@@ -57,40 +45,34 @@ export const originalState = {
   littleHelpIncrease: 100,
   littleHelpBasePrice: 20000,
 
-  postOffices: 0,
-  postOfficeDelay: 350,
-  postOfficeInc: 20,
-  postOfficeBasePrice: 2700,
-
   pigeons: 0,
   pigeonsDelivery: 1,
-  pigeonsBasePrice: 1000,
+  pigeonsBasePrice: 50,
   pigeonsDelay: 150,
 
   breeders: 0,
   breederBreed: 1,
-  breederBasePrice: 50000,
+  breederBasePrice: 230,
   breederDelay: 500,
 
   corporateOffices: 0,
-  corporateOfficesDelay: 1000,
+  corporateOfficesDelay: 750,
   corporateOfficesIncrease: 1,
-  corporateOfficesBasePrice: 50000000000, 
+  corporateOfficesBasePrice: 500, 
 
   advertisers: 0,
-  advertisersDelay: 500,
+  advertisersDelay: 250,
   advertisersInc: 1,
-  advertisersBasePrice: 3000,
-
-  monopoly:0,
-  monopolyBasePrice: 10 ** 11,
-  monopolyDelay: 500,
-  monopolyIncrease: 1,
+  advertisersBasePrice: 100,
 
   clickInc: 1,
   bootstrap: 0,
   bootstrapBasePrice: 15,
-  bootstrapDelivery: 2,
+  bootstrapDelivery: 50,
+
+  twoHands: 0,
+  twoHandsBasePrice: 300,
+  twoHandsMult: 2,
 
   mailmen: 0,
   mailmanBasePrice: 10, 
@@ -102,20 +84,10 @@ export const originalState = {
   mailboxLettersInc: 1,
   mailboxDelay: 500,
 
-  recruiterHire: 1,
-  recruiterBasePrice: 15000,
-  recruiterDelay: 750,
-  recruiters: 0,
-
-  factoryBasePrice: 2000,
-  factoryDelay: 2000,
+  factoryBasePrice: 150,
+  factoryDelay: 500,
   factories: 0,
   factoryGenerate: 1,
-
-  mailTrucks: 0,
-  mailTruckDelay: 250,
-  mailTruckBasePrice:2200,
-  mailTruckInc: 2,
 
   lastSave: new Date(),
 };
@@ -142,9 +114,8 @@ export function calculateNewState() {
   const secondsSince = now - lastSaveTime;
 
   this.letters += Math.floor((secondsSince / this.lettersDelay));
-  this.mailmen += Math.floor((secondsSince / this.recruiterDelay) * this.recruiters * this.multiplier);
-  this.mailboxes += Math.floor((secondsSince / this.factoryDelay) * this.factories * this.multiplier);
-  this.money += Math.floor((secondsSince / this.mailmanDelay) * this.mailmen * this.pricePerLetter * this.multiplier);
+  this.mailboxes += Math.floor((secondsSince / this.factoryDelay) * this.factories);
+  this.money += Math.floor((secondsSince / this.mailmanDelay) * this.mailmen * this.pricePerLetter);
 }
 
 export function loadState() {
@@ -157,6 +128,7 @@ export function loadState() {
     "openLetter",
     "readLetters",
     "curiosity",
+    "twoHands",
     "read",
     "lettersDelivered",
     "letter",
@@ -166,13 +138,10 @@ export function loadState() {
     "money",
     "breeders",
     "letters",
-    "postOffices",
     "bootstrap",
     "clickInc",
     "mailboxes",
-    "recruiters",
     "factories",
-    "mailTrucks",
     "letterOn",
     "corporateOffices",
     "advertisers",

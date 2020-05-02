@@ -38,8 +38,13 @@ export function buyOneTime(toggle, price) {
   return true;
 }
 
-export function buyMonopoly() {
-  return this.buy("monopoly", this.monopolyPrice);
+export function buyTwoHands() {
+  if(this.buy("twoHands", this.twoHandsPrice)) {
+    this.clickInc *= this.twoHandsMult;
+    return true;
+  }
+
+  return false;
 }
 
 export function buyBreeder() {
@@ -56,14 +61,12 @@ export function buyBootstrap() {
    */
 
   if(this.money < this.bootstrapPrice) {
-    this.letters += this.bootstrap * this.multiplier;
-    this.lettersPs += this.bootstrap * this.multiplier;
     return false;
   }
 
   this.money -= this.bootstrapPrice;
   this.bootstrap += this.bootstrapInc;  
-  this.clickInc += this.bootstrapInc * this.multiplier;
+  this.clickInc += this.bootstrapInc;
 
   return true;
 }
@@ -77,15 +80,6 @@ export function buyFactory() {
   return this.buy("factories", this.factoryPrice);
 }
 
-export function buyPostOffice() {
-  /*
-   * Generates more letters in less time
-   */
-
-  return this.buy("postOffices", this.postOfficePrice);
-
-}
-
 export function buyMailbox() {
   /*
    * Increases number of letters per second by one
@@ -93,16 +87,6 @@ export function buyMailbox() {
    */
   
   return this.buy("mailboxes", this.mailboxPrice);
-}
-
-export function buyRecruiter() {
-  /*
-   * Automatically hires a mailman per second
-   * Decreases time between hires by 5% for every new recruiter
-   *
-   */
-
-  return this.buy("recruiters", this.recruiterPrice);
 }
 
 export function buyMailman() {
@@ -118,35 +102,12 @@ export function buyMailman() {
 
 }
 
-export function buyMailTruck() {
-  /*
-   * Deliveres 2 letters every 0.5 seconds
-   */
-
-  return this.buy("mailTrucks", this.mailTruckPrice);
-}
-
 export function buyCorporateOffices() {
   return this.buy("corporateOffices", this.corporateOfficesPrice);
 }
 
 export function buyAdvertisers() {
   return this.buy("advertisers", this.advertisersPrice);
-}
-
-export function buyAutoReader() {
-  if(this.curiosity < this.autoreaderPrice)
-    return false;
-
-  this.autoreader += this.autoreaderInc;
-  this.curiosity -= this.autoreaderPrice;
-
-  return true;
-}
-
-export function buyMaxAutoReader() {
-  while(this.buyAutoReader()) {
-  }
 }
 
 export function buyMax(buyFunction) {

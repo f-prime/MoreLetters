@@ -97,14 +97,9 @@
 
       <div class="timed-event"></div>
       
-      <div class="row main-stat" v-else>
+      <div class="row main-stat-centered" v-show="read && !openLetter">
         {{ format(round(readLetters)) }}<br/>
-        <div class="main-stat-label">letters</div>
-      </div>
-
-      <div class="row stats" v-show="read">
-        <stat name="curiosity" :value="format(round(curiosity))"></stat>
-        <stat name="autoreaders" :value="format(round(autoreader))"></stat>
+        <div class="main-stat-label">letters read</div>
       </div>
 
       <div class="stats-container">
@@ -113,65 +108,47 @@
         </div>
 
         <div class="grid stats" v-show="!read">
-          <stat name="letters" :value="format(floor(letters))"></stat>
+          <stat name="undelivered letters" :value="format(floor(letters))"></stat>
           <stat name="letters delivered" :value="format(floor(lettersDelivered))"></stat>
+          <stat name="phase" :value="phase"></stat>
           <stat name="letters per second" :value="format(round(prevLettersPs))"></stat>
           <stat name="deliveries per second" :value="format(round(prevDeliveryPs))"></stat>
-          <stat name="letters per click" :value="format(floor(clickInc))"></stat>
-          <stat name="letter price" :value="'$' + format(round(getPricePerLetter * multiplier))"></stat>
-          <stat name="multiplier" :value="format(multiplier)"></stat>
-          <stat name="phase" :value="phase"></stat>
+          <stat :name="powerups.Bootstrap ? 'letters/deliveries per click' : 'deliveries per click'" :value="format(floor(clickInc))"></stat>
+          <stat name="letter price" :value="'$' + format(round(getPricePerLetter))"></stat>
           <stat v-show="powerups.Pigeons || powerups.Breeder" name="pigeons" :value="format(floor(pigeons))"></stat>
           <stat v-show="powerups.Breeder || powerups.Breeder" name="breeders" :value="format(floor(breeders))"></stat>
           <stat v-show="powerups.Mailman || powerups.Recruiter || powerups['Corporate Offices']" name="mailmen" :value="format(floor(mailmen))"></stat>
+          <stat v-show="powerups['Two Hands']" name="two hands" :value="format(floor(twoHands))"></stat>
           <stat v-show="powerups.Mailbox || powerups.Factory || powerups['Corporate Offices']" name="mailboxes" :value="format(floor(mailboxes))"></stat>
           <stat v-show="powerups.Advertisers" name="advertisers" :value="format(round(advertisers))"></stat>
-          <stat v-show="powerups.Recruiter" name="recruiters" :value="format(recruiters)"></stat>
-          <stat v-show="powerups.Factory" :value="format(factories)" name="factories"></stat> 
+          <stat v-show="powerups.Factory || powerups['Corporate Offices']" :value="format(floor(factories))" name="factories"></stat> 
           <stat v-show="powerups['Corporate Offices']" name="corporate offices" :value="format(corporateOffices)"></stat>
-          <stat v-show="powerups.Monopoly" name="monopolies" :value="format(monopoly)"></stat>
         </div>
       </div>
 
       <!-- Read -->
 
-      <div v-if="read && readLetters > 0" :class="!day ? 'btn-night' : ''">
+      <div v-show="read && !openLetter" :class="!day ? 'btn-night' : ''">
         <div class="row">
           <div class="column">
-            <div class="button" @click="clickRead">
+            <div class="button read" @click="clickRead">
               Read Letter
             </div>
           </div>
         </div>
-
-        <div class="row">
-          <div class="column"></div>
-          <div class="column">
-             <buy-button 
-               curiosity="true"
-               title="Auto Reader"
-               @buy="buyAutoReader()"
-               :price="format(autoreaderPrice)"
-               :description="autoreaderDescription"
-               :max-buy="true"
-               @buy-max="buyMaxAutoReader()">
-            </buy-button>
-          </div>
-          <div class="column"></div>
-        </div>
       </div>
 
-      <div v-else-if="!openLetter && read && readLetters <= 0" class="buttons" :class="!day ? 'btn-night' : ''">
+      <div v-show="read && !openLetter && readLetters <= 0" class="buttons" :class="!day ? 'btn-night' : ''">
         <div class="row">
           <div class="column">
-            <div class="button" @click="openLetter = true">
+            <div class="button read" @click="openLetter = true">
               Open Letter
             </div>
           </div>
         </div>
       </div>
 
-      <div v-else-if="openLetter" class="letter" :class="!day ? 'letter-night' : ''">
+      <div v-show="openLetter" class="letter" :class="!day ? 'letter-night' : ''">
         <div class="letter">
           <transition name="fade">
             <div class="letter-container">
@@ -184,7 +161,7 @@
         <br/>
         <div class="row" :class="!day ? 'btn-night' : ''">
           <div class="column">
-            <div class="button" @click="newGame();">
+            <div class="button read" @click="newGame();">
               Continue
             </div>
           </div>
@@ -264,14 +241,23 @@
 
         <div class="column" v-show="phase == 2">
           <buy-button
-             title="Recruiter"
-             :price="format(recruiterPrice)"
-             :description="recruiterDescription" 
+             title="Corporate Offices"
+             :description="corporateOfficesDescription"
+             :price="format(corporateOfficesPrice)"
              choose="true"
-             :chosen="powerups.Recruiter"
-             @chosen="choose('Recruiter')" 
-         ></buy-button>  
-        
+             :chosen="powerups['Corporate Offices']"
+             @chosen="choose('Corporate Offices')"
+          ></buy-button>
+
+          <buy-button
+            title="Two Hands"
+            :price="format(twoHandsPrice)"
+            :description="twoHandsDescription"
+            choose="true"
+            :chosen="powerups['Two Hands']"
+            @chosen="choose('Two Hands')"    
+          ></buy-button> 
+
           <buy-button
             title="Breeder"
             :price="format(breederPrice)"
@@ -281,51 +267,40 @@
             @chosen="choose('Breeder')"    
           ></buy-button> 
         </div>
-
-        <div class="column" v-show="phase == 3">
-          <buy-button
-             title="Corporate Offices"
-             :description="corporateOfficesDescription"
-             :price="format(corporateOfficesPrice)"
-             choose="true"
-             :chosen="powerups['Corporate Offices']"
-             @chosen="choose('Corporate Offices')"
-          ></buy-button>
-
-        </div>
-      </div>
-
-      <div v-show="!read && !choosePowerups" class="milestone">
-        <div class="row" :class='!day ? "btn-night" : ""'>
-          <div class="column" v-if="this.nextPhaseAvailable">
-            <div class="button" @click="nextPhase()"> 
-              <div class="button-name">
-                Enter Phase {{ phase + 1 }}
-              </div>
-              <div class="button-description">
-                This will erase all your progress and give you a 
-                x{{ 2 ** (phase) }} multiplier.
-              </div>
-            </div>
-          </div>
-          <div v-else class="column" id="next-phase-text">
-            Next phase at {{ format(nextPhaseAt) }} letters delivered
-          </div>
-        </div>
       </div>
  
       <!-- End Choose Powerups -->
 
       <!-- Main Game -->
 
-      <div :style="nextPhaseAvailable ? 'margin-top: 13rem;' : ''" class="row" :class="!day ? 'btn-night' : ''" id="delivery-btn">
+      <div v-show="!read && !choosePowerups" class="row" :class="!day ? 'btn-night' : ''" id="delivery-btn">
         <div class="column">
           <div class="button button-title" @click="clickDeliver">
             Deliver Letter
           </div>
+          <p v-if="powerups.Bootstrap"/>
+          <div v-if="powerups.Bootstrap" class="button button-title" @click="clickGenerate">
+            Generate Letters
+          </div>
+          <div v-show="!read && !choosePowerups" class="milestone">
+            <div class="row" :class='!day ? "btn-night" : ""'>
+              <div class="column" v-if="this.nextPhaseAvailable">
+                <div class="button" @click="nextPhase()"> 
+                  <div class="button-name">
+                    Enter Phase {{ phase + 1 }}
+                  </div>
+                  <div class="button-description">
+                    This will erase all your progress.
+                  </div>
+                </div>
+              </div>
+              <div v-else class="column" id="next-phase-text">
+                Next phase at {{ format(nextPhaseAt) }} letters delivered
+              </div>
+            </div>
+          </div>
         </div>
       </div>
- 
 
       <div class="buttons buttons-container" v-show="!read && !choosePowerups" class="buttons" :class="!day ? 'btn-night' :''">       
         <!-- End Delivery Button -->
@@ -397,14 +372,13 @@
         
         <div class="row" :class="!day ? 'btn-night' : ''">
           <buy-button
-            v-show="powerups.Recruiter"
-            title="Recruiter"
-            @buy="buyRecruiter()"
-            @buy-max="buyMax(buyRecruiter)"
+            v-show="powerups['Corporate Offices']"
+            title="Corporate Offices"
+            @buy="buyCorporateOffices"
+            @buy-max="buyMax(buyCorporateOffices)"
+            :price="format(corporateOfficesPrice)"
             :max-buy="true"
-            :price="format(recruiterPrice)"
-            :max-buy="true"
-            :description="recruiterDescription" 
+            :description="corporateOfficesDescription" 
          ></buy-button> 
         
           <buy-button
@@ -416,6 +390,17 @@
             @buy-max="buyMax(buyBreeder)"
             :max-buy="true"
           ></buy-button> 
+
+         <buy-button
+            v-show="powerups['Two Hands']"
+            title="Two Hands"
+            @buy="buyTwoHands"
+            @buy-max="buyMax(buyTwoHands)"
+            :price="format(twoHandsPrice)"
+            :max-buy="true"
+            :description="twoHandsDescription" 
+         ></buy-button> 
+
         </div>
       </div>
     </div>

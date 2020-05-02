@@ -4,7 +4,7 @@ export function generalUpdate(delay) {
 
 export function updateLetters() {
   const increment = this.generalUpdate(this.getLettersDelay);
-  const inc = (this.lettersInc * this.multiplier ) * increment;
+  const inc = this.lettersInc * increment;
   this.letters += inc;
   this.lettersPs += inc;
 }
@@ -13,9 +13,9 @@ export function updateCorporateOffices() {
   if(this.corporateOffices <= 0)
     return;
 
-  const delta = this.generalUpdate(this.getCorporateOfficesDelay);
+  const delta = this.generalUpdate(this.orporateOfficesDelay);
   this.factories += this.getCorporateOfficesIncrease * this.corporateOffices * delta;
-  this.recruiters += this.getCorporateOfficesIncrease * this.corporateOffices * delta;
+  this.mailmen += this.getCorporateOfficesIncrease * this.corporateOffices * delta;
 }
 
 export function updateAdvertisers() {
@@ -23,7 +23,7 @@ export function updateAdvertisers() {
     return;
 
   const delta = this.generalUpdate(this.advertisersDelay);
-  this.clickInc += this.advertisersInc * this.advertisers * this.multiplier * delta;
+  this.clickInc += this.advertisersInc * this.advertisers * delta;
 }
 
 export function updateBreeder() {
@@ -39,7 +39,7 @@ export function updatePigeons() {
     return;
 
   const delta = this.generalUpdate(this.getPigeonsDelay);
-  this.deliverLetter(this.getPigeonsDelivery * this.pigeons * this.multiplier * delta);
+  this.deliverLetter(this.getPigeonsDelivery * this.pigeons * delta);
 }
 
 export function updateMailboxes() {
@@ -47,31 +47,9 @@ export function updateMailboxes() {
     return;
 
   const delta = this.generalUpdate(this.getMailboxDelay);
-  const inc = this.mailboxes * this.multiplier * this.getMailboxLettersInc * delta;
+  const inc = this.mailboxes * this.getMailboxLettersInc * delta;
   this.letters += inc;
   this.lettersPs += inc;
-}
-
-export function updateMonopoly() {
-  if(this.monopoly <= 0)
-    return;
-
-  const delta = this.generalUpdate(this.getMonopolyDelay);
-  this.corporateOffices += this.monopolyIncrease * this.monopoly * delta;;
-}
-
-export function updateMailTruck() {
-  if(this.generalUpdate("mailTruckLast", this.getMailTruckDelay)) {
-    this.deliverLetter(this.mailTrucks * this.mailTruckInc * this.multiplier);
-  }
-}
-
-export function updatePostOffices() {
-  if(this.generalUpdate("postOfficeLast", this.getPostOfficeDelay)) {
-    const inc = (this.postOffices * this.postOfficeInc * this.multiplier);
-    this.letters += inc;
-    this.lettersPs += inc;
-  }
 }
 
 export function updateMailmen() {
@@ -79,7 +57,7 @@ export function updateMailmen() {
     return;
 
   const delta = this.generalUpdate(this.getMailmanDelay);
-  this.deliverLetter(this.mailmen * this.multiplier * delta);
+  this.deliverLetter(this.mailmen * delta);
 }
 
 export function updateFactories() {
@@ -89,18 +67,4 @@ export function updateFactories() {
   const delta = this.generalUpdate(this.getFactoryDelay);
   this.mailboxes += this.factoryGenerate * this.factories * delta;
 
-}
-
-export function updateRecruiters() {
-  if(this.recruiters <= 0)
-    return;
-
-  const delta = this.generalUpdate(this.getRecruiterDelay);
-  this.mailmen += this.recruiterHire * this.recruiters * delta;
-}
-
-export function updateAutoReader() {
-  if(this.autoreader <= 0)
-    return;
-  this.clickRead(this.autoreader);
 }
