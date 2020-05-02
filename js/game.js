@@ -258,8 +258,6 @@ const vw = new Vue({
           return this.phase3;
         case 3:
           return this.phase4;
-        case 4:
-          return this.phase5;
         default:
           return Infinity;
       }
@@ -267,6 +265,28 @@ const vw = new Vue({
 
     nextPhaseAvailable: function() {
       return this.lettersDelivered >= this.nextPhaseAt;
+    }
+  },
+
+  watch: {
+    openLetter: function(val) {
+      if(val) {
+        setTimeout(() => {
+          document.getElementById("decipher-textarea").focus();
+        }, 300);
+      }
+    },
+
+    decipherText: function(val) {
+      if(!val || !this.plaintext)
+        return;
+
+      val = val.trim().replace(/\n/g, '');
+      const plaintext = this.plaintext.trim().replace(/\n/g, '');
+
+      if(val == plaintext) {
+        this.deciphered = true;
+      }
     }
   },
 
@@ -300,10 +320,27 @@ const vw = new Vue({
     }, 
   
     getLetter: function() {
-      fetch(`/letters/${this.letterOn}.txt`)
+      var headers = {
+        method: 'GET',
+        headers: {
+          "pragma":"no-cache",
+          "cache-control":"no-cache",
+        },
+      };
+      
+      this.decipherText = "";
+      this.deciphered = false;
+
+      fetch(`/letters/${this.letterOn}.txt`, headers)
         .then(resp => resp.text())
         .then(text => {
           this.letter = text;
+        });
+
+      fetch(`/letters/${this.letterOn}_plaintext.txt`, headers)
+        .then(resp => resp.text())
+        .then(text => {
+          this.plaintext = text; 
         });
     },
 
@@ -383,28 +420,15 @@ const vw = new Vue({
       this.phase = phase + 1;
       this.lettersDelivered = lettersDelivered;
       this.letterOn = letterOn;
-      this.letters = 0;
+      this.letters = 0;  
 
-      if(this.phase == this.readPhase) {
+      if(this.phase == this.readPhase && this.letterOn < this.totalLetters) {
         this.getLetter();
-        this.readLetters = this.readAmount; // Set letters to read to 1T otherwise it could get too big
         this.letterOn += 1;
         this.read = true;
       }
     },
  
-    clickRead: function(amount) {
-      if(this.readLetters <= 0)
-        return;
-
-      const inc = (amount && amount > 0 ? amount : 1);
-
-      this.readLetters -= inc;
-
-      if(this.readLetters < 0)
-        this.readLetters = 0;
-    },
-
     clickGenerate: function() {
       if(!this.powerups.Bootstrap)
         return;
@@ -444,7 +468,6 @@ const vw = new Vue({
     handleDebug: function() {
       this.lettersDelivered = 10 ** 15;
       this.money = 10 ** 15;
-      this.readLetters = 1;
     },
 
     update: function() {

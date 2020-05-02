@@ -49,7 +49,7 @@
             <img v-show="phase == 3" src="assets/day/3.png" class="background bg2">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 4" src="assets/day/4.png" class="background bg3">
+            <img v-show="phase == 4" src="assets/day/8.png" class="background bg3">
           </transition>
           <transition name="fade">
             <img v-show="phase == 5" src="assets/day/5.png" class="background bg4">
@@ -78,7 +78,7 @@
             <img v-show="phase == 3" src="assets/night/3.png" class="background bg2">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 4" src="assets/night/4.png" class="background bg3">
+            <img v-show="phase == 4" src="assets/night/8.png" class="background bg3">
           </transition>
           <transition name="fade">
             <img v-show="phase == 5" src="assets/night/5.png" class="background bg4">
@@ -94,14 +94,7 @@
           </transition>
          </div>
       </transition>
-
-      <div class="timed-event"></div>
       
-      <div class="row main-stat-centered" v-show="read && !openLetter">
-        {{ format(round(readLetters)) }}<br/>
-        <div class="main-stat-label">letters read</div>
-      </div>
-
       <div class="stats-container">
         <div class="row main-stat" v-if="!read">
           ${{ format(round(money)) }}
@@ -128,17 +121,7 @@
 
       <!-- Read -->
 
-      <div v-show="read && !openLetter" :class="!day ? 'btn-night' : ''">
-        <div class="row">
-          <div class="column">
-            <div class="button read" @click="clickRead">
-              Read Letter
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div v-show="read && !openLetter && readLetters <= 0" class="buttons" :class="!day ? 'btn-night' : ''">
+      <div v-show="read && !openLetter" class="buttons" :class="!day ? 'btn-night' : ''">
         <div class="row">
           <div class="column">
             <div class="button read" @click="openLetter = true">
@@ -149,24 +132,36 @@
       </div>
 
       <div v-show="openLetter" class="letter" :class="!day ? 'letter-night' : ''">
-        <div class="letter">
-          <transition name="fade">
-            <div class="letter-container">
-              <img v-show="day" src="assets/day/letter.png">
-              <img v-show="!day" src="assets/night/letter.png">
-              <div class="letter-body" v-html="letter"></div>
+        <div class="row">
+          <div class="column"> 
+            <div class="letter">
+              <transition name="fade">
+                <div class="letter-container">
+                  <img v-show="day" src="assets/day/letter.png">
+                  <img v-show="!day" src="assets/night/letter.png">
+                  <div class="letter-body" v-html="letter"></div>
+                </div>
+              </transition>
             </div>
-          </transition>
-        </div>
-        <br/>
-        <div class="row" :class="!day ? 'btn-night' : ''">
+          </div>
           <div class="column">
-            <div class="button read" @click="newGame();">
-              Continue
+            <div class="letter">
+              <transition name="fade">
+                <div class="letter-container">
+                  <img v-show="day" src="assets/day/letter.png">
+                  <img v-show="!day" src="assets/night/letter.png">
+                  <div class="letter-body">
+                    <textarea id="decipher-textarea" v-model="decipherText"></textarea>
+                  </div>
+                </div>
+              </transition>
             </div>
           </div>
         </div>
-        <br/><br/>
+        <br/><br/><br/>
+        <div v-if="deciphered" class="row" :class="!day ? 'btn-night' : ''">
+          Now you'd get a global powerup... 
+        </div>
       </div>
 
       <!-- End Read -->
@@ -286,7 +281,7 @@
             <div class="row" :class='!day ? "btn-night" : ""'>
               <div class="column" v-if="this.nextPhaseAvailable">
                 <div class="button" @click="nextPhase()"> 
-                  <div class="button-name">
+                  <div class="button-name button-title">
                     Enter Phase {{ phase + 1 }}
                   </div>
                   <div class="button-description">

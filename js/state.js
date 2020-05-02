@@ -19,11 +19,13 @@ export const originalState = {
 
   openLetter: false,
   read: false,
-  readLetters:0,
   readAmount: 25,
   readPhase: 4,
-  
+  decipherText: "",
+  deciphered:false,
+  totalLetters: 1,//5, 
   letter: "",
+  plaintext:"",
 
   money: 0,
 
@@ -126,12 +128,12 @@ export function loadState() {
     "powerups",
     "choosePowerups",
     "openLetter",
-    "readLetters",
     "curiosity",
     "twoHands",
     "read",
     "lettersDelivered",
     "letter",
+    "plaintext",
     "numChosen",
     "pigeons",
     "autoreader",
@@ -142,6 +144,8 @@ export function loadState() {
     "clickInc",
     "mailboxes",
     "factories",
+    "decipherText",
+    "deciphered",
     "letterOn",
     "corporateOffices",
     "advertisers",

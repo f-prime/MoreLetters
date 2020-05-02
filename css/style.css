@@ -62,7 +62,7 @@ html, body {
 .letter-container {
   position: relative;
   top:-5%;
-  font-size: 1.1em;
+  font-size: 1.1rem;
 }
 
 .letter-container img {
@@ -210,6 +210,7 @@ html, body {
 
 .read {
   font-size: 1.5rem;
+  margin-top: 8rem;
 }
 
 .powerup-btn {
@@ -306,4 +307,15 @@ html, body {
   right: 4vw;
   height: 80vh;
   overflow: auto;
+}
+
+.letter-body textarea {
+  border:none;
+  background:none;
+  color:white;
+  width: 560px;
+  height: 510px;
+  font-family: 'Goudy Bookletter 1911', serif;
+  font-weight: 500;
+  font-size: 1.1rem;
 }
