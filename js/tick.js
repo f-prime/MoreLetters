@@ -13,7 +13,7 @@ export function updateCorporateOffices() {
   if(this.corporateOffices <= 0)
     return;
 
-  const delta = this.generalUpdate(this.orporateOfficesDelay);
+  const delta = this.generalUpdate(this.corporateOfficesDelay);
   this.factories += this.getCorporateOfficesIncrease * this.corporateOffices * delta;
   this.mailmen += this.getCorporateOfficesIncrease * this.corporateOffices * delta;
 }
