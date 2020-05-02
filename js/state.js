@@ -3,10 +3,10 @@ export const originalState = {
   
   phase:0,
   phase1: 50,
-  phase2: 10 ** 4,
-  phase3: 500 * 10 ** 5,
-  phase4: 10 ** 6,
-  phase5: 10 ** 7,
+  phase2: 10000,
+  phase3: 5000000,
+  phase4: 15000000,
+  phase5: 25000000,
   
   numChosen: 0,
   powerups: {},
