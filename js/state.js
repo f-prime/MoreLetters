@@ -60,7 +60,7 @@ export const originalState = {
   corporateOffices: 0,
   corporateOfficesDelay: 750,
   corporateOfficesIncrease: 1,
-  corporateOfficesBasePrice: 500, 
+  corporateOfficesBasePrice: 300, 
 
   advertisers: 0,
   advertisersDelay: 250,
@@ -73,7 +73,7 @@ export const originalState = {
   bootstrapDelivery: 50,
 
   twoHands: 0,
-  twoHandsBasePrice: 300,
+  twoHandsBasePrice: 500,
   twoHandsMult: 2,
 
   mailmen: 0,
