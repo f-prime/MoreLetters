@@ -285,12 +285,12 @@ const vw = new Vue({
       if(!val || !this.plaintext)
         return;
 
-      val = val.trim().replace(/\n/g, '');
-      const plaintext = this.plaintext.trim().replace(/\n/g, '');
-      
+      const checkVal = val.trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
+      const plaintext = this.plaintext.trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
+
       this.lettersTexts[this.path] = val;
 
-      if(val == plaintext) {
+      if(JSON.stringify(checkVal) == JSON.stringify(plaintext)) {
         this.deciphered = true;
       }
     }
@@ -355,12 +355,10 @@ const vw = new Vue({
         })
         .then(text => {
           this.letter = text;
-          fetch(`/letters/encrypted/${this.path}_plaintext.txt`, headers)
+          fetch(`/letters/decrypted/${this.path}.txt`, headers)
             .then(resp => resp.text())
             .then(text => {
               this.plaintext = text;
-              if(this.lettersHave.indexOf(this.path) !== -1)
-                this.deciphered = text;
             });
 
         })
