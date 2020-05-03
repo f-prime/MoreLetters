@@ -67,7 +67,7 @@ export const originalState = {
   pigeonsDelay: 300,
 
   breeders: 0,
-  breederBreed: 1,
+  breederBreed: 10,
   breederBasePrice: 190,
   breederDelay: 500,
 
