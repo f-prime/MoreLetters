@@ -14,8 +14,7 @@ export function updateCorporateOffices() {
     return;
 
   const delta = this.generalUpdate(this.corporateOfficesDelay);
-  this.factories += this.getCorporateOfficesIncrease * this.corporateOffices * delta;
-  this.mailmen += this.getCorporateOfficesIncrease * this.corporateOffices * delta;
+  this.corporateOfficeAdded += this.getCorporateOfficesIncrease * this.corporateOffices * delta;
 }
 
 export function updateAdvertisers() {
@@ -47,7 +46,7 @@ export function updateMailboxes() {
     return;
 
   const delta = this.generalUpdate(this.getMailboxDelay);
-  const inc = this.mailboxes * this.getMailboxLettersInc * delta;
+  const inc = (this.mailboxes + this.factoryMailboxes) * this.getMailboxLettersInc * delta;
   this.letters += inc;
   this.lettersPs += inc;
 }
@@ -57,7 +56,7 @@ export function updateMailmen() {
     return;
 
   const delta = this.generalUpdate(this.getMailmanDelay);
-  this.deliverLetter(this.mailmen * delta);
+  this.deliverLetter((this.mailmen + this.corporateOfficeAdded) * delta);
 }
 
 export function updateFactories() {
@@ -65,6 +64,6 @@ export function updateFactories() {
     return;
 
   const delta = this.generalUpdate(this.getFactoryDelay);
-  this.mailboxes += this.factoryGenerate * this.factories * delta;
+  this.factoryMailboxes += this.factoryGenerate * (this.factories + this.corporateOfficeAdded) * delta;
 
 }

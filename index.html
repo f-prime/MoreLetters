@@ -22,8 +22,8 @@
       <div class="bg-color" :style="!day ? 'background-color: #383838;' : ''"></div>
       <div class="top-links">
         <div class="row">
-          <div v-if="letterOn > 0" class="column align-right">
-            <a class="footer-link">{{ letterOn }} correspondence</a>
+          <div v-if="correspondence" class="column align-right">
+            <a class="footer-link">correspondence</a>
           </div>
           <div class="column align-right">
             <a @click="newGame()" class="footer-link">new game</a>
@@ -110,11 +110,11 @@
           <stat name="letter price" :value="'$' + format(round(getPricePerLetter))"></stat>
           <stat v-show="powerups.Pigeons || powerups.Breeder" name="pigeons" :value="format(floor(pigeons))"></stat>
           <stat v-show="powerups.Breeder || powerups.Breeder" name="breeders" :value="format(floor(breeders))"></stat>
-          <stat v-show="powerups.Mailman || powerups.Recruiter || powerups['Corporate Offices']" name="mailmen" :value="format(floor(mailmen))"></stat>
+          <stat v-show="powerups.Mailman || powerups.Recruiter || powerups['Corporate Offices']" name="mailmen" :value="format(floor(mailmen + corporateOfficeAdded))"></stat>
           <stat v-show="powerups['Two Hands']" name="two hands" :value="format(floor(twoHands))"></stat>
-          <stat v-show="powerups.Mailbox || powerups.Factory || powerups['Corporate Offices']" name="mailboxes" :value="format(floor(mailboxes))"></stat>
+          <stat v-show="powerups.Mailbox || powerups.Factory || powerups['Corporate Offices']" name="mailboxes" :value="format(floor(mailboxes + factoryMailboxes))"></stat>
           <stat v-show="powerups.Advertisers" name="advertisers" :value="format(round(advertisers))"></stat>
-          <stat v-show="powerups.Factory || powerups['Corporate Offices']" :value="format(floor(factories))" name="factories"></stat> 
+          <stat v-show="powerups.Factory || powerups['Corporate Offices']" :value="format(floor(factories + corporateOfficeAdded))" name="factories"></stat> 
           <stat v-show="powerups['Corporate Offices']" name="corporate offices" :value="format(corporateOffices)"></stat>
         </div>
       </div>

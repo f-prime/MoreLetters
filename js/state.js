@@ -4,13 +4,14 @@ export const originalState = {
   phase:0,
   phase1: 50,
   phase2: 10000,
-  phase3: 5000000,
-  phase4: 15000000,
-  phase5: 25000000,
+  phase3: 2000000,
+  phase4: 30000000,
   
   numChosen: 0,
   powerups: {},
   choosePowerups: false,
+
+  path:"",
 
   lastTick: new Date(),
   delta: 0,
@@ -23,7 +24,6 @@ export const originalState = {
   readPhase: 4,
   decipherText: "",
   deciphered:false,
-  totalLetters: 1,//5, 
   letter: "",
   plaintext:"",
 
@@ -42,25 +42,21 @@ export const originalState = {
   letters: 0,
   lettersDelivered: 0,
 
-  littleHelp: false,
-  littleHelpChance:0.10,
-  littleHelpIncrease: 100,
-  littleHelpBasePrice: 20000,
-
   pigeons: 0,
   pigeonsDelivery: 1,
   pigeonsBasePrice: 50,
-  pigeonsDelay: 150,
+  pigeonsDelay: 300,
 
   breeders: 0,
   breederBreed: 1,
-  breederBasePrice: 230,
+  breederBasePrice: 190,
   breederDelay: 500,
 
   corporateOffices: 0,
   corporateOfficesDelay: 750,
   corporateOfficesIncrease: 1,
   corporateOfficesBasePrice: 300, 
+  corporateOfficeAdded: 0,
 
   advertisers: 0,
   advertisersDelay: 250,
@@ -78,7 +74,7 @@ export const originalState = {
 
   mailmen: 0,
   mailmanBasePrice: 10, 
-  mailmanDelay: 750,
+  mailmanDelay: 150,
   mailmanDelivery: 1,
 
   mailboxBasePrice: 10,
@@ -87,10 +83,12 @@ export const originalState = {
   mailboxDelay: 500,
 
   factoryBasePrice: 150,
-  factoryDelay: 500,
+  factoryDelay: 750,
   factories: 0,
+  factoryMailboxes: 0,
   factoryGenerate: 1,
 
+  correspondence: false,
   lastSave: new Date(),
 };
 
@@ -101,7 +99,9 @@ export function saveState() {
     localStorage.setItem("state", JSON.stringify(this.$data));
     localStorage.setItem("lastSave", now);
     localStorage.setItem("day", this.day);
-    localStorage.setItem("letter", this.letterOn);
+    if(this.correspondence) {
+      localStorage.setItem("correspondence", true);
+    }
     this.lastSave = now;
   }
 }
@@ -116,12 +116,17 @@ export function calculateNewState() {
   const secondsSince = now - lastSaveTime;
 
   this.letters += Math.floor((secondsSince / this.lettersDelay));
-  this.mailboxes += Math.floor((secondsSince / this.factoryDelay) * this.factories);
-  this.money += Math.floor((secondsSince / this.mailmanDelay) * this.mailmen * this.pricePerLetter);
+  this.money += Math.floor((secondsSince / this.mailmanDelay) * this.mailmen * this.pricePerLetter); 
+  this.money += Math.floor((secondsSince / this.pigeonsDelay) * this.pigeons * this.pricePerLetter);
+  this.factoryAdded += Math.floor((secondsSince / this.factoryDelay) * this.factories);
+  this.clickInc += Math.floor((secondsSince / this.advertisersDelay) * this.advertisers * this.advertisersInc);
+  this.pigeons += Math.floor((secondsSince / this.breederDelay) * this.breeders);
+  this.corporateOfficeAdded += Math.floor((secondsSince / this.corporateOfficesDelay) * this.corporateOffices);
 }
 
 export function loadState() {
   const keysToLoad = [
+    "path",
     "mailmen",
     "phase",
     "day",
@@ -144,16 +149,17 @@ export function loadState() {
     "clickInc",
     "mailboxes",
     "factories",
+    "factoryMailboxes",
     "decipherText",
     "deciphered",
-    "letterOn",
     "corporateOffices",
+    "corporateOfficeAdded",
     "advertisers",
   ];
   
   
   const day = localStorage.getItem("day");
-  const letterOn = localStorage.getItem("letter");
+  const correspondence = localStorage.getItem("correspondence");
 
   let state = localStorage.getItem("state");
   let json;
@@ -164,22 +170,21 @@ export function loadState() {
     json = JSON.parse(state);
 
   for(const key in json) {
-    if(keysToLoad.indexOf(key) === -1) {
+    const keyVal = json[key];
+    if(keysToLoad.indexOf(key) === -1 || !keyVal || isNaN(keyVal)) {
       continue;
     }
-
-    this.$data[key] = json[key];
+  
+    this.$data[key] = keyVal;
   } 
   
   if(day) {
     this.day = JSON.parse(day); 
   }
 
-  if(letterOn && Number(letterOn)) {
-    this.letterOn = Number(letterOn);
-  } else {
-    this.letterOn = 0;
-  }
+  if(correspondence) {
+    this.correspondence = true;
+  } 
 
   this.calculateNewState();
 }

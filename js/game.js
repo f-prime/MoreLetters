@@ -241,11 +241,11 @@ const vw = new Vue({
     },
 
     mailmanPrice: function() {
-      return this.round(this.mailmanBasePrice + (this.mailmen ** 1.2));
+      return this.round(this.mailmanBasePrice + (this.mailmen ** 1.5));
     },
 
     mailboxPrice: function() {
-      return this.round(this.mailboxBasePrice + (this.mailboxes ** 1.5));
+      return this.round(this.mailboxBasePrice + (this.mailboxes ** 1.2));
     },
 
     nextPhaseAt: function() {
@@ -327,32 +327,69 @@ const vw = new Vue({
           "cache-control":"no-cache",
         },
       };
-      
+   
+      this.correspondence = true;
+      this.path = this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");
       this.decipherText = "";
       this.deciphered = false;
 
-      fetch(`/letters/${this.letterOn}.txt`, headers)
-        .then(resp => resp.text())
+      fetch(`/letters/encrypted/${this.path}.txt`, headers)
+        .then(resp => {
+          if(resp.status === 404) {
+            throw 404;
+          }
+
+          return resp.text()
+        
+        })
         .then(text => {
           this.letter = text;
-        });
+          fetch(`/letters/encrypted/${this.path}_plaintext.txt`, headers)
+            .then(resp => resp.text())
+            .then(text => {
+              this.plaintext = text; 
+            });
 
-      fetch(`/letters/${this.letterOn}_plaintext.txt`, headers)
-        .then(resp => resp.text())
-        .then(text => {
-          this.plaintext = text; 
-        });
+        })
+      .catch(e => {
+        fetch(`/letters/0.txt`, headers)
+          .then(resp => resp.text())
+          .then(text => {
+            this.letter = text;
+            fetch(`/letters/0_plaintext.txt`, headers)
+              .then(resp => resp.text())
+              .then(text => {
+                this.plaintext = text; 
+              });
+          })
+      });
+
     },
 
     choose: function(name) {
+      const pathMap = {
+        "Mailman":"A",
+        "Mailbox":"B",
+        "Bootstrap":"C",
+        "Pigeons":"D",
+        "Factory":"E",
+        "Advertisers":"F",
+        "Corporate Offices":"G",
+        "Two Hands":"H",
+        "Breeder":"I"
+      };
+
       const chosen = this.powerups[name];
+      const letter = pathMap[name];
+      
       if(chosen) {
-        delete this.powerups[name];
+        this.path = this.path.repalce(letter, '');
         this.numChosen -= 1;
         if(this.numChosen < 0) {
           this.numChosen = 0;
         }
       } else {
+        this.path += letter;
         this.powerups[name] = true;
         this.numChosen += 1;
       }
@@ -409,22 +446,22 @@ const vw = new Vue({
       const phase = this.phase;
       const day = this.day;
       const powerups = this.powerups;
-      const letterOn = this.letterOn;
+      const path = this.path;
+      const correspondence = this.correspondence;
 
       for(const key in originalState) {
         this.$data[key] = originalState[key];
       }
   
+      this.correspondence = correspondence;
+      this.path = path;
       this.powerups = powerups;
       this.day = day;
       this.phase = phase + 1;
-      this.lettersDelivered = lettersDelivered;
-      this.letterOn = letterOn;
       this.letters = 0;  
-
-      if(this.phase == this.readPhase && this.letterOn < this.totalLetters) {
+      
+      if(this.phase == this.readPhase) {
         this.getLetter();
-        this.letterOn += 1;
         this.read = true;
       }
     },
