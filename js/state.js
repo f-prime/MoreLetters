@@ -102,7 +102,7 @@ export const originalState = {
   mailboxDelay: 500,
 
   factoryBasePrice: 150,
-  factoryDelay: 750,
+  factoryDelay: 400,
   factories: 0,
   factoryMailboxes: 0,
   factoryGenerate: 1,
