@@ -221,5 +221,5 @@ export function loadState() {
 
 export function newGame() {
   localStorage.removeItem("state");
-  window.location.reload();
+  window.location = '/';
 }

@@ -271,6 +271,10 @@ const vw = new Vue({
   watch: {
     openLetter: function(val) {
       if(val) {
+        if(!this.lettersTexts[this.path]) {
+          this.lettersTexts[this.path] = "";
+        }
+
         setTimeout(() => {
           document.getElementById("decipher-textarea").focus();
         }, 300);
@@ -445,11 +449,15 @@ const vw = new Vue({
       const powerups = this.powerups;
       const path = this.path;
       const correspondence = this.correspondence;
-
+      const lettersTexts = this.lettersTexts;
+      const letterPowerupStates = this.letterPowerupStates;
+      
       for(const key in originalState) {
         this.$data[key] = originalState[key];
       }
   
+      this.lettersTexts = lettersTexts;
+      this.letterPowerupStates = letterPowerupStates;
       this.correspondence = correspondence;
       this.path = path;
       this.powerups = powerups;
