@@ -324,8 +324,13 @@ const vw = new Vue({
         this.prestige();
       }
     }, 
-  
-    getLetter: function() {
+ 
+    openFoundLetter: function(letterName) {
+      this.getLetter(letterName);
+      this.openLetter = true;
+    },
+
+    getLetter: function(path) {
       var headers = {
         method: 'GET',
         headers: {
@@ -334,17 +339,20 @@ const vw = new Vue({
         },
       };
    
+      if(!path) {
+        path = this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");  
+      }
+      
       this.correspondence = true;
-      this.path = this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");
       this.decipherText = "";
       this.deciphered = false;
-      if(this.lettersTexts[this.path]) {
-        this.decipherText = this.lettersTexts[this.path];
+      if(this.lettersTexts[path]) {
+        this.decipherText = this.lettersTexts[path];
       }
 
-      console.log(this.path);
+      console.log(path);
 
-      fetch(`/letters/encrypted/${this.path}.txt`, headers)
+      fetch(`/letters/encrypted/${path}.txt`, headers)
         .then(resp => {
           if(resp.status === 404) {
             throw 404;
@@ -355,7 +363,7 @@ const vw = new Vue({
         })
         .then(text => {
           this.letter = text;
-          fetch(`/letters/decrypted/${this.path}.txt`, headers)
+          fetch(`/letters/decrypted/${path}.txt`, headers)
             .then(resp => resp.text())
             .then(text => {
               this.plaintext = text;

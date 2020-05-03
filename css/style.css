@@ -332,3 +332,9 @@ html, body {
   font-weight: 500;
   font-size: 1.1rem;
 }
+
+.close-btn {
+  margin: 0 auto;
+  width: 20vw;
+  margin-bottom: 2rem;
+}
