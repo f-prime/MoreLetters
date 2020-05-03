@@ -21,9 +21,9 @@
     <div class="container" id="app" :style="!day ? 'color: white;' : ''">
       <div class="bg-color" :style="!day ? 'background-color: #383838;' : ''"></div>
       <div class="top-links">
-        <div class="row">
+        <div class="row" :class="!day ? 'night-link' : ''">
           <div v-if="correspondence" class="column align-right">
-            <a @click="window.location = '/correspondence.html'" class="footer-link">correspondence</a>
+            <a href="/correspondence.html" class="footer-link">correspondence</a>
           </div>
           <div class="column align-right">
             <a @click="newGame()" class="footer-link">new game</a>
@@ -32,7 +32,7 @@
             <a @click="day = !day" class="footer-link">{{ !day ? 'day mode' : 'night mode' }}</a>
           </div>
           <div class="column align-right">
-            <a @click="window.location = 'https://discord.gg/3JWH9J'" class="footer-link">discord</a>
+            <a href='https://discord.gg/db9SD9R' class="footer-link">discord</a>
           </div>
         </div>
       </div>
