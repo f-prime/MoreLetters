@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="More Letters Inc." content="A game about delivering more letters." charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="libs/vue.js"></script>
+    <script type="module" src="js/game.js" defer></script>
+    <title>More Letters Inc.</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-78436262-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-78436262-1');
+    </script>
+  </head>
+  <body id="body">
+    <div class="container" id="app" :style="!day ? 'color: white;' : ''">
+      <div class="bg-color" :style="!day ? 'background-color: #383838;' : ''"></div>
+      <div class="top-links">
+        <div class="row">
+          <div v-if="correspondence" class="column align-right">
+            <a @click="window.location = '/'" class="footer-link">home</a>
+          </div>
+          <div class="column align-right">
+            <a @click="newGame()" class="footer-link">new game</a>
+          </div>
+          <div class="column align-right">
+            <a @click="day = !day" class="footer-link">{{ !day ? 'day mode' : 'night mode' }}</a>
+          </div>
+          <div class="column align-right">
+            <a @click="window.location = 'https://discord.gg/3JWH9J'" class="footer-link">discord</a>
+          </div>
+        </div>
+      </div>
+     
+      <div v-show="!read">
+        <h1>Letters</h1>
+        <div v-for="letter in Object.keys(lettersTexts)">{{ letter }}</div>
+      </div>
+
+      <div v-show="read && !openLetter" class="buttons" :class="!day ? 'btn-night' : ''">
+        <div class="row">
+          <div class="column">
+            <div class="button read" @click="openLetter = true">
+              Open Letter
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-show="openLetter" class="letter" :class="!day ? 'letter-night' : ''">
+        <div class="row">
+          <div class="column"> 
+            <div class="letter">
+              <transition name="fade">
+                <div class="letter-container">
+                  <img v-show="day" src="assets/day/letter.png">
+                  <img v-show="!day" src="assets/night/letter.png">
+                  <div class="letter-body" v-html="letter"></div>
+                </div>
+              </transition>
+            </div>
+          </div>
+          <div class="column">
+            <div class="letter">
+              <transition name="fade">
+                <div class="letter-container">
+                  <img v-show="day" src="assets/day/letter.png">
+                  <img v-show="!day" src="assets/night/letter.png">
+                  <div class="letter-body">
+                    <textarea id="decipher-textarea" v-model="decipherText"></textarea>
+                  </div>
+                </div>
+              </transition>
+            </div>
+          </div>
+        </div>
+        <br/><br/><br/>
+        <div v-if="deciphered" class="row" :class="!day ? 'btn-night' : ''">
+          Now you'd get a global powerup... 
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

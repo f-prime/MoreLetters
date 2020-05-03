@@ -13,6 +13,26 @@ export const originalState = {
 
   path:"",
 
+  pathMap: {
+    "Mailman":"A",
+    "Mailbox":"B",
+    "Bootstrap":"C",
+    "Pigeons":"D",
+    "Factory":"E",
+    "Advertisers":"F",
+    "Corporate Offices":"G",
+    "Two Hands":"H",
+    "Breeder":"I"
+  },
+
+  correspondence: false,
+  
+  lettersTexts: {},
+  letterPowerupStates: { // 0 is locked, 1 has letter but not deciphered, 2 is deciphered and has powerup
+    "Muel":0,
+    "LeeLee's Pinkey":0,
+  },
+
   lastTick: new Date(),
   delta: 0,
 
@@ -20,7 +40,6 @@ export const originalState = {
 
   openLetter: false,
   read: false,
-  readAmount: 25,
   readPhase: 4,
   decipherText: "",
   deciphered:false,
@@ -88,7 +107,6 @@ export const originalState = {
   factoryMailboxes: 0,
   factoryGenerate: 1,
 
-  correspondence: false,
   lastSave: new Date(),
 };
 
@@ -99,6 +117,8 @@ export function saveState() {
     localStorage.setItem("state", JSON.stringify(this.$data));
     localStorage.setItem("lastSave", now);
     localStorage.setItem("day", this.day);
+    localStorage.setItem("lettersTexts", JSON.stringify(this.lettersTexts));
+    localStorage.setItem("letterPowerupStates", JSON.stringify(this.letterPowerupStates));
     if(this.correspondence) {
       localStorage.setItem("correspondence", true);
     }
@@ -160,6 +180,8 @@ export function loadState() {
   
   const day = localStorage.getItem("day");
   const correspondence = localStorage.getItem("correspondence");
+  const letterPowerupStates = localStorage.getItem("letterPowerupStates");
+  const lettersTexts = localStorage.getItem("lettersTexts");
 
   let state = localStorage.getItem("state");
   let json;
@@ -171,7 +193,7 @@ export function loadState() {
 
   for(const key in json) {
     const keyVal = json[key];
-    if(keysToLoad.indexOf(key) === -1 || !keyVal || isNaN(keyVal)) {
+    if(keysToLoad.indexOf(key) === -1 || keyVal == null || keyVal == undefined) {
       continue;
     }
   
@@ -185,6 +207,14 @@ export function loadState() {
   if(correspondence) {
     this.correspondence = true;
   } 
+
+  if(letterPowerupStates) {
+    this.letterPowerupStates = JSON.parse(letterPowerupStates);
+  }
+
+  if(lettersTexts) {
+    this.lettersTexts = JSON.parse(lettersTexts);
+  }
 
   this.calculateNewState();
 }

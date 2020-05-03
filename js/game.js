@@ -283,6 +283,8 @@ const vw = new Vue({
 
       val = val.trim().replace(/\n/g, '');
       const plaintext = this.plaintext.trim().replace(/\n/g, '');
+      
+      this.lettersTexts[this.path] = val;
 
       if(val == plaintext) {
         this.deciphered = true;
@@ -332,6 +334,11 @@ const vw = new Vue({
       this.path = this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");
       this.decipherText = "";
       this.deciphered = false;
+      if(this.lettersTexts[this.path]) {
+        this.decipherText = this.lettersTexts[this.path];
+      }
+
+      console.log(this.path);
 
       fetch(`/letters/encrypted/${this.path}.txt`, headers)
         .then(resp => {
@@ -347,7 +354,9 @@ const vw = new Vue({
           fetch(`/letters/encrypted/${this.path}_plaintext.txt`, headers)
             .then(resp => resp.text())
             .then(text => {
-              this.plaintext = text; 
+              this.plaintext = text;
+              if(this.lettersHave.indexOf(this.path) !== -1)
+                this.deciphered = text;
             });
 
         })
@@ -367,20 +376,8 @@ const vw = new Vue({
     },
 
     choose: function(name) {
-      const pathMap = {
-        "Mailman":"A",
-        "Mailbox":"B",
-        "Bootstrap":"C",
-        "Pigeons":"D",
-        "Factory":"E",
-        "Advertisers":"F",
-        "Corporate Offices":"G",
-        "Two Hands":"H",
-        "Breeder":"I"
-      };
-
       const chosen = this.powerups[name];
-      const letter = pathMap[name];
+      const letter = this.pathMap[name];
       
       if(chosen) {
         this.path = this.path.repalce(letter, '');

@@ -23,7 +23,7 @@
       <div class="top-links">
         <div class="row">
           <div v-if="correspondence" class="column align-right">
-            <a class="footer-link">correspondence</a>
+            <a @click="window.location = '/correspondence.html'" class="footer-link">correspondence</a>
           </div>
           <div class="column align-right">
             <a @click="newGame()" class="footer-link">new game</a>
