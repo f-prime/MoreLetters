@@ -23,7 +23,7 @@
       <div class="top-links">
         <div class="row" :class="!day ? 'night-link' : ''">
           <div v-if="correspondence" class="column align-right">
-            <a href="/correspondence.html" class="footer-link">correspondence</a>
+            <a @click="openLetter = false; window.location = '/correspondence.html';" class="footer-link">correspondence</a>
           </div>
           <div class="column align-right">
             <a @click="newGame()" class="footer-link">new game</a>
@@ -159,8 +159,17 @@
           </div>
         </div>
         <br/><br/><br/>
-        <div v-if="deciphered" class="row" :class="!day ? 'btn-night' : ''">
-          Now you'd get a global powerup... 
+        <div v-if="letterMapping[path] && letterMapping[path].unlocked" class="row" :class="!day ? 'btn-night' : ''">
+          <div class="buttons">
+            <div class="button">
+              <div class="button-title">
+                {{ letterMapping[path].powerup }} 
+              </div>
+              <div class="button-body">
+                {{ letterMapping[path].description }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -23,7 +23,7 @@
       <div class="top-links">
         <div class="row" :class="!day ? 'night-link' : ''">
           <div class="column align-right">
-            <a href="/" class="footer-link">home</a>
+            <a @click="redirectHome" class="footer-link">home</a>
           </div>
           <div class="column align-right">
             <a @click="newGame()" class="footer-link">new game</a>
@@ -37,9 +37,11 @@
         </div>
       </div>
      
-      <div v-show="!read" class="centered-text">
-        <h1>{{ Object.keys(lettersTexts).length }}/27 letters found</h1>
-        <div @click="openFoundLetter(letter)" class="found-letter" v-for="letter in Object.keys(lettersTexts)">{{ letter }}</div>
+      <div class="centered-text">
+        <h1>{{ getFoundLetters.length }}/27 letters found</h1>
+        <div class="buttons" :class="!day ? 'btn-night' : ''"> 
+          <div @click="openFoundLetter(letter)" class="button letter-button" v-for="letter in getFoundLetters">{{ letterMapping[letter] ? letterMapping[letter].title : letter }}</div>
+        </div>
       </div>
 
       <div v-show="openLetter" class="letter" :class="!day ? 'letter-night' : ''">
@@ -70,16 +72,19 @@
           </div>
         </div>
         <br/><br/><br/>
-        <div v-if="deciphered" class="row" :class="!day ? 'btn-night' : ''">
-          Now you'd get a global powerup... 
-        </div>
-        <div class="close-btn buttons" @click="openLetter = false;" :class="!day ? 'btn-night' : ''">
-          <div class="button">
-            <div class="button-name">
-              Close
+        <div v-if="letterMapping[path] && letterMapping[path].unlocked" class="row" :class="!day ? 'btn-night' : ''">
+          <div class="buttons">
+            <div class="button">
+              <div class="button-title">
+                {{ letterMapping[path].powerup }} 
+              </div>
+              <div class="button-body">
+                {{ letterMapping[path].description }}
+              </div>
             </div>
           </div>
         </div>
+        <p/>
       </div>
     </div>
   </body>

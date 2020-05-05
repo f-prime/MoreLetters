@@ -26,11 +26,22 @@ export const originalState = {
   },
 
   correspondence: false,
-  
   lettersTexts: {},
-  letterPowerupStates: { // 0 is locked, 1 has letter but not deciphered, 2 is deciphered and has powerup
-    "Muel":0,
-    "LeeLee's Pinkey":0,
+  
+  letterMapping: {
+    "ABDEGH": {
+      title:"Tis Said",
+      powerup: "Mule",
+      description: "Mailmen now deliver 100 letters every tick.",
+      unlocked: false,
+    },
+
+    "BCEFGH": {
+      title: "The Doll",
+      powerup: "LeeLee's Pinky",
+      description: "All automation powerups receive a x2 boost.",
+      unlocked: false,
+    },
   },
 
   lastTick: new Date(),
@@ -111,25 +122,16 @@ export const originalState = {
 };
 
 
-export function saveState() {
+export function saveState(force) {
   const now = new Date();
-  if(now - new Date(this.lastSave) > 1000) {
+  if(now - new Date(this.lastSave) > 1000 || force) {
     localStorage.setItem("state", JSON.stringify(this.$data));
-    localStorage.setItem("lastSave", now);
-    localStorage.setItem("day", this.day);
-    localStorage.setItem("lettersTexts", JSON.stringify(this.lettersTexts));
-    localStorage.setItem("letterPowerupStates", JSON.stringify(this.letterPowerupStates));
-    if(this.correspondence) {
-      localStorage.setItem("correspondence", true);
-    }
     this.lastSave = now;
   }
 }
 
 export function calculateNewState() {
-  const lastSave = localStorage.getItem("lastSave");
-  if(!lastSave)
-    return;
+  const lastSave = this.lastSave;
 
   const now = new Date();
   const lastSaveTime = new Date(lastSave);
@@ -156,6 +158,9 @@ export function loadState() {
     "curiosity",
     "twoHands",
     "read",
+    "lettersTexts",
+    "letterMapping",
+    "correspondence",
     "lettersDelivered",
     "letter",
     "plaintext",
@@ -177,12 +182,6 @@ export function loadState() {
     "advertisers",
   ];
   
-  
-  const day = localStorage.getItem("day");
-  const correspondence = localStorage.getItem("correspondence");
-  const letterPowerupStates = localStorage.getItem("letterPowerupStates");
-  const lettersTexts = localStorage.getItem("lettersTexts");
-
   let state = localStorage.getItem("state");
   let json;
 
@@ -200,26 +199,20 @@ export function loadState() {
     this.$data[key] = keyVal;
   } 
   
-  if(day) {
-    this.day = JSON.parse(day); 
-  }
-
-  if(correspondence) {
-    this.correspondence = true;
-  } 
-
-  if(letterPowerupStates) {
-    this.letterPowerupStates = JSON.parse(letterPowerupStates);
-  }
-
-  if(lettersTexts) {
-    this.lettersTexts = JSON.parse(lettersTexts);
-  }
-
   this.calculateNewState();
 }
 
 export function newGame() {
   localStorage.removeItem("state");
+
+  const newState = {
+    lettersTexts:this.lettersTexts,
+    letterMapping: this.letterMapping,
+    day:this.day,
+    correspondence:this.correspondence,
+  };
+
+  localStorage.setItem("state", JSON.stringify(newState));
+
   window.location = '/';
 }

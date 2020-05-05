@@ -129,6 +129,10 @@ const vw = new Vue({
   data: Object.assign({}, originalState), 
  
   computed: {
+    getFoundLetters: function() {
+      return Object.keys(this.lettersTexts).filter(letter => letter !== '');
+    },
+
     breederDescription: function() {
       return `Generates ${this.breederBreed} ${this.breederBreed > 1 ? 'pigeons' : 'pigeon'} every ${this.breederDelay / 1000} seconds at no cost.`;
     },
@@ -287,16 +291,28 @@ const vw = new Vue({
 
       const checkVal = val.trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
       const plaintext = this.plaintext.trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
-
+      
+      console.log(this.path);
       this.lettersTexts[this.path] = val;
 
       if(JSON.stringify(checkVal) == JSON.stringify(plaintext)) {
         this.deciphered = true;
+        const letterMapping = this.letterMapping[this.path];
+
+        if(letterMapping) {
+          this.letterMapping[this.path].unlocked = true; 
+        }
       }
     }
   },
 
   methods: {
+    redirectHome: function() {
+      this.openLetter = false;
+      this.saveState(true);
+      window.location = '/';
+    },
+    
     updateLettersPerSecond: function() {
       if(this.lastLettersPs < 1000) {
         this.lastLettersPs += this.delta;
@@ -326,11 +342,12 @@ const vw = new Vue({
     }, 
  
     openFoundLetter: function(letterName) {
-      this.getLetter(letterName);
+      this.path = letterName;
+      this.getLetter();
       this.openLetter = true;
     },
 
-    getLetter: function(path) {
+    getLetter: function() {
       var headers = {
         method: 'GET',
         headers: {
@@ -339,20 +356,18 @@ const vw = new Vue({
         },
       };
    
-      if(!path) {
-        path = this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");  
-      }
+      this.path = this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");  
       
       this.correspondence = true;
       this.decipherText = "";
       this.deciphered = false;
-      if(this.lettersTexts[path]) {
-        this.decipherText = this.lettersTexts[path];
+      if(this.lettersTexts[this.path]) {
+        this.decipherText = this.lettersTexts[this.path];
       }
 
-      console.log(path);
+      console.log(this.path);
 
-      fetch(`/letters/encrypted/${path}.txt`, headers)
+      fetch(`/letters/encrypted/${this.path}.txt`, headers)
         .then(resp => {
           if(resp.status === 404) {
             throw 404;
@@ -363,7 +378,7 @@ const vw = new Vue({
         })
         .then(text => {
           this.letter = text;
-          fetch(`/letters/decrypted/${path}.txt`, headers)
+          fetch(`/letters/decrypted/${this.path}.txt`, headers)
             .then(resp => resp.text())
             .then(text => {
               this.plaintext = text;
@@ -402,6 +417,7 @@ const vw = new Vue({
       }
 
       if(this.numChosen >= 2) {
+        console.log(this.path);
         this.prestige();
       }
     },
@@ -446,7 +462,6 @@ const vw = new Vue({
       if(!this.nextPhaseAvailable)
         return;
 
-      this.choosePowerups = false;
       this.numChosen = 0;
 
       const lettersDelivered = this.lettersDelivered;
@@ -469,12 +484,13 @@ const vw = new Vue({
       this.powerups = powerups;
       this.day = day;
       this.phase = phase + 1;
-      this.letters = 0;  
-      
+
       if(this.phase == this.readPhase) {
         this.getLetter();
         this.read = true;
       }
+
+      this.choosePowerups = false;
     },
  
     clickGenerate: function() {
@@ -523,7 +539,7 @@ const vw = new Vue({
       this.delta = now - new Date(this.lastTick);
       this.lastTick = now;
 
-      if(!this.read) {
+      if(!this.read && !this.choosePowerups) {
         this.updateLetters();
         this.updateMailmen();
         this.updateAdvertisers();

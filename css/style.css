@@ -338,3 +338,7 @@ html, body {
   width: 20vw;
   margin-bottom: 2rem;
 }
+
+.letter-button {
+  margin: 1em;
+}

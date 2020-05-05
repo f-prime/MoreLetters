@@ -3,6 +3,9 @@ export function generalUpdate(delay) {
 }
 
 export function updateLetters() {
+  if(this.choosePowerups)
+    return;
+
   const increment = this.generalUpdate(this.getLettersDelay);
   const inc = this.lettersInc * increment;
   this.letters += inc;
