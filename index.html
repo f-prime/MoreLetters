@@ -23,7 +23,7 @@
       <div class="top-links">
         <div class="row" :class="!day ? 'night-link' : ''">
           <div v-if="correspondence" class="column align-right">
-            <a @click="openLetter = false; window.location = '/correspondence.html';" class="footer-link">correspondence</a>
+            <a @click="pathOpened = ''; openLetter = false; window.location = '/correspondence.html';" class="footer-link">correspondence</a>
           </div>
           <div class="column align-right">
             <a @click="newGame()" class="footer-link">new game</a>
@@ -151,7 +151,7 @@
                   <img v-show="day" src="assets/day/letter.png">
                   <img v-show="!day" src="assets/night/letter.png">
                   <div class="letter-body">
-                    <textarea id="decipher-textarea" v-model="decipherText"></textarea>
+                    <textarea id="decipher-textarea" :style="!day ? 'color: white;' : 'color:black;'" v-model="decipherText"></textarea>
                   </div>
                 </div>
               </transition>

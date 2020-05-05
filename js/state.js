@@ -1,6 +1,6 @@
 export const originalState = {
   day: true,
-  
+
   phase:0,
   phase1: 50,
   phase2: 10000,
@@ -10,7 +10,8 @@ export const originalState = {
   numChosen: 0,
   powerups: {},
   choosePowerups: false,
-
+  
+  pathOpened: "",
   path:"",
 
   pathMap: {
@@ -202,7 +203,7 @@ export function loadState() {
   this.calculateNewState();
 }
 
-export function newGame() {
+export function newGame() { 
   localStorage.removeItem("state");
 
   const newState = {

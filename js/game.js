@@ -403,7 +403,11 @@ const vw = new Vue({
     choose: function(name) {
       const chosen = this.powerups[name];
       const letter = this.pathMap[name];
-      
+    
+      if(this.phase == 0 && this.numChosen == 0) {
+        this.path = ""; // For some reason paths from previous runs don't get deleted on a new game. This makes sure it isn't a problem.
+      }
+
       if(chosen) {
         this.path = this.path.repalce(letter, '');
         this.numChosen -= 1;

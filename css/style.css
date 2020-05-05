@@ -238,7 +238,7 @@ html, body {
   padding: 0.5em;
 }
 
-.button:active {
+.button:active, .btn-selected {
   background-color: #efefef;
 }
 
@@ -255,7 +255,7 @@ html, body {
   border: 1px solid white; 
 }
 
-.btn-night .button:active {
+.btn-night .button:active, .btn-night .btn-selected {
   background-color: #555555; 
 }
 

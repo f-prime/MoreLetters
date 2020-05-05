@@ -40,7 +40,9 @@
       <div class="centered-text">
         <h1>{{ getFoundLetters.length }}/27 letters found</h1>
         <div class="buttons" :class="!day ? 'btn-night' : ''"> 
-          <div @click="openFoundLetter(letter)" class="button letter-button" v-for="letter in getFoundLetters">{{ letterMapping[letter] ? letterMapping[letter].title : letter }}</div>
+          <div @click="openFoundLetter(letter)" class="button letter-button" :class="pathOpened == letter ? 'btn-selected' : ''" v-for="letter in getFoundLetters">
+            {{ letterMapping[letter] ? letterMapping[letter].title : letter }}
+          </div>
         </div>
       </div>
 
@@ -64,7 +66,7 @@
                   <img v-show="day" src="assets/day/letter.png">
                   <img v-show="!day" src="assets/night/letter.png">
                   <div class="letter-body">
-                    <textarea id="decipher-textarea" v-model="decipherText"></textarea>
+                    <textarea id="decipher-textarea" :style="!day ? 'color: white;' : 'color:black;'" v-model="decipherText"></textarea>
                   </div>
                 </div>
               </transition>
@@ -72,14 +74,14 @@
           </div>
         </div>
         <br/><br/><br/>
-        <div v-if="letterMapping[path] && letterMapping[path].unlocked" class="row" :class="!day ? 'btn-night' : ''">
+        <div v-if="letterMapping[pathOpened] && letterMapping[pathOpened].unlocked" class="row" :class="!day ? 'btn-night' : ''">
           <div class="buttons">
             <div class="button">
               <div class="button-title">
-                {{ letterMapping[path].powerup }} 
+                {{ letterMapping[pathOpened].powerup }} 
               </div>
               <div class="button-body">
-                {{ letterMapping[path].description }}
+                {{ letterMapping[pathOpened].description }}
               </div>
             </div>
           </div>
