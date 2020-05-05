@@ -134,7 +134,7 @@ const vw = new Vue({
     },
 
     breederDescription: function() {
-      return `Generates ${this.breederBreed} ${this.breederBreed > 1 ? 'pigeons' : 'pigeon'} every ${this.breederDelay / 1000} seconds at no cost.`;
+      return `Generates ${this.breederBreed} ${this.breederBreed > 1 ? 'Pigeons' : 'Pigeon'} every ${this.breederDelay / 1000} seconds at no cost.`;
     },
 
     breederPrice: function() {
@@ -154,7 +154,7 @@ const vw = new Vue({
     },
 
     factoryDescription: function() {
-      return `Generates ${this.factoryGenerate} ${this.factoryGenerate == 1 ? 'mailbox' : 'mailboxes'} every ${this.getFactoryDelay / 1000} seconds at no cost.`;
+      return `Generates ${this.factoryGenerate} ${this.factoryGenerate == 1 ? 'Mailbox' : 'Mailboxes'} every ${this.getFactoryDelay / 1000} seconds at no cost.`;
     },
 
     pigeonsDescription: function() {
@@ -162,7 +162,7 @@ const vw = new Vue({
     },
 
     twoHandsDescription: function() {
-      return `Multiplies letters per click and Bootstrap increase by ${this.twoHandsMult}.`
+      return `Multiplies Bootstrap increase by ${this.twoHandsMult}.`
     },
 
     twoHandsPrice: function() {
@@ -170,7 +170,7 @@ const vw = new Vue({
     },
 
     corporateOfficesDescription: function() {
-      return `Generates ${this.getCorporateOfficesIncrease} mailman and factory every ${this.corporateOfficesDelay / 1000} seconds at no cost.`; 
+      return `Generates ${this.getCorporateOfficesIncrease} Mailman and Factory every ${this.corporateOfficesDelay / 1000} seconds at no cost.`; 
     },
 
     corporateOfficesPrice: function() {
@@ -221,15 +221,11 @@ const vw = new Vue({
     },
 
     getFactoryDelay: function() {
-      const delay = this.factoryDelay / (this.scientificManagement ? 2 : 1);
-
-      return delay;
+      return this.factoryDelay;
     },
 
     bootstrapInc: function() {
-      const mult = this.twoHands ? (this.twoHands * this.twoHandsMult) : 1;
-      let inc = this.bootstrapDelivery * mult;
-      return inc;
+      return this.bootstrapDelivery;
     },
 
     postOfficePrice: function() {

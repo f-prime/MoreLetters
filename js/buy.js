@@ -40,9 +40,8 @@ export function buyOneTime(toggle, price) {
 
 export function buyTwoHands() {
   if(this.buy("twoHands", this.twoHandsPrice)) {
-    this.clickInc *= this.twoHandsMult;
-    return true;
-  }
+    this.clickInc *= 2;
+  } 
 
   return false;
 }

@@ -5,7 +5,7 @@ export const originalState = {
   phase1: 50,
   phase2: 10000,
   phase3: 2000000,
-  phase4: 30000000,
+  phase4: 100000000,
   
   numChosen: 0,
   powerups: {},
@@ -27,23 +27,6 @@ export const originalState = {
   },
 
   correspondence: false,
-  lettersTexts: {},
-  
-  letterMapping: {
-    "ABDEGH": {
-      title:"Tis Said",
-      powerup: "Mule",
-      description: "Mailmen now deliver 100 letters every tick.",
-      unlocked: false,
-    },
-
-    "BCEFGH": {
-      title: "The Doll",
-      powerup: "LeeLee's Pinky",
-      description: "All automation powerups receive a x2 boost.",
-      unlocked: false,
-    },
-  },
 
   lastTick: new Date(),
   delta: 0,
@@ -79,7 +62,7 @@ export const originalState = {
   pigeonsDelay: 300,
 
   breeders: 0,
-  breederBreed: 10,
+  breederBreed: 3,
   breederBasePrice: 190,
   breederDelay: 500,
 
@@ -97,7 +80,7 @@ export const originalState = {
   clickInc: 1,
   bootstrap: 0,
   bootstrapBasePrice: 15,
-  bootstrapDelivery: 50,
+  bootstrapDelivery: 25,
 
   twoHands: 0,
   twoHandsBasePrice: 500,
@@ -114,12 +97,183 @@ export const originalState = {
   mailboxDelay: 500,
 
   factoryBasePrice: 150,
-  factoryDelay: 400,
+  factoryDelay: 2000,
   factories: 0,
   factoryMailboxes: 0,
   factoryGenerate: 1,
 
   lastSave: new Date(),
+
+  lettersTexts: {},  
+  letterMapping: {
+    "ABDEGH": {
+      title:"Tis Said",
+      powerup: "Mule",
+      description: "Mailmen now deliver 100 letters every tick.",
+      unlocked: false,
+    },
+
+    "BCEFGH": {
+      title: "The Doll",
+      powerup: "LeeLee's Pinky",
+      description: "Bootstrap increment increased by 1000.",
+      unlocked: false,
+    },
+
+    "ABDEHI": {
+      title: "Turing",
+      powerup: "Hacker",
+      description: "Letters per second increased to 1000.",
+      unlocked: false
+    },
+    
+    "ABDEGI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ABEFGH": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ABEFHI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ABEFGI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ABDFGH": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ABDFHI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ABDFGI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "BCDEGH": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "BCDEHI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "BCDEGI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "BCEFHI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "BCEFGI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "BCDFGH": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "BCDFHI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "BCDFGI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ACDEGH": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ACDEHI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ACDEGI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ACEFGH": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ACEFHI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ACEFGI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ACDFGH": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ACDFHI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    },
+    "ACDFGI": {
+      "title": "",
+      "powerup": "",
+      "description": "",
+      "unlocked": false
+    }
+  },
+
+
 };
 
 
