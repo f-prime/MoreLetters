@@ -303,6 +303,7 @@ export function calculateNewState() {
 
 export function loadState() {
   const keysToLoad = [
+    "pathOpened",
     "path",
     "mailmen",
     "phase",

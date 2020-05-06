@@ -46,6 +46,21 @@
         </div>
       </div>
 
+      <p/>
+      
+      <div v-if="letterMapping[pathOpened] && letterMapping[pathOpened].unlocked" class="row" :class="!day ? 'btn-night' : ''">
+        <div class="buttons">
+          <div class="button">
+            <div class="button-title">
+              {{ letterMapping[pathOpened].powerup }} 
+            </div>
+            <div class="button-body">
+              {{ letterMapping[pathOpened].description }}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div v-show="openLetter" class="letter" :class="!day ? 'letter-night' : ''">
         <div class="row">
           <div class="column"> 
@@ -74,18 +89,6 @@
           </div>
         </div>
         <br/><br/><br/>
-        <div v-if="letterMapping[pathOpened] && letterMapping[pathOpened].unlocked" class="row" :class="!day ? 'btn-night' : ''">
-          <div class="buttons">
-            <div class="button">
-              <div class="button-title">
-                {{ letterMapping[pathOpened].powerup }} 
-              </div>
-              <div class="button-body">
-                {{ letterMapping[pathOpened].description }}
-              </div>
-            </div>
-          </div>
-        </div>
         <p/>
       </div>
     </div>

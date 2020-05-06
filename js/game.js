@@ -285,16 +285,16 @@ const vw = new Vue({
       if(!val || !this.plaintext)
         return;
 
-      const checkVal = val.trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
-      const plaintext = this.plaintext.trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
+      const checkVal = val.toLowerCase().trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
+      const plaintext = this.plaintext.toLowerCase().trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
       
       console.log(this.path);
       this.lettersTexts[this.path] = val;
 
       if(JSON.stringify(checkVal) == JSON.stringify(plaintext)) {
         this.deciphered = true;
+        console.log("THEY'RE THE SAME");
         const letterMapping = this.letterMapping[this.path];
-
         if(letterMapping) {
           this.letterMapping[this.path].unlocked = true; 
         }
@@ -304,6 +304,7 @@ const vw = new Vue({
 
   methods: {
     redirectHome: function() {
+      this.pathOpened = "";
       this.openLetter = false;
       this.saveState(true);
       window.location = '/';
@@ -338,9 +339,13 @@ const vw = new Vue({
     }, 
  
     openFoundLetter: function(letterName) {
-      this.path = letterName;
+      this.pathOpened = this.path;
       this.getLetter();
       this.openLetter = true;
+    },
+
+    getSortedPath: function() {
+      return this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");
     },
 
     getLetter: function() {
@@ -352,7 +357,7 @@ const vw = new Vue({
         },
       };
    
-      this.path = this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");  
+      this.path = this.getSortedPath(); 
       
       this.correspondence = true;
       this.decipherText = "";
@@ -488,6 +493,10 @@ const vw = new Vue({
       if(this.phase == this.readPhase) {
         this.getLetter();
         this.read = true;
+        const sortedPath = this.getSortedPath();
+        if(!this.lettersTexts[sortedPath]) {
+          this.lettersTexts[sortedPath] = "";
+        }
       }
 
       this.choosePowerups = false;
