@@ -123,16 +123,16 @@ export const originalState = {
 
     "ABDEHI": {
       title: "Turing",
-      powerup: "Hacker",
-      description: "Letters per second increased to 1000.",
+      powerup: "Code Breaker",
+      description: "",
       unlocked: false
     },
     
     "ABDEGI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Manifesto",
+      powerup: "Hacker",
+      description: "Does something...",
+      unlocked: false
     },
     "ABEFGH": {
       "title": "",
@@ -316,7 +316,6 @@ export function loadState() {
     "twoHands",
     "read",
     "lettersTexts",
-    "letterMapping",
     "correspondence",
     "lettersDelivered",
     "letter",
@@ -356,7 +355,15 @@ export function loadState() {
   
     this.$data[key] = keyVal;
   } 
+ 
+  // Load powerup unlocked states
   
+  const letterMapping = json.letterMapping;
+  
+  for(const key in letterMapping) {
+    this.$data.letterMapping[key].unlocked = letterMapping[key].unlocked;
+  }
+
   this.calculateNewState();
 }
 

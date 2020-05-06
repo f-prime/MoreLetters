@@ -356,7 +356,7 @@ const vw = new Vue({
       return this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");
     },
 
-    getLetter: function(letterName) {
+    getLetter: function(correspondencePageLetterName) {
       var headers = {
         method: 'GET',
         headers: {
@@ -367,17 +367,25 @@ const vw = new Vue({
       
       let path;
 
-      if(!letterName) {
+      if(!correspondencePageLetterName) {
         path = this.getSortedPath();
       } else {
-        path = letterName
+        path = correspondencePageLetterName
       }
       
       this.correspondence = true;
-      this.decipherText = "";
       this.deciphered = false;
-      if(this.lettersTexts[path]) {
-        this.decipherText = this.lettersTexts[path];
+    
+      if(!correspondencePageLetterName) {
+        this.decipherText = "";
+        if(this.lettersTexts[path]) {
+          this.decipherText = this.lettersTexts[path];
+        }
+      } else {
+        this.correspondenceDecipherText = "";
+        if(this.lettersTexts[path]) {
+          this.correspondenceDecipherText = this.lettersTexts[path];
+        }
       }
 
       console.log(path);
@@ -424,7 +432,7 @@ const vw = new Vue({
       }
 
       if(chosen) {
-        this.path = this.path.repalce(letter, '');
+        this.path = this.path.replace(letter, '');
         this.numChosen -= 1;
         if(this.numChosen < 0) {
           this.numChosen = 0;
