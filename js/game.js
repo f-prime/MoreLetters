@@ -271,7 +271,7 @@ const vw = new Vue({
   watch: {
     openLetter: function(val) {
       if(val) {
-        if(!this.lettersTexts[this.path]) {
+        if(!this.lettersTexts[this.path] && this.path) {
           this.lettersTexts[this.path] = "";
         }
 
@@ -508,7 +508,7 @@ const vw = new Vue({
         this.getLetter();
         this.read = true;
         const sortedPath = this.getSortedPath();
-        if(!this.lettersTexts[sortedPath]) {
+        if(!this.lettersTexts[sortedPath] && sortedPath) {
           this.lettersTexts[sortedPath] = "";
         }
       }
