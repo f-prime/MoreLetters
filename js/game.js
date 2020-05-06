@@ -284,25 +284,33 @@ const vw = new Vue({
     decipherText: function(val) {
       if(!val || !this.plaintext)
         return;
-
-      const checkVal = val.toLowerCase().trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
-      const plaintext = this.plaintext.toLowerCase().trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
       
-      console.log(this.path);
-      this.lettersTexts[this.path] = val;
+      this.checkDeciphered(this.path, val);
+    },
 
-      if(JSON.stringify(checkVal) == JSON.stringify(plaintext)) {
-        this.deciphered = true;
-        console.log("THEY'RE THE SAME");
-        const letterMapping = this.letterMapping[this.path];
-        if(letterMapping) {
-          this.letterMapping[this.path].unlocked = true; 
-        }
-      }
+    correspondenceDecipherText: function(val) {
+      if(!val || !this.plaintext)
+        return;
+      this.checkDeciphered(this.pathOpened, val);
     }
   },
 
   methods: {
+    checkDeciphered: function(path, val) {
+      const checkVal = val.toLowerCase().trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
+      const plaintext = this.plaintext.toLowerCase().trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
+      
+      this.lettersTexts[path] = val;
+
+      if(JSON.stringify(checkVal) == JSON.stringify(plaintext)) {
+        this.deciphered = true;
+        const letterMapping = this.letterMapping[path];
+        if(letterMapping) {
+          this.letterMapping[path].unlocked = true; 
+        }
+      }
+    },
+  
     redirectHome: function() {
       this.pathOpened = "";
       this.openLetter = false;
@@ -339,8 +347,8 @@ const vw = new Vue({
     }, 
  
     openFoundLetter: function(letterName) {
-      this.pathOpened = this.path;
-      this.getLetter();
+      this.pathOpened = letterName;
+      this.getLetter(letterName);
       this.openLetter = true;
     },
 
@@ -348,7 +356,7 @@ const vw = new Vue({
       return this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");
     },
 
-    getLetter: function() {
+    getLetter: function(letterName) {
       var headers = {
         method: 'GET',
         headers: {
@@ -356,19 +364,25 @@ const vw = new Vue({
           "cache-control":"no-cache",
         },
       };
-   
-      this.path = this.getSortedPath(); 
+      
+      let path;
+
+      if(!letterName) {
+        path = this.getSortedPath();
+      } else {
+        path = letterName
+      }
       
       this.correspondence = true;
       this.decipherText = "";
       this.deciphered = false;
-      if(this.lettersTexts[this.path]) {
-        this.decipherText = this.lettersTexts[this.path];
+      if(this.lettersTexts[path]) {
+        this.decipherText = this.lettersTexts[path];
       }
 
-      console.log(this.path);
+      console.log(path);
 
-      fetch(`/letters/encrypted/${this.path}.txt`, headers)
+      fetch(`/letters/encrypted/${path}.txt`, headers)
         .then(resp => {
           if(resp.status === 404) {
             throw 404;
@@ -379,7 +393,7 @@ const vw = new Vue({
         })
         .then(text => {
           this.letter = text;
-          fetch(`/letters/decrypted/${this.path}.txt`, headers)
+          fetch(`/letters/decrypted/${path}.txt`, headers)
             .then(resp => resp.text())
             .then(text => {
               this.plaintext = text;

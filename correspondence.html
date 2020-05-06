@@ -47,7 +47,7 @@
       </div>
 
       <p/>
-      
+
       <div v-if="letterMapping[pathOpened] && letterMapping[pathOpened].unlocked" class="row" :class="!day ? 'btn-night' : ''">
         <div class="buttons">
           <div class="button">
@@ -81,7 +81,7 @@
                   <img v-show="day" src="assets/day/letter.png">
                   <img v-show="!day" src="assets/night/letter.png">
                   <div class="letter-body">
-                    <textarea id="decipher-textarea" :style="!day ? 'color: white;' : 'color:black;'" v-model="decipherText"></textarea>
+                    <textarea id="decipher-textarea" :style="!day ? 'color: white;' : 'color:black;'" v-model="correspondenceDecipherText"></textarea>
                   </div>
                 </div>
               </transition>
