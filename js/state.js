@@ -135,10 +135,10 @@ export const originalState = {
       unlocked: false
     },
     "ABEFGH": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Ward",
+      powerup: "Insanity",
+      description: "",
+      unlocked: false
     },
     "ABEFHI": {
       "title": "",
