@@ -129,7 +129,7 @@ export const originalState = {
     },
     
     "ABDEGI": {
-      title: "Manifesto",
+      title: "The Mentor",
       powerup: "Hacker",
       description: "Does something...",
       unlocked: false
@@ -141,22 +141,22 @@ export const originalState = {
       unlocked: false
     },
     "ABEFHI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Prison Stories",
+      powerup: "Empowerment",
+      description: "",
+      unlocked: false
     },
     "ABEFGI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Esoteric",
+      powerup: "Brainfuck",
+      description: "",
+      unlocked: false
     },
     "ABDFGH": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Alice",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "ABDFHI": {
       "title": "",
@@ -273,8 +273,6 @@ export const originalState = {
       "unlocked": false
     }
   },
-
-
 };
 
 

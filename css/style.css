@@ -78,6 +78,9 @@ html, body {
   position: absolute;
   top:50px;
   left:65px;
+  height: 600px;
+  overflow:auto;
+  width:620px;
 }
 
 .letter-footer {
