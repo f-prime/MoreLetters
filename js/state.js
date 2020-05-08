@@ -159,28 +159,28 @@ export const originalState = {
       unlocked: false
     },
     "ABDFHI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Worms",
+      powerup: "Worms",
+      description: "",
+      unlocked: false
     },
     "ABDFGI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Aroma",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "BCDEGH": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Halloween",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "BCDEHI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Whitespace",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "BCDEGI": {
       "title": "",

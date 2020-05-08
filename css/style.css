@@ -81,6 +81,7 @@ html, body {
   height: 600px;
   overflow:auto;
   width:620px;
+  word-wrap: anywhere;
 }
 
 .letter-footer {

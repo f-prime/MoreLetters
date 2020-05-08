@@ -297,8 +297,21 @@ const vw = new Vue({
 
   methods: {
     checkDeciphered: function(path, val) {
-      const checkVal = val.toLowerCase().trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
-      const plaintext = this.plaintext.toLowerCase().trim().replace(/\n/g, ' ').split(' ').filter(w => w != '');
+      const checkVal = val.toLowerCase()
+                          .trim()
+                          .replace(/\n/g, ' ')
+                          .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
+                          .replace(/\s{2,}/g," ")
+                          .split(' ')
+                          .filter(w => w != '');
+
+      const plaintext = this.plaintext.toLowerCase()
+                          .trim()
+                          .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
+                          .replace(/\s{2,}/g," ")
+                          .replace(/\n/g, ' ')
+                          .split(' ')
+                          .filter(w => w != '');
       
       this.lettersTexts[path] = val;
 
