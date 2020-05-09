@@ -189,22 +189,22 @@ export const originalState = {
       unlocked: false
     },
     "BCEFHI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Chameleon",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "BCEFGI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "No Substitution",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "BCDFGH": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Like a Bird",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "BCDFHI": {
       "title": "",
