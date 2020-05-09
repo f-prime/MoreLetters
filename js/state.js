@@ -207,28 +207,28 @@ export const originalState = {
       unlocked: false
     },
     "BCDFHI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Self-Conscious",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "BCDFGI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Failure",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "ACDEGH": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Cancer",
+      powerup: "Cancer",
+      description: "At every new phase, a random powerup will be automatically be incremented every 0.5 seconds. The powerup does not cost money.",
+      unlocked: false
     },
     "ACDEHI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Upside Down",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "ACDEGI": {
       "title": "",
