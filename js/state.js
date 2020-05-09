@@ -231,10 +231,10 @@ export const originalState = {
       unlocked: false
     },
     "ACDEGI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Two Words",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "ACEFGH": {
       "title": "",
