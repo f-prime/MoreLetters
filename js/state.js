@@ -183,10 +183,10 @@ export const originalState = {
       unlocked: false
     },
     "BCDEGI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Remainder",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "BCEFHI": {
       "title": "",

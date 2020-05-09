@@ -446,6 +446,7 @@ const vw = new Vue({
 
       if(chosen) {
         this.path = this.path.replace(letter, '');
+        this.powerups[name] = false;
         this.numChosen -= 1;
         if(this.numChosen < 0) {
           this.numChosen = 0;
