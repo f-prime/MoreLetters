@@ -255,7 +255,7 @@ export const originalState = {
       unlocked: false
     },
     "ACDFGH": {
-      title: "Gratitude",
+      title: "Creativity",
       powerup: "",
       description: "",
       unlocked: false

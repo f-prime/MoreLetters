@@ -633,6 +633,7 @@ const vw = new Vue({
 
     this.setupTests(),
     this.loadState();
+    this.openLetter = false;
     setInterval(this.update, 0);
   }
 

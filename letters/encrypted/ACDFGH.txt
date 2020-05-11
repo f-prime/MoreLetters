@@ -1,0 +1,23 @@
+<pre>
+OHSWIAAWIHSWCBAAWNPP
+
+O - 5 
+T - 4
+H - 7
+E - 10
+R - 1
+S - 8
+A - 10
+V - 2
+N - 5
+W - 4
+I - 3
+D - 5
+K - 2
+Y - 2
+C - 2
+U - 1
+L - 2
+B - 2
+P - 2
+</pre>
