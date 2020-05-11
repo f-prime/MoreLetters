@@ -19,39 +19,23 @@ html, body {
 }
 
 .bgs img {
-  object-fit: cover;
-  width: 100%;
+  position: absolute;
 }
 
 .bg0 {
-  width: 60%;
+  width: 80%;
 }
 
 .bg1 {
-  height: 100%;
+  width: 100%;
+
 }
 
 .bg2 {
-  height: 100%;
+  width: 100%;
 }
 
 .bg3 {
-  height: 100%;
-}
-
-.bg4 {
-  height: 100%;
-}
-
-.bg5 {
-  height: 100%;
-}
-
-.bg6 {
-  height: 100%;
-}
-
-.bg7 {
   height: 100%;
 }
 

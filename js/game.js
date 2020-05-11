@@ -39,6 +39,7 @@ import {
   buyMax,
 } from "./buy.js";
 
+
 Vue.component("timed-event", {
   props: ["title", "seconds", "description"],
 
@@ -631,7 +632,7 @@ const vw = new Vue({
 
   created: function() {
     document.addEventListener("debug", this.handleDebug);
-
+    
     this.setupTests(),
     this.loadState();
     this.openLetter = false;

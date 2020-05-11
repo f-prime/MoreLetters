@@ -23,7 +23,7 @@
       <div class="top-links">
         <div class="row" :class="!day ? 'night-link' : ''">
           <div v-if="correspondence" class="column align-right">
-            <a @click="pathOpened = ''; openLetter = false; window.location = '/correspondence.html';" class="footer-link">correspondence</a>
+            <a @click="pathOpened = ''; openLetter = false; window.open('/correspondence.html', '_blank');" class="footer-link">correspondence</a>
           </div>
           <div class="column align-right">
             <a @click="newGame()" class="footer-link">new game</a>
@@ -36,32 +36,24 @@
           </div>
         </div>
       </div>
-      
+
+      <audio loop id="ambient-music" oncanplay="playMusic()">
+        <source src="assets/audio/music.mp3">
+      </audio>
+
       <transition name="fade"> 
         <div class="bgs" v-show="day">
           <transition name="fade">
-            <img v-show="phase == 1" src="assets/day/1.png" class="background bg0">
+            <img v-show="phase == 1" src="assets/day/5.png" class="background bg0">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 2" src="assets/day/2.png" class="background bg1">
+            <img v-show="phase == 2" src="assets/day/6.png" class="background bg1">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 3" src="assets/day/3.png" class="background bg2">
+            <img v-show="phase == 3" src="assets/day/7.png" class="background bg2">
           </transition>
           <transition name="fade">
             <img v-show="phase == 4" src="assets/day/8.png" class="background bg3">
-          </transition>
-          <transition name="fade">
-            <img v-show="phase == 5" src="assets/day/5.png" class="background bg4">
-          </transition>
-          <transition name="fade">
-            <img v-show="phase == 6" src="assets/day/6.png" class="background bg5">
-          </transition>
-          <transition name="fade">
-            <img v-show="phase == 7" src="assets/day/7.png" class="background bg6">
-          </transition>
-          <transition name="fade">
-            <img v-show="phase == 8" src="assets/day/8.png" class="background bg7">
           </transition>
         </div>
       </transition>
@@ -69,28 +61,16 @@
       <transition name="fade"> 
         <div class="bgs" v-show="!day">
           <transition name="fade">
-            <img v-show="phase == 1" src="assets/night/1.png" class="background bg0">
+            <img v-show="phase == 1" src="assets/night/5.png" class="background bg0">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 2" src="assets/night/2.png" class="background bg1">
+            <img v-show="phase == 2" src="assets/night/6.png" class="background bg1">
           </transition>
           <transition name="fade">
-            <img v-show="phase == 3" src="assets/night/3.png" class="background bg2">
+            <img v-show="phase == 3" src="assets/night/7.png" class="background bg2">
           </transition>
           <transition name="fade">
             <img v-show="phase == 4" src="assets/night/8.png" class="background bg3">
-          </transition>
-          <transition name="fade">
-            <img v-show="phase == 5" src="assets/night/5.png" class="background bg4">
-          </transition>
-          <transition name="fade">
-            <img v-show="phase == 6" src="assets/night/6.png" class="background bg5">
-          </transition>
-          <transition name="fade">
-            <img v-show="phase == 7" src="assets/night/7.png" class="background bg6">
-          </transition>
-          <transition name="fade">
-            <img v-show="phase == 10" src="assets/night/8.png" class="background bg7">
           </transition>
          </div>
       </transition>
@@ -416,5 +396,10 @@
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      function playMusic(elem) {
+        document.getElementById("ambient-music").play();
+      }
+    </script>
   </body>
 </html>
