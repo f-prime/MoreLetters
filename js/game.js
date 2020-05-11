@@ -128,7 +128,11 @@ const vw = new Vue({
   
   data: Object.assign({}, originalState), 
  
-  computed: {
+  computed: {    
+    getSortedPath: function() {
+      return this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");
+    },
+    
     getFoundLetters: function() {
       return Object.keys(this.lettersTexts).filter(letter => letter !== '');
     },
@@ -271,8 +275,9 @@ const vw = new Vue({
   watch: {
     openLetter: function(val) {
       if(val) {
-        if(!this.lettersTexts[this.path] && this.path) {
-          this.lettersTexts[this.path] = "";
+        const path = this.getSortedPath;
+        if(!this.lettersTexts[path] && this.path) {
+          this.lettersTexts[path] = "";
         }
 
         setTimeout(() => {
@@ -285,7 +290,7 @@ const vw = new Vue({
       if(!val || !this.plaintext)
         return;
       
-      this.checkDeciphered(this.path, val);
+      this.checkDeciphered(this.getSortedPath, val);
     },
 
     correspondenceDecipherText: function(val) {
@@ -365,10 +370,6 @@ const vw = new Vue({
       this.openLetter = true;
     },
 
-    getSortedPath: function() {
-      return this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");
-    },
-
     getLetter: function(correspondencePageLetterName) {
       var headers = {
         method: 'GET',
@@ -381,7 +382,7 @@ const vw = new Vue({
       let path;
 
       if(!correspondencePageLetterName) {
-        path = this.getSortedPath();
+        path = this.getSortedPath;
       } else {
         path = correspondencePageLetterName
       }
@@ -529,7 +530,7 @@ const vw = new Vue({
       if(this.phase == this.readPhase) {
         this.getLetter();
         this.read = true;
-        const sortedPath = this.getSortedPath();
+        const sortedPath = this.getSortedPath;
         if(!this.lettersTexts[sortedPath] && sortedPath) {
           this.lettersTexts[sortedPath] = "";
         }

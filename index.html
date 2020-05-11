@@ -160,18 +160,25 @@
           </div>
         </div>
         <br/><br/><br/>
-        <div v-if="letterMapping[path] && letterMapping[path].unlocked" class="row" :class="!day ? 'btn-night' : ''">
+        <div v-if="letterMapping[getSortedPath] && letterMapping[getSortedPath].unlocked" class="row" :class="!day ? 'btn-night' : ''">
           <div class="buttons">
             <div class="button">
               <div class="button-title">
-                {{ letterMapping[path].powerup }} 
+                {{ letterMapping[getSortedPath].powerup }} 
               </div>
               <div class="button-body">
-                {{ letterMapping[path].description }}
+                {{ letterMapping[getSortedPath].description }}
               </div>
             </div>
           </div>
         </div>
+        <p/>
+        <div class="buttons row" :class="!day ? 'btn-night' : ''">
+          <div class="button">
+            <div class="button-title" @click="newGame()">Continue</div>
+          </div>
+        </div>
+        <p/>
       </div>
 
       <!-- End Read -->

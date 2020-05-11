@@ -1,4 +1,6 @@
-It comes in different shapes and colors
-All the universe it covers
-It's faster than a shooting star
-and with you wherever you are
+<pre>
+It comes in different shapes and colors,
+all the universe it covers.
+It's faster than a shooting star,
+and when it's gone it makes life hard.
+</pre>

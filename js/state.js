@@ -244,7 +244,7 @@ export const originalState = {
     },
     "ACEFHI": {
       title: "Scrambled Addition",
-      powerup: "",
+      powerup: "Sun",
       description: "",
       unlocked: false
     },
