@@ -237,40 +237,40 @@ export const originalState = {
       unlocked: false
     },
     "ACEFGH": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Simple Addition",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "ACEFHI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Scrambled Addition",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "ACEFGI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Ancient",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "ACDFGH": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Gratitude",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "ACDFHI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Riddle",
+      powerup: "",
+      description: "",
+      unlocked: false
     },
     "ACDFGI": {
-      "title": "",
-      "powerup": "",
-      "description": "",
-      "unlocked": false
+      title: "Another Riddle",
+      powerup: "",
+      description: "",
+      unlocked: false
     }
   },
 };
