@@ -45,6 +45,9 @@ export const originalState = {
 
   money: 0,
 
+  codeBreakerDelay: 500,
+  hackerLPS: 1000,
+
   lettersPs: 0,
   prevLettersPs: 0,
   lastLettersPs: 0,
@@ -111,28 +114,28 @@ export const originalState = {
     "ABDEGH": {
       title:"Tis Said",
       powerup: "Mule",
-      description: "Mailmen now deliver 100 letters every tick.",
+      description: "",
       unlocked: false,
     },
 
     "BCEFGH": {
       title: "The Doll",
       powerup: "LeeLee's Pinky",
-      description: "Bootstrap increment increased by 1000.",
+      description: "",
       unlocked: false,
     },
 
     "ABDEHI": {
       title: "Turing",
       powerup: "Code Breaker",
-      description: "",
+      description: "Decreases factory delay to 0.5 seconds.",
       unlocked: false
     },
     
     "ABDEGI": {
       title: "The Mentor",
       powerup: "Hacker",
-      description: "Does something...",
+      description: "Increases the base letters per second from 1 to 1000",
       unlocked: false
     },
     "ABEFGH": {
@@ -304,7 +307,6 @@ export function calculateNewState() {
 export function loadState() {
   const keysToLoad = [
     "correspondencePage",
-    "pathOpened",
     "path",
     "mailmen",
     "phase",

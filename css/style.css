@@ -23,7 +23,7 @@ html, body {
 }
 
 .bg0 {
-  width: 80%;
+  width: 100%;
 }
 
 .bg1 {
@@ -37,6 +37,7 @@ html, body {
 
 .bg3 {
   height: 100%;
+  width:100%;
 }
 
 .letter {

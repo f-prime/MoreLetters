@@ -226,6 +226,10 @@ const vw = new Vue({
     },
 
     getFactoryDelay: function() {
+      if(this.letterMapping.ABDEHI.unlocked) {
+        return this.codeBreakerDelay;
+      }
+
       return this.factoryDelay;
     },
 
@@ -275,12 +279,12 @@ const vw = new Vue({
 
   watch: {
     openLetter: function(val) {
-      if(val) {
+      if(val && !this.correspondencePage) {
         const path = this.getSortedPath;
         if(!this.lettersTexts[path] && this.path) {
           this.lettersTexts[path] = "";
         }
-
+        
         setTimeout(() => {
           document.getElementById("decipher-textarea").focus();
         }, 300);
@@ -403,8 +407,6 @@ const vw = new Vue({
         }
       }
 
-      console.log(path);
-
       fetch(`/letters/encrypted/${path}.txt`, headers)
         .then(resp => {
           if(resp.status === 404) {
@@ -460,7 +462,6 @@ const vw = new Vue({
       }
 
       if(this.numChosen >= 2) {
-        console.log(this.path);
         this.prestige();
       }
     },
@@ -632,7 +633,7 @@ const vw = new Vue({
 
   created: function() {
     document.addEventListener("debug", this.handleDebug);
-
+    
     this.setupTests(),
     this.loadState();
     this.openLetter = false;

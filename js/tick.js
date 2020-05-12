@@ -6,8 +6,16 @@ export function updateLetters() {
   if(this.choosePowerups)
     return;
 
-  const increment = this.generalUpdate(this.getLettersDelay);
-  const inc = this.lettersInc * increment;
+  const delta = this.generalUpdate(this.getLettersDelay);
+  
+  let inc;
+
+  if(this.letterMapping.ABDEGI.unlocked) {
+    inc = delta * this.hackerLPS;
+  } else {
+    inc = this.lettersInc * delta;
+  }
+
   this.letters += inc;
   this.lettersPs += inc;
 }
