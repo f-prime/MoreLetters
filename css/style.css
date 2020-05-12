@@ -43,6 +43,11 @@ html, body {
   margin-top: 2rem;
 }
 
+.letters-buttons {
+  width: 10vw;
+  margin: 0 auto;
+} 
+
 .letter-container {
   position: relative;
   font-size: 1.1rem;

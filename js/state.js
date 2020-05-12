@@ -27,6 +27,7 @@ export const originalState = {
   },
 
   correspondence: false,
+  correspondencePage: false,
 
   lastTick: new Date(),
   delta: 0,
@@ -302,6 +303,7 @@ export function calculateNewState() {
 
 export function loadState() {
   const keysToLoad = [
+    "correspondencePage",
     "pathOpened",
     "path",
     "mailmen",
