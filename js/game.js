@@ -632,7 +632,7 @@ const vw = new Vue({
 
   created: function() {
     document.addEventListener("debug", this.handleDebug);
-    
+
     this.setupTests(),
     this.loadState();
     this.openLetter = false;
