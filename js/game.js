@@ -234,7 +234,8 @@ const vw = new Vue({
     },
 
     bootstrapInc: function() {
-      return this.bootstrapDelivery;
+      const inc = this.letterMapping.BCEFGH.unlocked ? this.leeleesPinkeyInc : 0;
+      return this.bootstrapDelivery + inc;
     },
 
     postOfficePrice: function() {

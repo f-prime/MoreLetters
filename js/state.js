@@ -45,7 +45,9 @@ export const originalState = {
 
   money: 0,
 
-  codeBreakerDelay: 500,
+  tisSaidMult: 2,
+  leeleePinkeyInc: 500,
+  codeBreakerDelay: 100,
   hackerLPS: 1000,
 
   lettersPs: 0,
@@ -114,21 +116,21 @@ export const originalState = {
     "ABDEGH": {
       title:"Tis Said",
       powerup: "Mule",
-      description: "",
+      description: "x2 multiplier on all automation powerups.",
       unlocked: false,
     },
 
     "BCEFGH": {
       title: "The Doll",
       powerup: "LeeLee's Pinky",
-      description: "",
+      description: "Bootstrap increment increased by 500",
       unlocked: false,
     },
 
     "ABDEHI": {
       title: "Turing",
       powerup: "Code Breaker",
-      description: "Decreases factory delay to 0.5 seconds.",
+      description: "Decreases factory delay to 0.1 seconds.",
       unlocked: false
     },
     

@@ -22,27 +22,32 @@ export function updateLetters() {
 
 export function updateCorporateOffices() {
   const delta = this.generalUpdate(this.corporateOfficesDelay);
-  this.corporateOfficeAdded += this.getCorporateOfficesIncrease * this.corporateOffices * delta;
+  const mult = this.letterMapping.ABDEGH.unlocked ? this.tisSaidMult : 1;
+  this.corporateOfficeAdded += this.getCorporateOfficesIncrease * this.corporateOffices * delta * mult;
 }
 
 export function updateAdvertisers() {
+  const mult = this.letterMapping.ABDEGH.unlocked ? this.tisSaidMult : 1;
   const delta = this.generalUpdate(this.advertisersDelay);
-  this.clickInc += this.advertisersInc * this.advertisers * delta;
+  this.clickInc += this.advertisersInc * this.advertisers * delta * mult;
 }
 
 export function updateBreeder() {
   const delta = this.generalUpdate(this.breederDelay);
-  this.pigeons += this.breederBreed * this.breeders * delta;
+  const mult = this.letterMapping.ABDEGH.unlocked ? this.tisSaidMult : 1;
+  this.pigeons += this.breederBreed * this.breeders * delta * mult;
 }
 
 export function updatePigeons() {
   const delta = this.generalUpdate(this.getPigeonsDelay);
-  this.deliverLetter(this.getPigeonsDelivery * this.pigeons * delta);
+  const mult = this.letterMapping.ABDEGH.unlocked ? this.tisSaidMult : 1;
+  this.deliverLetter(this.getPigeonsDelivery * this.pigeons * delta * mult);
 }
 
 export function updateMailboxes() {
   const delta = this.generalUpdate(this.getMailboxDelay);
-  const inc = (this.mailboxes + this.factoryMailboxes) * this.getMailboxLettersInc * delta;
+  const mult = this.letterMapping.ABDEGH.unlocked ? this.tisSaidMult : 1;
+  const inc = (this.mailboxes + this.factoryMailboxes) * this.getMailboxLettersInc * delta * mult;
   this.letters += inc;
   this.lettersPs += inc;
 }
@@ -50,13 +55,15 @@ export function updateMailboxes() {
 export function updateMailmen() {
   if(this.letters < 1)
     return;
-
+  
+  const mult = this.letterMapping.ABDEGH.unlocked ? this.tisSaidMult : 1;
   const delta = this.generalUpdate(this.getMailmanDelay);
-  this.deliverLetter((this.mailmen + this.corporateOfficeAdded) * delta);
+  this.deliverLetter((this.mailmen + this.corporateOfficeAdded) * delta * mult);
 }
 
 export function updateFactories() {
   const delta = this.generalUpdate(this.getFactoryDelay);
-  this.factoryMailboxes += this.factoryGenerate * (this.factories + this.corporateOfficeAdded) * delta;
+  const mult = this.letterMapping.ABDEGH.unlocked ? this.tisSaidMult : 1;
+  this.factoryMailboxes += this.factoryGenerate * (this.factories + this.corporateOfficeAdded) * delta * mult;
 
 }
