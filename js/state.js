@@ -10,7 +10,7 @@ export const originalState = {
   numChosen: 0,
   powerups: {},
   choosePowerups: false,
-  
+ 
   pathOpened: "",
   path:"",
 
@@ -28,7 +28,7 @@ export const originalState = {
 
   correspondence: false,
   correspondencePage: false,
-
+  chooseCorrespondencePowerup: false, 
   lastTick: new Date(),
   delta: 0,
 
@@ -80,7 +80,7 @@ export const originalState = {
   corporateOfficeAdded: 0,
 
   advertisers: 0,
-  advertisersDelay: 250,
+  advertisersDelay: 1200,
   advertisersInc: 1,
   advertisersBasePrice: 100,
 
@@ -116,28 +116,28 @@ export const originalState = {
     "ABDEGH": {
       title:"Tis Said",
       powerup: "Mule",
-      description: "x2 multiplier on all automation powerups.",
+      description: "",
       unlocked: false,
     },
 
     "BCEFGH": {
       title: "The Doll",
       powerup: "LeeLee's Pinky",
-      description: "Bootstrap increment increased by 500",
-      unlocked: false,
+      description: "Bootstrap interval multiplied by 4.",
+      unlocked: true,
     },
 
     "ABDEHI": {
       title: "Turing",
       powerup: "Code Breaker",
-      description: "Decreases factory delay to 0.1 seconds.",
+      description: "",
       unlocked: false
     },
     
     "ABDEGI": {
       title: "The Mentor",
       powerup: "Hacker",
-      description: "Increases the base letters per second from 1 to 1000",
+      description: "",
       unlocked: false
     },
     "ABEFGH": {
@@ -153,16 +153,16 @@ export const originalState = {
       unlocked: false
     },
     "ABEFGI": {
-      title: "Esoteric",
+      title: "Brainfuck",
       powerup: "Brainfuck",
       description: "",
       unlocked: false
     },
     "ABDFGH": {
       title: "Alice",
-      powerup: "",
-      description: "",
-      unlocked: false
+      powerup: "Leisure",
+      description: "Double number of letters required per phase.",
+      unlocked: true
     },
     "ABDFHI": {
       title: "Worms",
@@ -341,6 +341,7 @@ export function loadState() {
     "corporateOffices",
     "corporateOfficeAdded",
     "advertisers",
+    "chooseCorrespondencePowerup"
   ];
   
   let state = localStorage.getItem("state");
@@ -376,9 +377,10 @@ export function newGame() {
 
   const newState = {
     lettersTexts:this.lettersTexts,
-    letterMapping: this.letterMapping,
+    //letterMapping: this.letterMapping UNCOMMENT THIS ITS ONLY FOR DEBUGGING!!
     day:this.day,
     correspondence:this.correspondence,
+    chooseCorrespondencePowerup:this.correspondence ? true : false
   };
 
   localStorage.setItem("state", JSON.stringify(newState));

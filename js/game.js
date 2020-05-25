@@ -109,7 +109,8 @@ Vue.component('buy-button', {
       <div class="button-name">
         <div class="button-title">
           {{ title }}
-          <div v-if="!owned && !curiosity">(\${{ price }})</div>
+          <div v-if="!price"></div>
+          <div v-else-if="!owned && !curiosity">(\${{ price }})</div>
         </div>
         <div v-else-if="curiosity">({{ price }} curiosity)</div>
         <div v-else>(owned)</div>
@@ -226,16 +227,16 @@ const vw = new Vue({
     },
 
     getFactoryDelay: function() {
-      if(this.letterMapping.ABDEHI.unlocked) {
-        return this.codeBreakerDelay;
-      }
-
       return this.factoryDelay;
     },
 
     bootstrapInc: function() {
-      const inc = this.letterMapping.BCEFGH.unlocked ? this.leeleesPinkeyInc : 0;
-      return this.bootstrapDelivery + inc;
+      let val = this.bootstrapDelivery * (this.twoHands ? 2 * this.twoHands : 1);
+      if(this.powerups['LeeLees Pinky']) {
+        val *= 4;
+      }
+
+      return val;
     },
 
     postOfficePrice: function() {
@@ -259,15 +260,17 @@ const vw = new Vue({
     },
 
     nextPhaseAt: function() {
+      const mult = this.powerups.Leisure ? 2 : 1;
+
       switch(this.phase) {
         case 0:
-          return this.phase1;
+          return this.phase1 * mult;
         case 1:
-          return this.phase2;
+          return this.phase2 * mult;
         case 2:
-          return this.phase3;
+          return this.phase3 * mult;
         case 3:
-          return this.phase4;
+          return this.phase4 * mult;
         default:
           return Infinity;
       }
@@ -444,7 +447,23 @@ const vw = new Vue({
     choose: function(name) {
       const chosen = this.powerups[name];
       const letter = this.pathMap[name];
-    
+   
+      if(this.chooseCorrespondencePowerup) {
+        if(chosen) {
+          this.numChosen -= 1;
+          this.powerups[name] = false;
+        } else {
+          this.numChosen += 1;
+          this.powerups[name] = true;
+        }
+
+        if(this.numChosen == 2) {
+          this.chooseCorrespondencePowerup = false;
+          this.numChosen = 0;
+        }
+        return;
+      }
+
       if(this.phase == 0 && this.numChosen == 0) {
         this.path = ""; // For some reason paths from previous runs don't get deleted on a new game. This makes sure it isn't a problem.
       }
@@ -588,7 +607,7 @@ const vw = new Vue({
       this.delta = now - new Date(this.lastTick);
       this.lastTick = now;
 
-      if(!this.read && !this.choosePowerups) {
+      if(!this.read && !this.choosePowerups && !this.chooseCorrespondencePowerup) {
         this.updateLetters();
         this.updateMailmen();
         this.updateAdvertisers();
