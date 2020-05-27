@@ -116,12 +116,12 @@ export const originalState = {
     "ABDEGH": {
       title:"Tis Said",
       powerup: "Mule",
-      description: "",
-      unlocked: false,
+      description: "Reduces mailbox tick by 75%",
+      unlocked: true,
     },
 
     "BCEFGH": {
-      title: "The Doll",
+      title: "A Peek Inside",
       powerup: "LeeLee's Pinky",
       description: "Bootstrap interval multiplied by 4.",
       unlocked: true,
@@ -172,9 +172,9 @@ export const originalState = {
     },
     "ABDFGI": {
       title: "Aroma",
-      powerup: "",
-      description: "",
-      unlocked: false
+      powerup: "Industrial",
+      description: "Start with one factory at every phase.",
+      unlocked: true
     },
     "BCDEGH": {
       title: "Halloween",

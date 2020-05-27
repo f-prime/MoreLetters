@@ -47,6 +47,49 @@
 
         <div class="row buttons" :class="!day ? 'btn-night' : ''">
             <buy-button 
+               v-if="letterMapping.ABDFGI.unlocked"
+               title="Industrial"
+               :description="letterMapping.ABDFGI.description"
+               choose="true"
+               :chosen="powerups['Industrial']"
+               @chosen="choose('Industrial')"    
+            >
+            </buy-button>
+
+            <buy-button 
+               v-if="letterMapping.BCEFGH.unlocked"
+               title="LeeLee's Pinky"
+               :description="letterMapping.BCEFGH.description"
+               choose="true"
+               :chosen="powerups['LeeLees Pinky']"
+               @chosen="choose('LeeLees Pinky')"    
+            >
+            </buy-button>
+
+            <buy-button 
+               v-if="letterMapping.ABDFGH.unlocked"
+               title="Leisure"
+               :description="letterMapping.ABDFGH.description"
+               choose="true"
+               :chosen="powerups.Leisure"
+               @chosen="choose('Leisure')"    
+            >
+            </buy-button>
+        </div>
+
+
+        <div class="row buttons" :class="!day ? 'btn-night' : ''">
+            <buy-button 
+               v-if="letterMapping.ABDEGH.unlocked"
+               title="Muel"
+               :description="letterMapping.ABDEGH.description"
+               choose="true"
+               :chosen="powerups['Muel']"
+               @chosen="choose('Muel')"    
+            >
+            </buy-button>
+
+            <buy-button 
                v-if="letterMapping.BCEFGH.unlocked"
                title="LeeLee's Pinky"
                :description="letterMapping.BCEFGH.description"
@@ -178,9 +221,9 @@
             <stat v-show="powerups.Breeder || powerups.Breeder" name="breeders" :value="format(floor(breeders))"></stat>
             <stat v-show="powerups.Mailman || powerups.Recruiter || powerups['Corporate Offices']" name="mailmen" :value="format(floor(mailmen + corporateOfficeAdded))"></stat>
             <stat v-show="powerups['Two Hands']" name="two hands" :value="format(floor(twoHands))"></stat>
-            <stat v-show="powerups.Mailbox || powerups.Factory || powerups['Corporate Offices']" name="mailboxes" :value="format(floor(mailboxes + factoryMailboxes))"></stat>
+            <stat v-show="factories > 0 || powerups.Mailbox || powerups.Factory || powerups['Corporate Offices']" name="mailboxes" :value="format(floor(mailboxes + factoryMailboxes))"></stat>
             <stat v-show="powerups.Advertisers" name="advertisers" :value="format(round(advertisers))"></stat>
-            <stat v-show="powerups.Factory || powerups['Corporate Offices']" :value="format(floor(factories + corporateOfficeAdded))" name="factories"></stat> 
+            <stat v-show="factories > 0 || powerups.Factory || powerups['Corporate Offices']" :value="format(floor(factories + corporateOfficeAdded))" name="factories"></stat> 
             <stat v-show="powerups['Corporate Offices']" name="corporate offices" :value="format(corporateOffices)"></stat>
           </div>
         </div>

@@ -219,7 +219,12 @@ const vw = new Vue({
     },
 
     getMailboxDelay: function() {
-      return this.mailboxDelay;
+      let delay = this.mailboxDelay;
+      if(this.powerups.Muel) {
+        delay -= delay * 0.75;
+      }
+      
+      return delay;
     },
 
     getMailmanDelay: function() {
@@ -460,6 +465,9 @@ const vw = new Vue({
         if(this.numChosen == 2) {
           this.chooseCorrespondencePowerup = false;
           this.numChosen = 0;
+          if(this.powerups.Industrial) {
+            this.factories = 1;
+          }
         }
         return;
       }
@@ -557,6 +565,9 @@ const vw = new Vue({
           this.lettersTexts[sortedPath] = "";
         }
       }
+
+      if(this.powerups.Industrial)
+        this.factories = 1;
 
       this.choosePowerups = false;
     },
