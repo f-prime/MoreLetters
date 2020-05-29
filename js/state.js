@@ -137,8 +137,8 @@ export const originalState = {
     "ABDEGI": {
       title: "The Mentor",
       powerup: "Hacker",
-      description: "",
-      unlocked: false
+      description: "Increases base letters per second from 1 to 100.",
+      unlocked: true
     },
     "ABEFGH": {
       title: "Ward",
@@ -149,8 +149,8 @@ export const originalState = {
     "ABEFHI": {
       title: "Prison Stories",
       powerup: "Empowerment",
-      description: "",
-      unlocked: false
+      description: "Start each phase with 5 advertisers.",
+      unlocked: true
     },
     "ABEFGI": {
       title: "Brainfuck",
@@ -167,8 +167,8 @@ export const originalState = {
     "ABDFHI": {
       title: "Worms",
       powerup: "Worms",
-      description: "",
-      unlocked: false
+      description: "Quadruples the price per letter at every phase.",
+      unlocked: true
     },
     "ABDFGI": {
       title: "Aroma",
@@ -178,9 +178,9 @@ export const originalState = {
     },
     "BCDEGH": {
       title: "Halloween",
-      powerup: "",
-      description: "",
-      unlocked: false
+      powerup: "Night Shift",
+      description: "Start each phase with 50 mailmen.",
+      unlocked: true
     },
     "BCDEHI": {
       title: "Whitespace",
@@ -202,15 +202,15 @@ export const originalState = {
     },
     "BCEFGI": {
       title: "No Substitution",
-      powerup: "",
-      description: "",
-      unlocked: false
+      powerup: "Surplus",
+      description: "Start each phase with 50 mailboxes.",
+      unlocked: true
     },
     "BCDFGH": {
       title: "Like a Bird",
-      powerup: "",
-      description: "",
-      unlocked: false
+      powerup: "Bird Feeder",
+      description: "Start each phase with 200 pigeons.",
+      unlocked: true
     },
     "BCDFHI": {
       title: "Self-Conscious",
@@ -228,7 +228,7 @@ export const originalState = {
       title: "Cancer",
       powerup: "Cancer",
       description: "At every new phase, a random powerup will be automatically be incremented every 0.5 seconds. The powerup does not cost money.",
-      unlocked: false
+      unlocked: true,
     },
     "ACDEHI": {
       title: "Upside Down",

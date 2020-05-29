@@ -130,7 +130,8 @@ const vw = new Vue({
   
   data: Object.assign({}, originalState), 
  
-  computed: {    
+  computed: {
+
     getSortedPath: function() {
       return this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");
     },
@@ -208,9 +209,13 @@ const vw = new Vue({
     },
 
     getPricePerLetter: function() {
-      const inflation = this.inflation ? this.inflationIncrease : 0;
-      const increase = this.pricePerLetter * inflation;
-      return this.pricePerLetter + increase;
+      let currentPrice = this.pricePerLetter;
+
+      if(this.powerups.Worms && this.phase > 0) {
+        currentPrice += this.pricePerLetter * (4 ** (this.phase - 1));
+      }
+
+      return currentPrice;
     },
 
     getMailboxLettersInc: function() {
@@ -315,6 +320,11 @@ const vw = new Vue({
   },
 
   methods: {
+    correspondenceContinue: function() {
+      this.chooseCorrespondencePowerup = false;
+      this.numChosen = 0;
+    },
+
     checkDeciphered: function(path, val) {
       const checkVal = val.toLowerCase()
                           .trim()
@@ -462,12 +472,30 @@ const vw = new Vue({
           this.powerups[name] = true;
         }
 
+        if(this.powerups.Industrial) {
+          this.factories = 1;
+        }
+        
+        if(this.powerups.Empowerment) {
+          this.advertisers = 25;
+        }
+
+        if(this.powerups['Bird Feeder']) {
+          this.pigeons = 200;
+        }
+
+        if(this.powerups['Night Shift']) {
+          this.mailmen = 50;
+        }
+
+        if(this.powerups.Surplus) {
+          this.mailboxes = 50;
+        }
+
+
         if(this.numChosen == 2) {
           this.chooseCorrespondencePowerup = false;
           this.numChosen = 0;
-          if(this.powerups.Industrial) {
-            this.factories = 1;
-          }
         }
         return;
       }
@@ -566,8 +594,25 @@ const vw = new Vue({
         }
       }
 
-      if(this.powerups.Industrial)
+      if(this.powerups.Industrial) {
         this.factories = 1;
+      }
+
+      if(this.powerups.Empowerment) {
+        this.advertisers = 25;
+      }
+
+      if(this.powerups['Night Shift']) {
+        this.mailmen = 50;
+      }
+
+      if(this.powerups.Surplus) {
+        this.mailboxes = 50;
+      }
+
+      if(this.powerups['Bird Feeder']) {
+        this.pigeons = 200;
+      }
 
       this.choosePowerups = false;
     },

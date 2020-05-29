@@ -41,7 +41,7 @@
       <div v-show="chooseCorrespondencePowerup">
         <div class="row">
           <div class="column">
-            Choose two Correspondence powerups
+            Choose up to two Correspondence powerups
           </div>
         </div>
 
@@ -77,7 +77,6 @@
             </buy-button>
         </div>
 
-
         <div class="row buttons" :class="!day ? 'btn-night' : ''">
             <buy-button 
                v-if="letterMapping.ABDEGH.unlocked"
@@ -90,24 +89,95 @@
             </buy-button>
 
             <buy-button 
-               v-if="letterMapping.BCEFGH.unlocked"
-               title="LeeLee's Pinky"
-               :description="letterMapping.BCEFGH.description"
+               v-if="letterMapping.ABDFHI.unlocked"
+               title="Worms"
+               :description="letterMapping.ABDFHI.description"
                choose="true"
-               :chosen="powerups['LeeLees Pinky']"
-               @chosen="choose('LeeLees Pinky')"    
+               :chosen="powerups.Worms"
+               @chosen="choose('Worms')"    
             >
             </buy-button>
 
             <buy-button 
-               v-if="letterMapping.ABDFGH.unlocked"
-               title="Leisure"
-               :description="letterMapping.ABDFGH.description"
+               v-if="letterMapping.ABDEGI.unlocked"
+               title="Hacker"
+               :description="letterMapping.ABDEGI.description"
                choose="true"
-               :chosen="powerups.Leisure"
-               @chosen="choose('Leisure')"    
+               :chosen="powerups.Hacker"
+               @chosen="choose('Hacker')"    
             >
             </buy-button>
+        </div>
+
+        <div class="row buttons" :class="!day ? 'btn-night' : ''">
+            <buy-button 
+               v-if="letterMapping.BCDEGH.unlocked"
+               title="Night Shift"
+               :description="letterMapping.BCDEGH.description"
+               choose="true"
+               :chosen="powerups['Night Shift']"
+               @chosen="choose('Night Shift')"    
+            >
+            </buy-button>
+
+            <buy-button 
+               v-if="letterMapping.BCDFGH.unlocked"
+               title="Bird Feeder"
+               :description="letterMapping.BCDFGH.description"
+               choose="true"
+               :chosen="powerups['Bird Feeder']"
+               @chosen="choose('Bird Feeder')"    
+            >
+            </buy-button>
+
+            <buy-button 
+               v-if="letterMapping.ABEFHI.unlocked"
+               title="Empowerment"
+               :description="letterMapping.ABEFHI.description"
+               choose="true"
+               :chosen="powerups.Empowerment"
+               @chosen="choose('Empowerment')"    
+            >
+            </buy-button>
+        </div>
+
+        <div class="row buttons" :class="!day ? 'btn-night' : ''">
+            <buy-button 
+               v-if="letterMapping.BCEFGI.unlocked"
+               title="Surplus"
+               :description="letterMapping.BCEFGI.description"
+               choose="true"
+               :chosen="powerups['Surplus']"
+               @chosen="choose('Surplus')"    
+            >
+            </buy-button>
+
+            <buy-button 
+               v-if="letterMapping.BCDFGH.unlocked"
+               title="Bird Feeder"
+               :description="letterMapping.BCDFGH.description"
+               choose="true"
+               :chosen="powerups['Bird Feeder']"
+               @chosen="choose('Bird Feeder')"    
+            >
+            </buy-button>
+
+            <buy-button 
+               v-if="letterMapping.ABEFHI.unlocked"
+               title="Empowerment"
+               :description="letterMapping.ABEFHI.description"
+               choose="true"
+               :chosen="powerups.Empowerment"
+               @chosen="choose('Empowerment')"    
+            >
+            </buy-button>
+        </div>
+
+
+        <div class="buttons row" :class="!day ? 'btn-night' : ''">
+          <div class="button">
+            <div class="button-title" @click="correspondenceContinue()">Continue</div>
+          </div>
         </div>
       </div>
 
@@ -215,16 +285,16 @@
             <stat name="phase" :value="phase"></stat>
             <stat name="letters per second" :value="format(round(prevLettersPs))"></stat>
             <stat name="deliveries per second" :value="format(round(prevDeliveryPs))"></stat>
-            <stat :name="powerups.Bootstrap ? 'letters/deliveries per click' : 'deliveries per click'" :value="format(floor(clickInc))"></stat>
+            <stat :name="bootstrap > 0 || powerups.Bootstrap ? 'letters/deliveries per click' : 'deliveries per click'" :value="format(floor(clickInc))"></stat>
             <stat name="letter price" :value="'$' + format(round(getPricePerLetter))"></stat>
-            <stat v-show="powerups.Pigeons || powerups.Breeder" name="pigeons" :value="format(floor(pigeons))"></stat>
-            <stat v-show="powerups.Breeder || powerups.Breeder" name="breeders" :value="format(floor(breeders))"></stat>
-            <stat v-show="powerups.Mailman || powerups.Recruiter || powerups['Corporate Offices']" name="mailmen" :value="format(floor(mailmen + corporateOfficeAdded))"></stat>
+            <stat v-show="pigeons > 0 || powerups.Pigeons || powerups.Breeder" name="pigeons" :value="format(floor(pigeons))"></stat>
+            <stat v-show="breeders > 0 || powerups.Breeder || powerups.Breeder" name="breeders" :value="format(floor(breeders))"></stat>
+            <stat v-show="mailmen > 0 || powerups.Mailman || powerups.Recruiter || powerups['Corporate Offices']" name="mailmen" :value="format(floor(mailmen + corporateOfficeAdded))"></stat>
             <stat v-show="powerups['Two Hands']" name="two hands" :value="format(floor(twoHands))"></stat>
-            <stat v-show="factories > 0 || powerups.Mailbox || powerups.Factory || powerups['Corporate Offices']" name="mailboxes" :value="format(floor(mailboxes + factoryMailboxes))"></stat>
-            <stat v-show="powerups.Advertisers" name="advertisers" :value="format(round(advertisers))"></stat>
-            <stat v-show="factories > 0 || powerups.Factory || powerups['Corporate Offices']" :value="format(floor(factories + corporateOfficeAdded))" name="factories"></stat> 
-            <stat v-show="powerups['Corporate Offices']" name="corporate offices" :value="format(corporateOffices)"></stat>
+            <stat v-show="factories > 0 || mailboxes > 0 || powerups.Mailbox || powerups.Factory || powerups['Corporate Offices']" name="mailboxes" :value="format(floor(mailboxes + factoryMailboxes))"></stat>
+            <stat v-show="advertisers > 0 || powerups.Advertisers" name="advertisers" :value="format(round(advertisers))"></stat>
+            <stat v-show="factories > 0 || factories > 0 || powerups.Factory || powerups['Corporate Offices']" :value="format(floor(factories + corporateOfficeAdded))" name="factories"></stat> 
+            <stat v-show="corporateOffices > 0 || powerups['Corporate Offices']" name="corporate offices" :value="format(corporateOffices)"></stat>
           </div>
         </div>
 

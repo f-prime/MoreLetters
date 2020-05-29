@@ -7,7 +7,11 @@ export function updateLetters() {
     return;
 
   const delta = this.generalUpdate(this.getLettersDelay);
-  const inc = this.lettersInc * delta;
+  let hackerInc = 0;
+  if(this.powerups.Hacker) {
+    hackerInc = 100;
+  }
+  const inc = (this.lettersInc + hackerInc) * delta;
 
   this.letters += inc;
   this.lettersPs += inc;
