@@ -254,7 +254,10 @@ const vw = new Vue({
     },
 
     bootstrapPrice: function() {
-      return this.round(this.bootstrapBasePrice + (this.bootstrap ** 1.5))
+      let inc = 1.5; 
+      if(this.powerups['Slow and Steady'])
+        inc = 0.5; 
+      return this.round(this.bootstrapBasePrice + (this.bootstrap ** inc))
     },
 
     factoryPrice: function() {
@@ -321,7 +324,6 @@ const vw = new Vue({
 
   methods: {
     correspondenceContinue: function() {
-      this.chooseCorrespondencePowerup = false;
       this.numChosen = 0;
     },
 
@@ -463,43 +465,6 @@ const vw = new Vue({
       const chosen = this.powerups[name];
       const letter = this.pathMap[name];
    
-      if(this.chooseCorrespondencePowerup) {
-        if(chosen) {
-          this.numChosen -= 1;
-          this.powerups[name] = false;
-        } else {
-          this.numChosen += 1;
-          this.powerups[name] = true;
-        }
-
-        if(this.powerups.Industrial) {
-          this.factories = 1;
-        }
-        
-        if(this.powerups.Empowerment) {
-          this.advertisers = 25;
-        }
-
-        if(this.powerups['Bird Feeder']) {
-          this.pigeons = 200;
-        }
-
-        if(this.powerups['Night Shift']) {
-          this.mailmen = 50;
-        }
-
-        if(this.powerups.Surplus) {
-          this.mailboxes = 50;
-        }
-
-
-        if(this.numChosen == 2) {
-          this.chooseCorrespondencePowerup = false;
-          this.numChosen = 0;
-        }
-        return;
-      }
-
       if(this.phase == 0 && this.numChosen == 0) {
         this.path = ""; // For some reason paths from previous runs don't get deleted on a new game. This makes sure it isn't a problem.
       }
@@ -663,7 +628,7 @@ const vw = new Vue({
       this.delta = now - new Date(this.lastTick);
       this.lastTick = now;
 
-      if(!this.read && !this.choosePowerups && !this.chooseCorrespondencePowerup) {
+      if(!this.read && !this.choosePowerups) {
         this.updateLetters();
         this.updateMailmen();
         this.updateAdvertisers();

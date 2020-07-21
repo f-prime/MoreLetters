@@ -38,150 +38,7 @@
         </div>
       </div>
 
-      <div v-show="chooseCorrespondencePowerup">
-        <div class="row">
-          <div class="column">
-            Choose up to two Correspondence powerups
-          </div>
-        </div>
-
-        <div class="row buttons" :class="!day ? 'btn-night' : ''">
-            <buy-button 
-               v-if="letterMapping.ABDFGI.unlocked"
-               title="Industrial"
-               :description="letterMapping.ABDFGI.description"
-               choose="true"
-               :chosen="powerups['Industrial']"
-               @chosen="choose('Industrial')"    
-            >
-            </buy-button>
-
-            <buy-button 
-               v-if="letterMapping.BCEFGH.unlocked"
-               title="LeeLee's Pinky"
-               :description="letterMapping.BCEFGH.description"
-               choose="true"
-               :chosen="powerups['LeeLees Pinky']"
-               @chosen="choose('LeeLees Pinky')"    
-            >
-            </buy-button>
-
-            <buy-button 
-               v-if="letterMapping.ABDFGH.unlocked"
-               title="Leisure"
-               :description="letterMapping.ABDFGH.description"
-               choose="true"
-               :chosen="powerups.Leisure"
-               @chosen="choose('Leisure')"    
-            >
-            </buy-button>
-        </div>
-
-        <div class="row buttons" :class="!day ? 'btn-night' : ''">
-            <buy-button 
-               v-if="letterMapping.ABDEGH.unlocked"
-               title="Muel"
-               :description="letterMapping.ABDEGH.description"
-               choose="true"
-               :chosen="powerups['Muel']"
-               @chosen="choose('Muel')"    
-            >
-            </buy-button>
-
-            <buy-button 
-               v-if="letterMapping.ABDFHI.unlocked"
-               title="Worms"
-               :description="letterMapping.ABDFHI.description"
-               choose="true"
-               :chosen="powerups.Worms"
-               @chosen="choose('Worms')"    
-            >
-            </buy-button>
-
-            <buy-button 
-               v-if="letterMapping.ABDEGI.unlocked"
-               title="Hacker"
-               :description="letterMapping.ABDEGI.description"
-               choose="true"
-               :chosen="powerups.Hacker"
-               @chosen="choose('Hacker')"    
-            >
-            </buy-button>
-        </div>
-
-        <div class="row buttons" :class="!day ? 'btn-night' : ''">
-            <buy-button 
-               v-if="letterMapping.BCDEGH.unlocked"
-               title="Night Shift"
-               :description="letterMapping.BCDEGH.description"
-               choose="true"
-               :chosen="powerups['Night Shift']"
-               @chosen="choose('Night Shift')"    
-            >
-            </buy-button>
-
-            <buy-button 
-               v-if="letterMapping.BCDFGH.unlocked"
-               title="Bird Feeder"
-               :description="letterMapping.BCDFGH.description"
-               choose="true"
-               :chosen="powerups['Bird Feeder']"
-               @chosen="choose('Bird Feeder')"    
-            >
-            </buy-button>
-
-            <buy-button 
-               v-if="letterMapping.ABEFHI.unlocked"
-               title="Empowerment"
-               :description="letterMapping.ABEFHI.description"
-               choose="true"
-               :chosen="powerups.Empowerment"
-               @chosen="choose('Empowerment')"    
-            >
-            </buy-button>
-        </div>
-
-        <div class="row buttons" :class="!day ? 'btn-night' : ''">
-            <buy-button 
-               v-if="letterMapping.BCEFGI.unlocked"
-               title="Surplus"
-               :description="letterMapping.BCEFGI.description"
-               choose="true"
-               :chosen="powerups['Surplus']"
-               @chosen="choose('Surplus')"    
-            >
-            </buy-button>
-
-            <buy-button 
-               v-if="letterMapping.BCDFGH.unlocked"
-               title="Bird Feeder"
-               :description="letterMapping.BCDFGH.description"
-               choose="true"
-               :chosen="powerups['Bird Feeder']"
-               @chosen="choose('Bird Feeder')"    
-            >
-            </buy-button>
-
-            <buy-button 
-               v-if="letterMapping.ABEFHI.unlocked"
-               title="Empowerment"
-               :description="letterMapping.ABEFHI.description"
-               choose="true"
-               :chosen="powerups.Empowerment"
-               @chosen="choose('Empowerment')"    
-            >
-            </buy-button>
-        </div>
-
-
-        <div class="buttons row" :class="!day ? 'btn-night' : ''">
-          <div class="button">
-            <div class="button-title" @click="correspondenceContinue()">Continue</div>
-          </div>
-        </div>
-      </div>
-
-      <div v-if="correspondencePage && !chooseCorrespondencePowerup">     
+      <div v-if="correspondencePage">     
         <div class="centered-text">
           <h1>{{ getFoundLetters.length }}/27 letters found</h1>
           <div class="buttons letters-buttons" :class="!day ? 'btn-night' : ''"> 
@@ -197,10 +54,7 @@
           <div class="buttons">
             <div class="button">
               <div class="button-title">
-                {{ letterMapping[pathOpened].powerup }} 
-              </div>
-              <div class="button-body">
-                {{ letterMapping[pathOpened].description }}
+                Solved
               </div>
             </div>
           </div>
@@ -239,7 +93,7 @@
         </div>
       </div>
       
-      <div class="container" v-else-if="!chooseCorrespondencePowerup">
+      <div class="container" v-else>
         <transition name="fade"> 
           <div class="bgs" v-show="day">
             <transition name="fade">
@@ -343,10 +197,7 @@
             <div class="buttons">
               <div class="button">
                 <div class="button-title">
-                  {{ letterMapping[getSortedPath].powerup }} 
-                </div>
-                <div class="button-body">
-                  {{ letterMapping[getSortedPath].description }}
+                  Solved
                 </div>
               </div>
             </div>
@@ -369,7 +220,7 @@
 
         <!-- Choose Powerups -->
 
-        <div v-show="!chooseCorrespondencePowerup && !read && choosePowerups" class="buttons" :class="!day ? 'btn-night' :''">
+        <div v-show="!read && choosePowerups" class="buttons" :class="!day ? 'btn-night' :''">
           <div class="row">
             <div class="column">
               Choose Two Powerups

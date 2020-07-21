@@ -45,9 +45,17 @@ html, body {
 }
 
 .letters-buttons {
-  width: 10vw;
+  width: 50vw;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+
 } 
+
+.letters-buttons .button {
+  width: 100px;
+}
 
 .letter-container {
   position: relative;

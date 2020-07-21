@@ -28,7 +28,6 @@ export const originalState = {
 
   correspondence: false,
   correspondencePage: false,
-  chooseCorrespondencePowerup: false, 
   lastTick: new Date(),
   delta: 0,
 
@@ -62,6 +61,120 @@ export const originalState = {
   lettersDelay: 1000,
   letters: 0,
   lettersDelivered: 0,
+
+  letterMapping: {
+    "ABDEGH": {
+      title:"Tis Said",
+      unlocked: false,
+    },
+
+    "BCEFGH": {
+      title: "A Peek Inside",
+      unlocked: false,
+    },
+
+    "ABDEHI": {
+      title: "Turing",
+      unlocked: false
+    },
+    
+    "ABDEGI": {
+      title: "The Mentor",
+      unlocked: false
+    },
+    "ABEFGH": {
+      title: "Ward",
+      unlocked: false
+    },
+    "ABEFHI": {
+      title: "Prison Stories",
+      unlocked: false
+    },
+    "ABEFGI": {
+      title: "Brainfuck",
+      unlocked: false
+    },
+    "ABDFGH": {
+      title: "Alice",
+      unlocked: false
+    },
+    "ABDFHI": {
+      title: "Worms",
+      unlocked: false
+    },
+    "ABDFGI": {
+      title: "Aroma",
+      unlocked: false
+    },
+    "BCDEGH": {
+      title: "Halloween",
+      unlocked: false
+    },
+    "BCDEHI": {
+      title: "Whitespace",
+      unlocked: false
+    },
+    "BCDEGI": {
+      title: "Remainder",
+      unlocked: false
+    },
+    "BCEFHI": {
+      title: "Chameleon",
+      unlocked: false
+    },
+    "BCEFGI": {
+      title: "No Substitution",
+      unlocked: false
+    },
+    "BCDFGH": {
+      title: "Like a Bird",
+      unlocked: false
+    },
+    "BCDFHI": {
+      title: "Self-Conscious",
+      unlocked: false
+    },
+    "BCDFGI": {
+      title: "Failure",
+      unlocked: false
+    },
+    "ACDEGH": {
+      title: "Cancer",
+      unlocked: false,
+    },
+    "ACDEHI": {
+      title: "Upside Down",
+      unlocked: false
+    },
+    "ACDEGI": {
+      title: "Two Words",
+      unlocked: false
+    },
+    "ACEFGH": {
+      title: "Simple Addition",
+      unlocked: false
+    },
+    "ACEFHI": {
+      title: "Scrambled Addition",
+      unlocked: false
+    },
+    "ACEFGI": {
+      title: "Ancient",
+      unlocked: false
+    },
+    "ACDFGH": {
+      title: "Creativity",
+      unlocked: false
+    },
+    "ACDFHI": {
+      title: "Riddle",
+      unlocked: false
+    },
+    "ACDFGI": {
+      title: "Another Riddle",
+      unlocked: false
+    }
+  },
 
   pigeons: 0,
   pigeonsDelivery: 1,
@@ -112,173 +225,6 @@ export const originalState = {
   lastSave: new Date(),
 
   lettersTexts: {},  
-  letterMapping: {
-    "ABDEGH": {
-      title:"Tis Said",
-      powerup: "Mule",
-      description: "Reduces mailbox tick by 75%",
-      unlocked: true,
-    },
-
-    "BCEFGH": {
-      title: "A Peek Inside",
-      powerup: "LeeLee's Pinky",
-      description: "Bootstrap interval multiplied by 4.",
-      unlocked: true,
-    },
-
-    "ABDEHI": {
-      title: "Turing",
-      powerup: "Code Breaker",
-      description: "",
-      unlocked: false
-    },
-    
-    "ABDEGI": {
-      title: "The Mentor",
-      powerup: "Hacker",
-      description: "Increases base letters per second from 1 to 100.",
-      unlocked: true
-    },
-    "ABEFGH": {
-      title: "Ward",
-      powerup: "Insanity",
-      description: "",
-      unlocked: false
-    },
-    "ABEFHI": {
-      title: "Prison Stories",
-      powerup: "Empowerment",
-      description: "Start each phase with 5 advertisers.",
-      unlocked: true
-    },
-    "ABEFGI": {
-      title: "Brainfuck",
-      powerup: "Brainfuck",
-      description: "",
-      unlocked: false
-    },
-    "ABDFGH": {
-      title: "Alice",
-      powerup: "Leisure",
-      description: "Double number of letters required per phase.",
-      unlocked: true
-    },
-    "ABDFHI": {
-      title: "Worms",
-      powerup: "Worms",
-      description: "Quadruples the price per letter at every phase.",
-      unlocked: true
-    },
-    "ABDFGI": {
-      title: "Aroma",
-      powerup: "Industrial",
-      description: "Start with one factory at every phase.",
-      unlocked: true
-    },
-    "BCDEGH": {
-      title: "Halloween",
-      powerup: "Night Shift",
-      description: "Start each phase with 50 mailmen.",
-      unlocked: true
-    },
-    "BCDEHI": {
-      title: "Whitespace",
-      powerup: "",
-      description: "",
-      unlocked: false
-    },
-    "BCDEGI": {
-      title: "Remainder",
-      powerup: "",
-      description: "",
-      unlocked: false
-    },
-    "BCEFHI": {
-      title: "Chameleon",
-      powerup: "",
-      description: "",
-      unlocked: false
-    },
-    "BCEFGI": {
-      title: "No Substitution",
-      powerup: "Surplus",
-      description: "Start each phase with 50 mailboxes.",
-      unlocked: true
-    },
-    "BCDFGH": {
-      title: "Like a Bird",
-      powerup: "Bird Feeder",
-      description: "Start each phase with 200 pigeons.",
-      unlocked: true
-    },
-    "BCDFHI": {
-      title: "Self-Conscious",
-      powerup: "",
-      description: "",
-      unlocked: false
-    },
-    "BCDFGI": {
-      title: "Failure",
-      powerup: "",
-      description: "",
-      unlocked: false
-    },
-    "ACDEGH": {
-      title: "Cancer",
-      powerup: "Cancer",
-      description: "At every new phase, a random powerup will be automatically be incremented every 0.5 seconds. The powerup does not cost money.",
-      unlocked: true,
-    },
-    "ACDEHI": {
-      title: "Upside Down",
-      powerup: "",
-      description: "",
-      unlocked: false
-    },
-    "ACDEGI": {
-      title: "Two Words",
-      powerup: "",
-      description: "",
-      unlocked: false
-    },
-    "ACEFGH": {
-      title: "Simple Addition",
-      powerup: "",
-      description: "",
-      unlocked: false
-    },
-    "ACEFHI": {
-      title: "Scrambled Addition",
-      powerup: "Sun",
-      description: "",
-      unlocked: false
-    },
-    "ACEFGI": {
-      title: "Ancient",
-      powerup: "",
-      description: "",
-      unlocked: false
-    },
-    "ACDFGH": {
-      title: "Creativity",
-      powerup: "",
-      description: "",
-      unlocked: false
-    },
-    "ACDFHI": {
-      title: "Riddle",
-      powerup: "",
-      description: "",
-      unlocked: false
-    },
-    "ACDFGI": {
-      title: "Another Riddle",
-      powerup: "",
-      description: "",
-      unlocked: false
-    }
-  },
 };
 
 
@@ -341,7 +287,6 @@ export function loadState() {
     "corporateOffices",
     "corporateOfficeAdded",
     "advertisers",
-    "chooseCorrespondencePowerup"
   ];
   
   let state = localStorage.getItem("state");
@@ -377,10 +322,9 @@ export function newGame() {
 
   const newState = {
     lettersTexts:this.lettersTexts,
-    //letterMapping: this.letterMapping UNCOMMENT THIS ITS ONLY FOR DEBUGGING!!
+    letterMapping: this.letterMapping,
     day:this.day,
     correspondence:this.correspondence,
-    chooseCorrespondencePowerup:this.correspondence ? true : false
   };
 
   localStorage.setItem("state", JSON.stringify(newState));
