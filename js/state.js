@@ -69,7 +69,7 @@ export const originalState = {
     },
 
     "BCEFGH": {
-      title: "A Peek Inside",
+      title: "Lee Lee's Pinky",
       unlocked: false,
     },
 
