@@ -41,6 +41,7 @@
       <div v-if="correspondencePage">     
         <div class="centered-text">
           <h1>{{ getFoundLetters.length }}/27 letters found</h1>
+          <h2><span style="font-size:15px;">x</span>{{ multiplier }} multiplier</h2>
           <div class="buttons letters-buttons" :class="!day ? 'btn-night' : ''"> 
             <div @click="openFoundLetter(letter)" class="button letter-button" :class="pathOpened == letter ? 'btn-selected' : ''" v-for="letter in getFoundLetters">
               {{ letterMapping[letter] ? letterMapping[letter].title : letter }}
