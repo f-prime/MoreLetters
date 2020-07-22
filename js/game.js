@@ -132,14 +132,14 @@ const vw = new Vue({
  
   computed: {
     multiplier: function() {
-      let numCompleted = 0;
+      let numCompleted = 1;
       Object.keys(this.letterMapping).forEach(letter => {
         if(this.letterMapping[letter].unlocked) {
           numCompleted += 1;
         }
       });
 
-      return 2 ** numCompleted;
+      return numCompleted;
     },
 
     getSortedPath: function() {
