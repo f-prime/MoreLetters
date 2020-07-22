@@ -131,6 +131,16 @@ const vw = new Vue({
   data: Object.assign({}, originalState), 
  
   computed: {
+    multiplier: function() {
+      let numCompleted = 0;
+      Object.keys(this.letterMapping).forEach(letter => {
+        if(this.letterMapping[letter].unlocked) {
+          numCompleted += 1;
+        }
+      });
+
+      return 2 ** numCompleted;
+    },
 
     getSortedPath: function() {
       return this.path.split('').sort((a,b) => a > b ? 1 : -1).join("");
@@ -273,17 +283,15 @@ const vw = new Vue({
     },
 
     nextPhaseAt: function() {
-      const mult = this.powerups.Leisure ? 2 : 1;
-
       switch(this.phase) {
         case 0:
-          return this.phase1 * mult;
+          return this.phase1;
         case 1:
-          return this.phase2 * mult;
+          return this.phase2;
         case 2:
-          return this.phase3 * mult;
+          return this.phase3;
         case 3:
-          return this.phase4 * mult;
+          return this.phase4;
         default:
           return Infinity;
       }
@@ -549,6 +557,7 @@ const vw = new Vue({
       this.powerups = powerups;
       this.day = day;
       this.phase = phase + 1;
+      this.choosePowerups = false;
 
       if(this.phase == this.readPhase) {
         this.getLetter();
@@ -558,43 +567,21 @@ const vw = new Vue({
           this.lettersTexts[sortedPath] = "";
         }
       }
-
-      if(this.powerups.Industrial) {
-        this.factories = 1;
-      }
-
-      if(this.powerups.Empowerment) {
-        this.advertisers = 25;
-      }
-
-      if(this.powerups['Night Shift']) {
-        this.mailmen = 50;
-      }
-
-      if(this.powerups.Surplus) {
-        this.mailboxes = 50;
-      }
-
-      if(this.powerups['Bird Feeder']) {
-        this.pigeons = 200;
-      }
-
-      this.choosePowerups = false;
     },
  
     clickGenerate: function() {
       if(!this.powerups.Bootstrap)
         return;
 
-      this.letters += this.clickInc;
-      this.lettersPs += this.clickInc;
+      this.letters += this.clickInc * this.multiplier;
+      this.lettersPs += this.clickInc * this.multiplier;
     },
 
     clickDeliver: function() {
       if(this.letters == 0)
         return;
      
-      this.deliverLetter(Math.ceil(this.clickInc));
+      this.deliverLetter(Math.ceil(this.clickInc) * this.multiplier);
       this.clickDelivery += 1;
 
     },

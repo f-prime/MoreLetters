@@ -141,6 +141,7 @@
             <stat name="deliveries per second" :value="format(round(prevDeliveryPs))"></stat>
             <stat :name="bootstrap > 0 || powerups.Bootstrap ? 'letters/deliveries per click' : 'deliveries per click'" :value="format(floor(clickInc))"></stat>
             <stat name="letter price" :value="'$' + format(round(getPricePerLetter))"></stat>
+            <stat name="multiplier" :value="multiplier"></stat>
             <stat v-show="pigeons > 0 || powerups.Pigeons || powerups.Breeder" name="pigeons" :value="format(floor(pigeons))"></stat>
             <stat v-show="breeders > 0 || powerups.Breeder || powerups.Breeder" name="breeders" :value="format(floor(breeders))"></stat>
             <stat v-show="mailmen > 0 || powerups.Mailman || powerups.Recruiter || powerups['Corporate Offices']" name="mailmen" :value="format(floor(mailmen + corporateOfficeAdded))"></stat>

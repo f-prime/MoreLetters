@@ -2,14 +2,14 @@ export const originalState = {
   day: true,
 
   phase:0,
-  phase1: 50,
+  phase1: 0,
   phase2: 10000,
   phase3: 2000000,
   phase4: 100000000,
   
   numChosen: 0,
   powerups: {},
-  choosePowerups: false,
+  choosePowerups: true,
  
   pathOpened: "",
   path:"",
