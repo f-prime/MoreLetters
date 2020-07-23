@@ -47,7 +47,7 @@ export function buyTwoHands() {
 }
 
 export function buyBreeder() {
-  return this.buy("breeders", this.breederBasePrice);
+  return this.buy("breeders", this.breederPrice);
 }
 
 export function buyPigeons() {
