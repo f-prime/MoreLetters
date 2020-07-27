@@ -131,6 +131,19 @@ const vw = new Vue({
   data: Object.assign({}, originalState), 
  
   computed: {
+    allLettersCompleted: function() {
+      const allLetters = Object.keys(this.letterMapping);
+      const total = allLetters.length;
+      let totalSolved = 0; 
+      allLetters.forEach(letter => {
+        if(this.letterMapping[letter].unlocked) {
+          totalSolved += 1;
+        }
+      });
+
+      return totalSolved === total;
+    },
+
     multiplier: function() {
       let numCompleted = 1;
       Object.keys(this.letterMapping).forEach(letter => {

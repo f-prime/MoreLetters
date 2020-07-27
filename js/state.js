@@ -27,7 +27,7 @@ export const originalState = {
   },
 
   correspondence: false,
-  correspondencePage: false,
+  pageOn: "home",
   lastTick: new Date(),
   delta: 0,
 
@@ -43,11 +43,6 @@ export const originalState = {
   plaintext:"",
 
   money: 0,
-
-  tisSaidMult: 2,
-  leeleePinkeyInc: 500,
-  codeBreakerDelay: 100,
-  hackerLPS: 1000,
 
   lettersPs: 0,
   prevLettersPs: 0,

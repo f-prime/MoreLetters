@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="More Letters" content="A game about delivering more letters." charset="utf-8"/>
+    <meta name="description" content="More Letters - A game about delivering more letters." charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script type="text/javascript" src="libs/vue.js"></script>
     <script type="module" src="js/game.js" defer></script>
@@ -20,11 +20,17 @@
   <body id="body">
     <div id="app" class="container" :style="!day ? 'color: white;' : ''">
       <div class="bg-color" :style="!day ? 'background-color: #383838;' : ''"></div>
+      <!-- NAV BAR -->
       <div class="top-links">
         <div class="row" :class="!day ? 'night-link' : ''">
+          <div v-if="pageOn != 'home'" class="column align-right">
+            <a @click="pathOpened = ''; openLetter = false; pageOn = 'home';" class="footer-link">home</a>
+          </div>
           <div v-if="correspondence" class="column align-right">
-            <a v-if="!correspondencePage" @click="pathOpened = ''; openLetter = false; correspondencePage = true;" class="footer-link">correspondence</a>
-            <a v-else  @click="pathOpened = ''; openLetter = false; correspondencePage = false;" class="footer-link">home</a>
+            <a @click="pathOpened = ''; openLetter = false; pageOn = 'correspondence';" class="footer-link">correspondence</a>
+          </div>
+          <div v-if="allLettersCompleted" class="column align-right">
+            <a @click="pathOpened = ''; openLetter = false; pageOn = 'achievements';" class="footer-link">achievements</a>
           </div>
           <div class="column align-right">
             <a @click="newGame()" class="footer-link">new game</a>
@@ -37,8 +43,11 @@
           </div>
         </div>
       </div>
+      <!-- END NAVBAR -->
 
-      <div v-if="correspondencePage">     
+      <!-- CORRESPONDENCE PAGE -->
+
+      <div v-if="pageOn == 'correspondence'">     
         <div class="centered-text">
           <h1>{{ getFoundLetters.length }}/27 letters found</h1>
           <h2><span style="font-size:15px;">x</span>{{ multiplier }} multiplier</h2>
@@ -93,7 +102,15 @@
           <p/>
         </div>
       </div>
-      
+     
+      <!-- END CORRESPONDENCE PAGE -->
+      <!-- ACHIEVEMENTS PAGE -->
+      <div v-else-if="pageOn == 'achievements'">
+        <h1 class="centered-text">Achievements</h1>
+        You solved all the letters... but this isn't the end. There is more still to come.
+      </div>
+      <!-- END ACHIEVEMENTS PAGE -->
+      <!-- MAIN GAME -->
       <div class="container" v-else>
         <transition name="fade"> 
           <div class="bgs" v-show="day">
