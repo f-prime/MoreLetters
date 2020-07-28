@@ -41,6 +41,12 @@
           <div class="column align-right">
             <a href='https://discord.gg/db9SD9R' class="footer-link">discord</a>
           </div>
+          <div class="column align-right">
+            <a href="https://www.buymeacoffee.com/fprime" target="_blank" class="footer-link">donate</a>
+          </div>
+          <div class="column align-right">
+            <a @click="pathOpened = ''; openLetter = false; pageOn = 'credits';" class="footer-link">credits</a> 
+          </div>
         </div>
       </div>
       <!-- END NAVBAR -->
@@ -104,6 +110,27 @@
       </div>
      
       <!-- END CORRESPONDENCE PAGE -->
+
+      <!-- CREDITS -->
+      <div v-else-if="pageOn == 'credits'">
+        <div class="centered-text">
+          <h1>Credits</h1>
+          <p>
+            Marionela Gavriliuc - Art and Design, puzzle design, and play testing
+          </p>
+          <p>
+            Tom Milkowski - Puzzle messages (Aroma, Halloween, and Worms) and play testing
+          </p>
+          <p>
+            CaptainDapper - Found broken puzzles and suggested fixes
+          </p>
+          <p>
+            Play testers: Christopher, Nic, Luis, Nicky, and Luke
+          </p>
+        </div>
+      </div>
+      <!-- END CREDITS -->
+
       <!-- ACHIEVEMENTS PAGE -->
       <div v-else-if="pageOn == 'achievements'">
         <h1 class="centered-text">Achievements</h1>

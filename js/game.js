@@ -141,6 +141,7 @@ const vw = new Vue({
         }
       });
 
+
       return totalSolved === total;
     },
 
@@ -364,10 +365,16 @@ const vw = new Vue({
                           .replace(/\n/g, ' ')
                           .split(' ')
                           .filter(w => w != '');
-      
+
+      let solvedCondition = JSON.stringify(checkVal) == JSON.stringify(plaintext);
+
+      if(path === "ABEFHI") {
+        solvedCondition = checkVal.join(" ").indexOf(plaintext.join(" ")) !== -1
+      }  
+
       this.lettersTexts[path] = val;
 
-      if(JSON.stringify(checkVal) == JSON.stringify(plaintext)) {
+      if(solvedCondition) {
         this.deciphered = true;
         const letterMapping = this.letterMapping[path];
         if(letterMapping) {
@@ -621,6 +628,9 @@ const vw = new Vue({
     handleDebug: function() {
       this.lettersDelivered = 10 ** 15;
       this.money = 10 ** 15;
+      Object.keys(this.letterMapping).forEach(letter => {
+        this.lettersTexts[letter] = "";        
+      });
     },
 
     update: function() {
