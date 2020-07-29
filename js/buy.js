@@ -110,5 +110,16 @@ export function buyAdvertisers() {
 }
 
 export function buyMax(buyFunction) {
-  while(buyFunction()) {}
+  if(buyFunction === this.buyPigeons) {
+    // Since pigeons are a fixed price always
+    // We can use a basic equation.
+    // And we need to because otherwise the webpage will crash
+    // When the player has enough money.
+    const maxPurchase = Math.floor(this.money / this.pigeonsBasePrice);
+    const price = this.pigeonsBasePrice * maxPurchase;
+    this.money -= price;
+    this.pigeons += maxPurchase;
+  } else {
+    while(buyFunction()) {}
+  }
 }

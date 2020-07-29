@@ -220,10 +220,16 @@ export const originalState = {
   lastSave: new Date(),
 
   lettersTexts: {},  
+  resetting: false,
 };
 
 
 export function saveState(force) {
+  // Prevent saving state while resetting game
+  if(this.resetting) {
+    return;
+  }
+
   const now = new Date();
   if(now - new Date(this.lastSave) > 1000 || force) {
     localStorage.setItem("state", JSON.stringify(this.$data));
@@ -313,12 +319,14 @@ export function loadState() {
 }
 
 export function newGame() { 
+  this.resetting = true;
   localStorage.removeItem("state");
 
   const newState = {
     lettersTexts:this.lettersTexts,
     letterMapping: this.letterMapping,
     day:this.day,
+    path: "",
     correspondence:this.correspondence,
   };
 

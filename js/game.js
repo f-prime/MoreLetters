@@ -161,7 +161,7 @@ const vw = new Vue({
     },
     
     getFoundLetters: function() {
-      return Object.keys(this.lettersTexts).filter(letter => letter !== '');
+      return Object.keys(this.lettersTexts).filter(letter => letter !== '' && this.letterMapping[letter]);
     },
 
     breederDescription: function() {
