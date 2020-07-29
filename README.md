@@ -2,6 +2,8 @@
 
 An incremental crypto puzzle game.
 
+https://morelettersinc.com
+
 ## Setup
 
 More Letters uses Vue.js
