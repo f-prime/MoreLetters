@@ -280,9 +280,9 @@ const vw = new Vue({
 
     bootstrapInc: function() {
       if(this.twoHands > 0) {
-			let val = this.bootstrapDelivery * (this.twoHandsMult ** this.twoHands);
-			return val;
-	  }
+        let val = this.bootstrapDelivery * (this.twoHandsMult ** this.twoHands);
+        return val;
+	    }
       return this.bootstrapDelivery;
     },
 
