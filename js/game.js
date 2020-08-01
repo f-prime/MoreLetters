@@ -163,14 +163,8 @@ const vw = new Vue({
     getFoundLetters: function() {
       return Object.keys(this.lettersTexts).filter(letter => letter !== '' && this.letterMapping[letter]);
     },
-
-    breederDescription: function() {
-      return `Generates ${this.breederBreed} ${this.breederBreed > 1 ? 'Pigeons' : 'Pigeon'} every ${this.breederDelay / 1000} seconds at no cost.`;
-    },
-
-    breederPrice: function() {
-      return this.round(this.breederBasePrice + (this.breeders ** 2));
-    },
+	
+	//Descriptions
 
     mailmanDescription: function() {
       return `Delivers ${this.mailmanDelivery} ${this.mailmanDelivery > 1 ? 'letters' : 'letter'} every ${this.round(this.getMailmanDelay / 1000)} seconds.`;
@@ -192,32 +186,61 @@ const vw = new Vue({
       return `Deliver ${this.getPigeonsDelivery} letter every ${this.getPigeonsDelay / 1000} seconds. Pigeons do not get more expensive.`; 
     },
 
+    advertisersDescription: function() {
+      return `Increases deliveries per click by ${this.advertisersInc} every ${this.advertisersDelay / 1000} seconds.`;
+    },
+	
     twoHandsDescription: function() {
       return `Multiplies Bootstrap increase by ${this.twoHandsMult}.`
+    },
+
+    breederDescription: function() {
+      return `Generates ${this.breederBreed} ${this.breederBreed > 1 ? 'Pigeons' : 'Pigeon'} every ${this.breederDelay / 1000} seconds at no cost.`;
+    },
+	
+    corporateOfficesDescription: function() {
+      return `Generates ${this.getCorporateOfficesIncrease} Mailman and Factory every ${this.corporateOfficesDelay / 1000} seconds at no cost.`; 
+    },
+
+	//Prices
+
+    mailmanPrice: function() {
+      return this.round(this.mailmanBasePrice + (this.mailmen ** 1.5));
+    },
+
+    mailboxPrice: function() {
+      return this.round(this.mailboxBasePrice + (this.mailboxes ** 1.2));
+    },
+
+    bootstrapPrice: function() {
+      let inc = 1.5; 
+      return this.round(this.bootstrapBasePrice + (this.bootstrap ** inc))
+    },
+
+    factoryPrice: function() {
+      return this.round(this.factoryBasePrice + (this.factories ** 2.0));
+    },
+
+    advertisersPrice: function() {
+      return this.round(this.advertisersBasePrice + (this.advertisers ** 1.5));
     },
 
     twoHandsPrice: function() {
       return this.round(this.twoHandsBasePrice + (this.twoHands ** 7));
     },
-
-    corporateOfficesDescription: function() {
-      return `Generates ${this.getCorporateOfficesIncrease} Mailman and Factory every ${this.corporateOfficesDelay / 1000} seconds at no cost.`; 
+	
+    breederPrice: function() {
+      return this.round(this.breederBasePrice + (this.breeders ** 2));
     },
 
     corporateOfficesPrice: function() {
       return this.round(this.corporateOfficesBasePrice + (this.corporateOffices ** 2));
     },
+	
+	//Get Stuff
 
     getCorporateOfficesIncrease: function() {
       return this.corporateOfficesIncrease;
-    },
-
-    advertisersDescription: function() {
-      return `Increases deliveries per click by ${this.advertisersInc} every ${this.advertisersDelay / 1000} seconds.`;
-    },
-
-    advertisersPrice: function() {
-      return this.round(this.advertisersBasePrice + (this.advertisers ** 1.5));
     },
 
     getPigeonsDelivery: function() {
@@ -234,11 +257,6 @@ const vw = new Vue({
 
     getPricePerLetter: function() {
       let currentPrice = this.pricePerLetter;
-
-      if(this.powerups.Worms && this.phase > 0) {
-        currentPrice += this.pricePerLetter * (4 ** (this.phase - 1));
-      }
-
       return currentPrice;
     },
 
@@ -249,10 +267,6 @@ const vw = new Vue({
 
     getMailboxDelay: function() {
       let delay = this.mailboxDelay;
-      if(this.powerups.Muel) {
-        delay -= delay * 0.75;
-      }
-      
       return delay;
     },
 
@@ -265,36 +279,14 @@ const vw = new Vue({
     },
 
     bootstrapInc: function() {
-      let val = this.bootstrapDelivery * (this.twoHands ? 2 * this.twoHands : 1);
-      if(this.powerups['LeeLees Pinky']) {
-        val *= 4;
-      }
-
-      return val;
+      if(this.twoHands > 0) {
+			let val = this.bootstrapDelivery * (this.twoHandsMult ** this.twoHands);
+			return val;
+	  }
+      return this.bootstrapDelivery;
     },
 
-    postOfficePrice: function() {
-      return this.round(this.postOfficeBasePrice + (this.postOffices ** 2.3));
-    },
-
-    bootstrapPrice: function() {
-      let inc = 1.5; 
-      if(this.powerups['Slow and Steady'])
-        inc = 0.5; 
-      return this.round(this.bootstrapBasePrice + (this.bootstrap ** inc))
-    },
-
-    factoryPrice: function() {
-      return this.round(this.factoryBasePrice + (this.factories ** 2.0));
-    },
-
-    mailmanPrice: function() {
-      return this.round(this.mailmanBasePrice + (this.mailmen ** 1.5));
-    },
-
-    mailboxPrice: function() {
-      return this.round(this.mailboxBasePrice + (this.mailboxes ** 1.2));
-    },
+	//Phases
 
     nextPhaseAt: function() {
       switch(this.phase) {
