@@ -539,11 +539,28 @@ const vw = new Vue({
         return this.getFormatted(number, 10**12) + "t";
       } else if (number < 10**18) {
         return this.getFormatted(number, 10**15) + "s";
+      } else if(number < 10**21) {
+        return this.getFormatted(number, 10**18) + "q";
+      } else if(number < 10**24) {
+        return this.getFormatted(number, 10**21) + "u";
+      } else if(number < 10**27) {
+        return this.getFormatted(number, 10**24) + "kk";
+      } else if(number < 10**30) {
+        return this.getFormatted(number, 10**27) + "km";
+      } else if(number < 10**33) {
+        return this.getFormatted(number, 10**30) + "kb";
+      } else if(number < 10**36) {
+        return this.getFormatted(number, 10**33) + "kt";
+      } else if(number < 10**39) {
+        return this.getFormatted(number, 10**36) + "ks";
+      } else if(number < 10**42) {
+        return this.getFormatted(number, 10**39) + "kq";
       } else if (number == Infinity) {
         return "Infinity";
       }
 
-      return this.getFormatted(number, 10**15) + "q";
+      return this.getFormatted(number, 10**42) + "ku";
+
     },
 
     round: function(number) {
