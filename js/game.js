@@ -191,7 +191,7 @@ const vw = new Vue({
     },
 	
     twoHandsDescription: function() {
-      return `Multiplies Bootstrap increase by ${this.twoHandsMult}.`
+      return `Deliveries per click multiplied by ${this.twoHandsMult}. If Bootstrap was selected in Phase 1 then the Boostrap increment will be multiplied by ${this.twoHandsMult}.`
     },
 
     breederDescription: function() {
